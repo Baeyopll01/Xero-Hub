@@ -2,7 +2,7 @@ Library = {}
 SaveTheme = {}
 
 local themes = {
-    index = {'PinkDark', 'LimeDark', 'OrangeDark', 'PurpleDark', 'YellowDark', 'BlueDark', 'RedDark'},
+	index = {'PinkDark', 'LimeDark', 'OrangeDark', 'PurpleDark', 'YellowDark', 'BlueDark', 'RedDark'},
     BlueDark = {
         ['Shadow'] = Color3.fromRGB(10, 10, 20),
         ['Background'] = Color3.fromRGB(15, 15, 25),
@@ -573,18 +573,18 @@ do
 	end
 	function getColorFromPath(tbl, path)
 		local result = tbl
-		for _, part in next, string.split(path, ".") do
+		for _, part in ipairs(string.split(path, ".")) do
 			result = result and result[part]
 		end
 		return result
 	end
 	function Library:setTheme(st)
-		for name, objs in next, SaveTheme do
+		for name, objs in pairs(SaveTheme) do
 			local color = getColorFromPath(st, name)
 			if color then
-				for _, obj in next, objs do
+				for _, obj in pairs(objs) do
 					if SaveTheme[name] then
-						for _, obj in next, SaveTheme[name] do
+						for _, obj in pairs(SaveTheme[name]) do
 							if obj:IsA("Frame") or obj:IsA("CanvasGroup") then
 								obj.BackgroundColor3 = color
 							elseif obj:IsA("TextLabel") or obj:IsA("TextButton") or obj:IsA("TextBox") then
@@ -1161,7 +1161,7 @@ do
 			if not isopen then return end
 
 			local visibleCount = 0
-			for i, v in next, ScrollingFrame_1:GetChildren() do
+			for i, v in pairs(ScrollingFrame_1:GetChildren()) do
 				if v:IsA("Frame") and v.Visible then
 					visibleCount = visibleCount + 1
 				end
@@ -1177,7 +1177,7 @@ do
 
 		TextBox_1.Changed:Connect(function()
 			local SearchT = string.lower(TextBox_1.Text)
-			for i, v in next, ScrollingFrame_1:GetChildren() do
+			for i, v in pairs(ScrollingFrame_1:GetChildren()) do
 				if v:IsA("Frame") then
 					if SearchT ~= "" and v:FindFirstChild("TextLabel") then
 						if string.find(string.lower(v.TextLabel.Text), SearchT) then
@@ -1251,7 +1251,7 @@ do
 				elseif type(a) == "string" then
 					return v:FindFirstChild("TextLabel") and v.TextLabel.Text == a
 				elseif type(a) == "table" then
-					for _, name in next, a do
+					for _, name in ipairs(a) do
 						if v:FindFirstChild("TextLabel") and v.TextLabel.Text == name then
 							return true
 						end
@@ -1266,7 +1266,7 @@ do
 				pcall(Callback ,selectedValues)
 			end
 
-			for _, v in next, ScrollingFrame_1:GetChildren() do
+			for _, v in ipairs(ScrollingFrame_1:GetChildren()) do
 				if v:IsA("Frame") and shouldClear(v) then
 					if selectedItem and v:FindFirstChild("TextLabel") and v.TextLabel.Text == selectedItem then
 						selectedItem = nil
@@ -1340,7 +1340,7 @@ do
 						hasselect()
 					end
 					local selectedList = {}
-					for i, v in next, selectedValues do
+					for i, v in pairs(selectedValues) do
 						table.insert(selectedList, i)
 					end
 					if #selectedList > 0 then
@@ -1350,7 +1350,7 @@ do
 					end
 					pcall(Callback, selectedList)
 				else
-					for i,v in next, ScrollingFrame_1:GetChildren() do
+					for i,v in pairs(ScrollingFrame_1:GetChildren()) do
 						if v:IsA("Frame") then
 							tw({v = v.TextLabel, t = 0.15, s = Enum.EasingStyle.Linear, d = "Out", g = {TextTransparency = 0.8}}):Play()
 						end
@@ -1367,7 +1367,7 @@ do
 					return false
 				end
 
-				for _, v in next, tbl do
+				for _, v in pairs(tbl) do
 					if v == val then
 						return true
 					end
@@ -1381,7 +1381,7 @@ do
 						hasselect()
 						selectedValues[text] = true
 						local selectedList = {}
-						for i, v in next, selectedValues do
+						for i, v in pairs(selectedValues) do
 							table.insert(selectedList, i)
 						end
 						if #selectedList > 0 then
@@ -1407,7 +1407,7 @@ do
 				selectedValues = {}
 				selectedValues[value] = true
 				TextLabelValue_1.Text = value
-				for _, v in next, ScrollingFrame_1:GetChildren() do
+				for _, v in ipairs(ScrollingFrame_1:GetChildren()) do
 					if v:IsA("Frame") and v:FindFirstChild("TextLabel") then
 						if v.TextLabel.Text == value then
 							tw({v = v.TextLabel, t = 0.05, s = Enum.EasingStyle.Exponential, d = "Out", g = {TextTransparency = 0}}):Play()
@@ -1420,7 +1420,7 @@ do
 			else
 				Value = value
 				TextLabelValue_1.Text = value
-				for _, v in next, ScrollingFrame_1:GetChildren() do
+				for _, v in ipairs(ScrollingFrame_1:GetChildren()) do
 					if v:IsA("Frame") and v:FindFirstChild("TextLabel") then
 						if v.TextLabel.Text == value then
 							tw({v = v.TextLabel, t = 0.05, s = Enum.EasingStyle.Exponential, d = "Out", g = {TextTransparency = 0}}):Play()
@@ -1433,7 +1433,7 @@ do
 			end
 		end
 
-		for i, v in next, List do
+		for i, v in ipairs(List) do
 			itemslist:Add(v, i)
 		end
 
@@ -2001,9 +2001,9 @@ function Library:Window(p)
 		end
 
 		local function chg()
-			for i, v in next, self.List do
+			for i, v in pairs(self.List) do
 				v.Page.Visible = false
-				for i, v in next, ScrollingFrame_1:GetChildren() do
+				for i, v in pairs(ScrollingFrame_1:GetChildren()) do
 					if v:IsA('Frame') and v:FindFirstChild('Background') then
 						v.Background.Position = UDim2.new(0, 0, 0,0)
 						v.Background.AnchorPoint = Vector2.new(1 ,0)
@@ -2025,7 +2025,7 @@ function Library:Window(p)
 				end)
 				InPage_1.Visible = true
 			end
-			for i, v in next, TabList_1:GetChildren() do
+			for i, v in pairs(TabList_1:GetChildren()) do
 				if v:IsA('Frame') and v.Name ~= 'Line' then
 					tw({
 						v = v.Func.Title,
@@ -2933,7 +2933,7 @@ function Library:Window(p)
 
 				local function createKeywordSet(keywords)
 					local keywordSet = {}
-					for _, keyword in next, keywords do
+					for _, keyword in ipairs(keywords) do
 						keywordSet[keyword] = true
 					end
 					return keywordSet
@@ -3060,7 +3060,7 @@ function Library:Window(p)
 
 					local highlighted = {}
 
-					for i, token in next, tokens do
+					for i, token in ipairs(tokens) do
 						if multiStrings[token] then
 							local syntax = string.format(
 								'<font color = "#%s">%s</font>',
