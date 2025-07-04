@@ -172,18 +172,18 @@ do
 	end
 	function getColorFromPath(tbl, path)
 		local result = tbl
-		for _, part in ipairs(string.split(path, ".")) do
+		for _, part in next, string.split(path, ".") do
 			result = result and result[part]
 		end
 		return result
 	end
 	function Library:setTheme(st)
-		for name, objs in pairs(SaveTheme) do
+		for name, objs in next, SaveTheme do
 			local color = getColorFromPath(st, name)
 			if color then
-				for _, obj in pairs(objs) do
+				for _, obj in next, objs do
 					if SaveTheme[name] then
-						for _, obj in pairs(SaveTheme[name]) do
+						for _, obj in next, SaveTheme[name] do
 							if obj:IsA("Frame") or obj:IsA("CanvasGroup") then
 								obj.BackgroundColor3 = color
 							elseif obj:IsA("TextLabel") or obj:IsA("TextButton") or obj:IsA("TextBox") then
@@ -760,7 +760,7 @@ do
 			if not isopen then return end
 
 			local visibleCount = 0
-			for i, v in pairs(ScrollingFrame_1:GetChildren()) do
+			for i, v in next, ScrollingFrame_1:GetChildren() do
 				if v:IsA("Frame") and v.Visible then
 					visibleCount = visibleCount + 1
 				end
@@ -776,7 +776,7 @@ do
 
 		TextBox_1.Changed:Connect(function()
 			local SearchT = string.lower(TextBox_1.Text)
-			for i, v in pairs(ScrollingFrame_1:GetChildren()) do
+			for i, v in next, ScrollingFrame_1:GetChildren() do
 				if v:IsA("Frame") then
 					if SearchT ~= "" and v:FindFirstChild("TextLabel") then
 						if string.find(string.lower(v.TextLabel.Text), SearchT) then
@@ -850,7 +850,7 @@ do
 				elseif type(a) == "string" then
 					return v:FindFirstChild("TextLabel") and v.TextLabel.Text == a
 				elseif type(a) == "table" then
-					for _, name in ipairs(a) do
+					for _, name in next, a do
 						if v:FindFirstChild("TextLabel") and v.TextLabel.Text == name then
 							return true
 						end
@@ -865,7 +865,7 @@ do
 				pcall(Callback ,selectedValues)
 			end
 
-			for _, v in ipairs(ScrollingFrame_1:GetChildren()) do
+			for _, v in next, ScrollingFrame_1:GetChildren() do
 				if v:IsA("Frame") and shouldClear(v) then
 					if selectedItem and v:FindFirstChild("TextLabel") and v.TextLabel.Text == selectedItem then
 						selectedItem = nil
@@ -939,7 +939,7 @@ do
 						hasselect()
 					end
 					local selectedList = {}
-					for i, v in pairs(selectedValues) do
+					for i, v in next, selectedValues do
 						table.insert(selectedList, i)
 					end
 					if #selectedList > 0 then
@@ -949,7 +949,7 @@ do
 					end
 					pcall(Callback, selectedList)
 				else
-					for i,v in pairs(ScrollingFrame_1:GetChildren()) do
+					for i,v in next, ScrollingFrame_1:GetChildren() do
 						if v:IsA("Frame") then
 							tw({v = v.TextLabel, t = 0.15, s = Enum.EasingStyle.Linear, d = "Out", g = {TextTransparency = 0.8}}):Play()
 						end
@@ -966,7 +966,7 @@ do
 					return false
 				end
 
-				for _, v in pairs(tbl) do
+				for _, v in next, tbl do
 					if v == val then
 						return true
 					end
@@ -980,7 +980,7 @@ do
 						hasselect()
 						selectedValues[text] = true
 						local selectedList = {}
-						for i, v in pairs(selectedValues) do
+						for i, v in next, selectedValues do
 							table.insert(selectedList, i)
 						end
 						if #selectedList > 0 then
@@ -1006,7 +1006,7 @@ do
 				selectedValues = {}
 				selectedValues[value] = true
 				TextLabelValue_1.Text = value
-				for _, v in ipairs(ScrollingFrame_1:GetChildren()) do
+				for _, v in next, ScrollingFrame_1:GetChildren() do
 					if v:IsA("Frame") and v:FindFirstChild("TextLabel") then
 						if v.TextLabel.Text == value then
 							tw({v = v.TextLabel, t = 0.05, s = Enum.EasingStyle.Exponential, d = "Out", g = {TextTransparency = 0}}):Play()
@@ -1019,7 +1019,7 @@ do
 			else
 				Value = value
 				TextLabelValue_1.Text = value
-				for _, v in ipairs(ScrollingFrame_1:GetChildren()) do
+				for _, v in next, ScrollingFrame_1:GetChildren() do
 					if v:IsA("Frame") and v:FindFirstChild("TextLabel") then
 						if v.TextLabel.Text == value then
 							tw({v = v.TextLabel, t = 0.05, s = Enum.EasingStyle.Exponential, d = "Out", g = {TextTransparency = 0}}):Play()
@@ -1032,7 +1032,7 @@ do
 			end
 		end
 
-		for i, v in ipairs(List) do
+		for i, v in next, List do
 			itemslist:Add(v, i)
 		end
 
@@ -1042,14 +1042,14 @@ do
 	end
 end
 
-function Library:Window(p)
+function Library:CreateWindow(p)
 
 	local Title = p.Title or 'null'
-	local Desc = p.Desc or ''
+	local Desc = p.Author or ''
 	local Icon = p.Icon or 'door-open'
 	local Theme = p.Theme or 'Dark'
-	local Keybind = p.Config.Keybind or Enum.KeyCode.LeftControl
-	local Size = p.Config.Size or UDim2.new(0, 530,0, 400)
+	local Keybind = p.Keybind or Enum.KeyCode.LeftControl
+	local Size = p.Size or UDim2.new(0, 530,0, 400)
 
 	local R, HAA = false, false
 	local HasChangeTheme = p.Theme
@@ -1600,9 +1600,9 @@ function Library:Window(p)
 		end
 
 		local function chg()
-			for i, v in pairs(self.List) do
+			for i, v in next, self.List do
 				v.Page.Visible = false
-				for i, v in pairs(ScrollingFrame_1:GetChildren()) do
+				for i, v in next, ScrollingFrame_1:GetChildren() do
 					if v:IsA('Frame') and v:FindFirstChild('Background') then
 						v.Background.Position = UDim2.new(0, 0, 0,0)
 						v.Background.AnchorPoint = Vector2.new(1 ,0)
@@ -1624,7 +1624,7 @@ function Library:Window(p)
 				end)
 				InPage_1.Visible = true
 			end
-			for i, v in pairs(TabList_1:GetChildren()) do
+			for i, v in next, TabList_1:GetChildren() do
 				if v:IsA('Frame') and v.Name ~= 'Line' then
 					tw({
 						v = v.Func.Title,
@@ -1734,11 +1734,11 @@ function Library:Window(p)
 		end
 
 		function Func:Toggle(p)
-			local Value = p.Value or false
+			local Value = p.Default or false
 			local Image = p.Image or ''
 			local Callback = p.Callback or function() end
 			local Title = p.Title or 'null'
-			local Desc = p.Desc or ''
+			local Desc = p.Content or ''
 
 			local Toggle, Config = background(ScrollingFrame_1, Title, Desc, Image, 'Toggle')
 
@@ -1865,9 +1865,9 @@ function Library:Window(p)
 			return New
 		end
 
-		function Func:Label(p)
+		function Func:Paragraph(p)
 			local Title = p.Title or 'null'
-			local Desc = p.Desc or ''
+			local Desc = p.Content or ''
 			local Image = p.Image or ''
 
 			local Label, Config = background(ScrollingFrame_1, Title, Desc, Image, 'Label')
@@ -1894,7 +1894,7 @@ function Library:Window(p)
 
 		function Func:Button(p)
 			local Title = p.Title or 'null'
-			local Desc = p.Desc or ''
+			local Desc = p.Content or ''
 			local Image = p.Image or ''
 			local Callback = p.Callback or function() end
 
@@ -1957,11 +1957,11 @@ function Library:Window(p)
 
 		function Func:Slider(p)
 			local Title = p.Title or 'null'
-			local Desc = p.Desc or ''
+			local Desc = p.Content or ''
 			local Image = p.Image or ''
-			local Min = p.Min or 0
-			local Max = p.Max or 100
-			local Value = p.Value or Min + 1
+			local Min = p.Value.Min or 0
+			local Max = p.Value.Max or 100
+			local Value = p.Value.Default or Min + 1
 			local Rounding = p.Rounding or 2
 			local Callback = p.Callback or function() end
 
@@ -2532,7 +2532,7 @@ function Library:Window(p)
 
 				local function createKeywordSet(keywords)
 					local keywordSet = {}
-					for _, keyword in ipairs(keywords) do
+					for _, keyword in next, keywords do
 						keywordSet[keyword] = true
 					end
 					return keywordSet
@@ -2659,7 +2659,7 @@ function Library:Window(p)
 
 					local highlighted = {}
 
-					for i, token in ipairs(tokens) do
+					for i, token in next, tokens do
 						if multiStrings[token] then
 							local syntax = string.format(
 								'<font color = "#%s">%s</font>',
@@ -2742,9 +2742,9 @@ function Library:Window(p)
 
 		function Func:Dropdown(p)
 			local Title = p.Title or 'null'
-			local Desc = p.Desc or ''
+			local Desc = p.Content or ''
 			local Image = p.Image or ''
-			local List = p.List or {}
+			local List = p.Values or {}
 			local Value = p.Value or List[1]
 			local Multi = p.Multi or false
 			local Callback = p.Callback or function() end
@@ -2788,9 +2788,9 @@ function Library:Window(p)
 
 		function Func:Keybind(p)
 			local Title = p.Title or 'null'
-			local Desc = p.Desc or ''
+			local Desc = p.Content or ''
 			local Image = p.Image or ''
-			local Value = p.Value or false
+			local Value = p.Default or false
 			local Key = p.Key or Enum.KeyCode.E
 			local Callback = p.Callback or function() end
 
@@ -3011,11 +3011,11 @@ function Library:Window(p)
 			return New
 		end
 
-		function Func:ColorPicker(p)
+		function Func:Colorpicker(p)
 			local Title = p.Title
-			local Desc = p.Desc or ''
+			local Desc = p.Content or ''
 			local Image = p.Image or ''
-			local Value = p.Value or Color3.fromRGB(255, 255, 255)
+			local Value = p.Default or Color3.fromRGB(255, 255, 255)
 			local Callback = p.Callback or function() end
 
 			local ColorPicker, Config = background(ScrollingFrame_1, Title, Desc, Image, 'Color Picker')
@@ -3113,7 +3113,7 @@ function Library:Window(p)
 			UIStroke_1.Thickness = 1
 			UIStroke_1.Transparency = 1
 			UIStroke_1.Color = Color3.fromRGB(255, 255, 255)
-			UIStroke_1.Transparency = 0.95
+			UIStroke_1.Transparency = 1
 
 			addToTheme('Function.Color Picker.Color Select.UIStroke', UIStroke_1)
 
@@ -3788,11 +3788,11 @@ function Library:Window(p)
 			return New
 		end
 
-		function Func:Textbox(p)
+		function Func:Input(p)
 			local Title = p.Title
-			local Desc = p.Desc or ''
+			local Desc = p.Content or ''
 			local Image = p.Image or ''
-			local Value = p.Value or ''
+			local Value = p.Default or ''
 			local Placeholder = p.Placeholder or 'Paste Your Text'
 			local ClearText = p.ClearText or p.ClearTextOnFocus or false
 			local Callback = p.Callback or function() end
@@ -3965,8 +3965,8 @@ function Library:Window(p)
 
 	function Tabs:Notify(p)
 		local Title = p.Title or 'null'
-		local Desc = p.Desc or ''
-		local Time = p.Time or 5
+		local Desc = p.Content or ''
+		local Time = p.Duration or 5
 
 		local Shadow = Instance.new("ImageLabel")
 		local UIPadding_1 = Instance.new("UIPadding")
@@ -4503,9 +4503,9 @@ function Library:Window(p)
 			if not firsttime then
 				firsttime = true
 				Tabs:Notify({
-					Title = 'Dummy UI',
-					Desc = 'Press the <font color="#FF77A5" size="14">('..tostring(Keybind):gsub("Enum.KeyCode.", "")..')</font> button to hide and show the UI',
-					Time = 10
+					Title = 'Xero Hub',
+					Content = 'x2Tobi',
+					Duration = 10
 				})
 			end
 		end
