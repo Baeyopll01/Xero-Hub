@@ -1,4 +1,3 @@
-local HttpService = game:GetService("HttpService")
 Library = {}
 SaveTheme = {}
 
@@ -165,72 +164,53 @@ local themes = {
     },
 }
 
-function Library:SaveThemesToFile()
-    local data = HttpService:JSONEncode(themes)
-    writefile("Themes.json", data)
-end
-
-function Library:LoadThemesFromFile()
-    if isfile("Themes.json") then
-        local data = readfile("Themes.json")
-        themes = HttpService:JSONDecode(data)
-    end
-end
-
 local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Parent = not game:GetService("RunService"):IsStudio() and game:GetService("CoreGui") or game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.Parent = not game:GetService("RunService"):IsStudio() and game:GetService("CoreGui") or game:GetService("Players").LocalPlayer.PlayerGui
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 local U, Tw = game:GetService("UserInputService"), game:GetService("TweenService")
 
-function addToTheme(name, obj)
-    if not SaveTheme[name] then
-        SaveTheme[name] = {}
-    end
-    table.insert(SaveTheme[name], obj)
-end
-
-function getColorFromPath(tbl, path)
-    local result = tbl
-    for _, part in next, string.split(path, ".") do
-        result = result and result[part]
-    end
-    return result
-end
-
-function Library:setTheme(st)
-    for name, objs in next, SaveTheme do
-        local color = getColorFromPath(st, name)
-        if color then
-            for _, obj in next, objs do
-                if obj:IsA("Frame") or obj:IsA("CanvasGroup") then
-                    obj.BackgroundColor3 = color
-                elseif obj:IsA("TextLabel") or obj:IsA("TextButton") or obj:IsA("TextBox") then
-                    obj.TextColor3 = color
-                elseif obj:IsA("ImageLabel") or obj:IsA("ImageButton") then
-                    obj.ImageColor3 = color
-                elseif obj:IsA("ScrollingFrame") then
-                    obj.ScrollBarImageColor3 = color
-                elseif obj:IsA("UIStroke") then
-                    obj.Color = color
-                elseif obj:IsA("UIGradient") then
-                    obj.Color = color
-                end
-            end
-        end
-    end
-end
-
-Library:LoadThemesFromFile()
-
-Library:SaveThemesToFile()
-
-Library:LoadThemesFromFile()
-
-Library:SaveThemesToFile()
-Library:LoadThemesFromFile()
-Library:setTheme(themes["YellowDark"])
-
+do
+	function addToTheme(name, obj)
+		if not SaveTheme[name] then
+			SaveTheme[name] = {}
+		end
+		table.insert(SaveTheme[name], obj)
+	end
+	function getColorFromPath(tbl, path)
+		local result = tbl
+		for _, part in ipairs(string.split(path, ".")) do
+			result = result and result[part]
+		end
+		return result
+	end
+	function Library:setTheme(st)
+		for name, objs in pairs(SaveTheme) do
+			local color = getColorFromPath(st, name)
+			if color then
+				for _, obj in pairs(objs) do
+					if SaveTheme[name] then
+						for _, obj in pairs(SaveTheme[name]) do
+							if obj:IsA("Frame") or obj:IsA("CanvasGroup") then
+								obj.BackgroundColor3 = color
+							elseif obj:IsA("TextLabel") or obj:IsA("TextButton") or obj:IsA("TextBox") then
+								obj.TextColor3 = color
+							elseif obj:IsA("ImageLabel") or obj:IsA("ImageButton") then
+								obj.ImageColor3 = color
+							elseif obj:IsA("ScrollingFrame") then
+								obj.ScrollBarImageColor3 = color
+							elseif obj:IsA("UIStroke") then
+								obj.Color = color
+							elseif obj:IsA("UIGradient") then
+								obj.Color = color
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+	
 local IconList = loadstring(game:HttpGet('https://raw.githubusercontent.com/Dummyrme/Library/refs/heads/main/Icon.lua'))()
 function gl(i)
 	local iconData = IconList.Icons[i]
@@ -321,6 +301,7 @@ function jc(c, p)
 
 	expandTween:Play()
 end
+
 function jcf(p, p2)
 	local ClickButtonCircle = Instance.new("Frame")
 	ClickButtonCircle.Parent = p
