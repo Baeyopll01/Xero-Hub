@@ -1204,9 +1204,9 @@ function p:Window(_)
 	local k = { Active = nil, Maximized = false, Visible = true, Ready = false }
 	local _ = _ or {}
 	local m = {
-		StartupName = _.StartupName or _.startname or "Xero",
+		StartupName = _.StartupName or _.startname or "Xeno",
 		Title = _.title or _.Title or "Window",
-		SubTitle = _.subtitle or _.Subtitle or _.SubTitle or "Copyright Xero Hub",
+		SubTitle = _.subtitle or _.Subtitle or _.SubTitle or "Xero Hub",
 		TabWidth = _.tabwidth or _.TabWidth or 160,
 		Size = _.size or _.Size or self.IsMobile and UDim2.fromOffset(464, 368) or UDim2.fromOffset(580, 460),
 		MinimizeKey = _.minimizekey or _.MinimizeKey or Enum.KeyCode.Home,
@@ -1219,17 +1219,19 @@ function p:Window(_)
 	self.Settings.Keybind = m.MinimizeKey
 	self.Settings.Transparency = m.Transparency
 	self.Theme = m.Theme
-	local _ = c:IsStudio() and a.PlayerGui or game:GetService("CoreGui")
-	local j = self:Create("ScreenGui", {
+
+	local guiParent = c:IsStudio() and a.PlayerGui or game:GetService("CoreGui")
+	local gui = self:Create("ScreenGui", {
 		Name = "NEXT_GEN",
-		Parent = _,
+		Parent = guiParent,
 		ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
 		ResetOnSpawn = false,
 		DisplayOrder = 100000000000,
 		IgnoreGuiInset = true,
 	})
-	local _ = p:Create("Frame", {
-		Parent = j,
+
+	local startupFrame = p:Create("Frame", {
+		Parent = gui,
 		AnchorPoint = Vector2.new(0.5, 0.5),
 		BackgroundColor3 = Color3.new(1, 1, 1),
 		BackgroundTransparency = 1,
@@ -1238,9 +1240,10 @@ function p:Window(_)
 		Position = UDim2.new(0.5, 0, 0.5, 0),
 		Size = UDim2.new(0.151, 0, 0.093, 0),
 	})
-	local a = p:Create("TextLabel", {
+
+	local startupLabel = p:Create("TextLabel", {
 		Name = "StartupLabel",
-		Parent = _,
+		Parent = startupFrame,
 		AnchorPoint = Vector2.new(0.5, 0.5),
 		BackgroundColor3 = Color3.new(1, 1, 1),
 		BackgroundTransparency = 1,
@@ -1250,14 +1253,16 @@ function p:Window(_)
 		Size = UDim2.new(1, 0, 0.234, 0),
 		ZIndex = 2,
 		Font = Enum.Font.GothamBold,
-		Text = "Starting up! " .. m.StartupName .. " Hub",
+		Text = "Welcome To Xeno Hub", -- ข้อความใหม่
 		TextColor3 = Color3.new(1, 1, 1),
 		TextScaled = true,
 		TextSize = 14,
 		TextWrapped = true,
 	})
-	local b = p:Create("TextLabel", {
+
+	local initializingLabel = p:Create("TextLabel", {
 		Name = "InitializingLabel",
+		Parent = startupFrame,
 		AnchorPoint = Vector2.new(0.5, 0.5),
 		BackgroundColor3 = Color3.new(1, 1, 1),
 		BackgroundTransparency = 1,
@@ -1267,7 +1272,7 @@ function p:Window(_)
 		Size = UDim2.new(1, 0, 0.222, 0),
 		ZIndex = 2,
 		Font = Enum.Font.GothamBold,
-		Text = "Initializing the UI...",
+		Text = "By.Smooth X Dev",
 		TextColor3 = Color3.new(1, 1, 1),
 		TextScaled = true,
 		TextSize = 14,
@@ -1275,36 +1280,29 @@ function p:Window(_)
 		TextTransparency = 1,
 	})
 	task.delay(1, function()
-		b.Parent = _
-		o:Animation(a, { Position = UDim2.new(0.5, 0, 0.345, 0) }, 0.1, Enum.EasingStyle.Linear)
-		o:Animation(b, { TextTransparency = 0 }, 0.1, Enum.EasingStyle.Linear)
+		o:Animation(startupLabel, { Position = UDim2.new(0.5, 0, 0.345, 0) }, 0.1, Enum.EasingStyle.Linear)
+		o:Animation(initializingLabel, { TextTransparency = 0 }, 0.1, Enum.EasingStyle.Linear)
 		task.wait(3)
-		o:Animation(a, { Position = UDim2.new(0.5, 0, 0.275, 0), TextTransparency = 1 }, 0.1, Enum.EasingStyle.Linear)
-		o:Animation(b, { Position = UDim2.new(0.5, 0, 0.5, 0) }, 0.1, Enum.EasingStyle.Linear)
+		o:Animation(startupLabel, { Position = UDim2.new(0.5, 0, 0.275, 0), TextTransparency = 1 }, 0.1, Enum.EasingStyle.Linear)
+		o:Animation(initializingLabel, { Position = UDim2.new(0.5, 0, 0.5, 0) }, 0.1, Enum.EasingStyle.Linear)
 		task.wait(1)
-		local _ = o:Animation(b, { TextTransparency = 1 }, 0.1, Enum.EasingStyle.Linear)
-		_.Completed:Connect(function()
+		local completeTween = o:Animation(initializingLabel, { TextTransparency = 1 }, 0.1, Enum.EasingStyle.Linear)
+		completeTween.Completed:Connect(function()
 			k.Ready = true
-			if a then
-				a:Destroy()
-			end
-			if b then
-				b:Destroy()
-			end
+			if startupLabel then startupLabel:Destroy() end
+			if initializingLabel then initializingLabel:Destroy() end
 		end)
 	end)
-	repeat
-		task.wait()
-	until k.Ready
+	repeat task.wait() until k.Ready
 	function p:Destroy()
-		for _, _ in pairs(self.Connections) do
-			_:Disconnect()
+		for _, conn in pairs(self.Connections) do
+			conn:Disconnect()
 		end
-		j:Destroy()
+		gui:Destroy()
 	end
-	local n = self:Create("Frame", {
+	local mainFrame = self:Create("Frame", {
 		Name = "MainFrame",
-		Parent = j,
+		Parent = gui,
 		Visible = true,
 		Size = m.Size,
 		Position = UDim2.new(0.5, 0, 0.5, 0),
