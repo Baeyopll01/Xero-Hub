@@ -2849,49 +2849,84 @@ function p:Window(_)
         }),
     })
 
-    -- Search box
-    local searchBox = p:Create("TextBox", {
-        Name = "SearchBox",
-        FontFace = p.Settings.FontFace or Font.new("rbxasset://fonts/families/GothamSSm.json"),
-        Text = "",
-        PlaceholderText = "Search...",
-        TextColor3 = Color3.fromRGB(240, 240, 240),
-        PlaceholderColor3 = Color3.fromRGB(140, 140, 140),
-        TextSize = 13,
-        TextXAlignment = Enum.TextXAlignment.Left,
-        BackgroundColor3 = Color3.fromRGB(60, 60, 60),
-        BackgroundTransparency = 0.5,
-        BorderColor3 = Color3.fromRGB(0, 0, 0),
-        Size = UDim2.new(1, -10, 0, 30),
-        Position = UDim2.new(0, 5, 0, 5),
-        Parent = optionFrame,
-    }, {
-        p:Create("UICorner", { CornerRadius = UDim.new(0, 4) }),
-        p:Create("UIPadding", { PaddingLeft = UDim.new(0, 8) }),
-    })
+-- ส่วนสร้าง dropdown และ frame เหมือนเดิม
+local optionFrame = p:Create("Frame", {
+    Name = "OptionFrame",
+    BackgroundColor3 = Color3.fromRGB(45, 45, 45),
+    BorderColor3 = Color3.fromRGB(0, 0, 0),
+    BorderSizePixel = 0,
+    Size = UDim2.fromScale(1, 1),
+    Parent = optionPopup,
+})
 
-    local optionScrolling = p:Create("ScrollingFrame", {
-        Name = "OptionScrollingFrame",
-        BackgroundTransparency = 1,
-        BorderSizePixel = 0,
-        Position = UDim2.fromOffset(5, 40),
-        Size = UDim2.new(1, -5, 1, -45),
-        ScrollBarThickness = 4,
-        Parent = optionFrame,
-        CanvasSize = UDim2.fromOffset(0, 0),
-        AutomaticCanvasSize = Enum.AutomaticSize.Y
-    })
+-- ปุ่มปิด (ข้างบน search box)
+local closeButton = p:Create("TextButton", {
+    Name = "CloseButton",
+    Text = "X",
+    Font = Enum.Font.SourceSansBold,
+    TextColor3 = Color3.fromRGB(255, 100, 100),
+    BackgroundColor3 = Color3.fromRGB(70, 70, 70),
+    Size = UDim2.new(0, 30, 0, 30),
+    Position = UDim2.new(1, -35, 0, 5),
+    AnchorPoint = Vector2.new(1, 0),
+    Parent = optionFrame
+}, { p:Create("UICorner", { CornerRadius = UDim.new(0, 4) }) })
 
-    local listLayout = p:Create("UIListLayout", {
-        Padding = UDim.new(0, 3),
-        SortOrder = Enum.SortOrder.LayoutOrder,
-        Parent = optionScrolling
-    })
+p:Connect(closeButton.Activated, function()
+    h:Hide()
+end)
 
-    -- ปรับ CanvasSize ให้อัตโนมัติเมื่อเพิ่มหรือลบ options
-    p:Connect(listLayout:GetPropertyChangedSignal("AbsoluteContentSize"), function()
-        optionScrolling.CanvasSize = UDim2.fromOffset(0, listLayout.AbsoluteContentSize.Y)
-    end)
+-- Search box
+local searchBox = p:Create("TextBox", {
+    Name = "SearchBox",
+    Text = "",
+    PlaceholderText = "Search...",
+    TextColor3 = Color3.fromRGB(240, 240, 240),
+    PlaceholderColor3 = Color3.fromRGB(140, 140, 140),
+    BackgroundColor3 = Color3.fromRGB(60, 60, 60),
+    BackgroundTransparency = 0.5,
+    Size = UDim2.new(1, -50, 0, 30),
+    Position = UDim2.new(0, 5, 0, 5),
+    Parent = optionFrame,
+}, { p:Create("UICorner", { CornerRadius = UDim.new(0, 4) }) })
+
+-- ScrollingFrame สำหรับ options
+local optionScrolling = p:Create("ScrollingFrame", {
+    Name = "OptionScrollingFrame",
+    BackgroundTransparency = 1,
+    BorderSizePixel = 0,
+    Position = UDim2.fromOffset(5, 40),
+    Size = UDim2.new(1, -10, 1, -45),
+    ScrollBarThickness = 6,
+    Parent = optionFrame,
+    CanvasSize = UDim2.fromOffset(0, 0),
+    AutomaticCanvasSize = Enum.AutomaticSize.Y
+})
+
+local listLayout = p:Create("UIListLayout", { Padding = UDim.new(0, 3), SortOrder = Enum.SortOrder.LayoutOrder, Parent = optionScrolling })
+
+-- ปรับ CanvasSize ให้เลื่อนสุดหลังจากเพิ่ม/ซ่อน option
+local function updateCanvas()
+    optionScrolling.CanvasSize = UDim2.fromOffset(0, listLayout.AbsoluteContentSize.Y)
+end
+
+p:Connect(listLayout:GetPropertyChangedSignal("AbsoluteContentSize"), updateCanvas)
+
+-- Filter option ตาม search
+local function filterOptions(searchText)
+    searchText = string.lower(searchText)
+    for _, optData in pairs(h.Options) do
+        local label = optData.Option:FindFirstChild("OptionLabel")
+        if label then
+            optData.Option.Visible = searchText == "" or string.find(string.lower(label.Text), searchText)
+        end
+    end
+    updateCanvas()
+end
+
+p:Connect(searchBox:GetPropertyChangedSignal("Text"), function()
+    filterOptions(searchBox.Text)
+end)
 
     -- Filter options ตาม search box
     local function filterOptions(searchText)
