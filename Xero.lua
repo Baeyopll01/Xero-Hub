@@ -2806,10 +2806,12 @@ function p:Window(_)
 	})
 	local listLayout = p:Create("UIListLayout",{Padding = UDim.new(0,3), Parent = scrollFrame})
 
-	-- ปรับ CanvasSize ให้เลื่อนจนสุด
+	-- Update CanvasSize ปลอดภัย
 	local function UpdateCanvasSize()
 		task.defer(function()
-			scrollFrame.CanvasSize = UDim2.new(0,0,0,listLayout.AbsoluteContentSize.Y)
+			if listLayout and scrollFrame then
+				scrollFrame.CanvasSize = UDim2.new(0,0,0,listLayout.AbsoluteContentSize.Y)
+			end
 		end)
 	end
 	listLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(UpdateCanvasSize)
@@ -2825,13 +2827,13 @@ function p:Window(_)
 			Parent = scrollFrame,
 		}, { 
 			p:Create("UICorner",{CornerRadius = UDim.new(0,6)}),
-			p:Create("TextLabel",{Text = value, TextColor3 = Color3.fromRGB(240,240,240), TextSize = 13, TextWrapped = true, AutomaticSize = Enum.AutomaticSize.Y, BackgroundTransparency = 1, Position = UDim2.fromOffset(10,0), Size = UDim2.fromScale(0.96,1)})
+			p:Create("TextLabel",{Text = value, TextColor3 = Color3.fromRGB(240,240,240), TextSize = 13, TextWrapped = true, AutomaticSize = Enum.AutomaticSize.Y, BackgroundTransparency = 1, Position = UDim2.fromOffset(10,0), Size = UDim2.fromScale(0.96,1), Name = "OptionLabel"})
 		})
-		table.insert(h.Options, { Option = btn })
+		table.insert(h.Options, { Option = btn, Selected = defaultSelected })
 		UpdateCanvasSize()
 	end
 
-	-- ฟังก์ชัน SetValues
+	-- Set Values แบบปลอดภัย
 	function h:SetValues(values, default)
 		h.Options = {}
 		for _,child in pairs(scrollFrame:GetChildren()) do
@@ -2852,6 +2854,19 @@ function p:Window(_)
 		h:Add(v, typeof(i.Default)=="table" and table.find(i.Default,v) or i.Default==v)
 	end
 	UpdateCanvasSize()
+
+	-- ปลอดภัย OnChanged
+	function h:OnChanged(callback)
+		h.Callback = callback
+		if h.Callback then
+			if typeof(i.Default) == "table" then
+				h.Callback(i.Default)
+			else
+				h.Callback(i.Default)
+			end
+		end
+		return h
+	end
 
 	return h
 end
