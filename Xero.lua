@@ -2682,7 +2682,7 @@ function p:Window(_)
 		TextSize = 14,
 		AutomaticSize = Enum.AutomaticSize.Y,
 		BackgroundColor3 = Color3.fromRGB(120, 120, 120),
-		BackgroundTransparency = 0.8700000047683716,
+		BackgroundTransparency = 0.87,
 		BorderColor3 = Color3.fromRGB(0, 0, 0),
 		LayoutOrder = 7,
 		Size = UDim2.new(1, 0, 0, 0),
@@ -2718,7 +2718,7 @@ function p:Window(_)
 			PaddingBottom = UDim.new(0, 13)
 		}),
 	})
-	local _ = p:Create("TextLabel", {
+	p:Create("TextLabel", {
 		Name = "DropdownTitle",
 		FontFace = p.Settings.FontFace or Font.new(
 			"rbxasset://fonts/families/GothamSSm.json",
@@ -2735,7 +2735,7 @@ function p:Window(_)
 		Size = UDim2.new(0.55, 0, 0, 14),
 		Parent = b,
 	})
-	local _ = p:Create("TextLabel", {
+	local desc = p:Create("TextLabel", {
 		FontFace = p.Settings.FontFace or Font.new(
 			"rbxasset://fonts/families/GothamSSm.json",
 			Enum.FontWeight.Regular,
@@ -2755,7 +2755,8 @@ function p:Window(_)
 		Name = "DropdownDesc",
 		Parent = b,
 	})
-	_.Size = UDim2.new(0.592, -54, 0, _.TextBounds.Y)
+	desc.Size = UDim2.new(0.592, -54, 0, desc.TextBounds.Y)
+
 	local d = p:Create("TextButton", {
 		Name = "DropdownOptions",
 		FontFace = p.Settings.FontFace or Font.new("rbxasset://fonts/families/SourceSansPro.json"),
@@ -2793,11 +2794,11 @@ function p:Window(_)
 			Size = UDim2.fromOffset(16, 16),
 		}),
 	})
-	local _ = typeof(i.Default) == "table" and table.concat(i.Default, ", ") or i.Default
+	local defaultText = typeof(i.Default) == "table" and table.concat(i.Default, ", ") or i.Default
 	local e = p:Create("TextLabel", {
 		Name = "TextLabel",
 		FontFace = p.Settings.FontFace or Font.new("rbxasset://fonts/families/GothamSSm.json"),
-		Text = _,
+		Text = defaultText,
 		TextColor3 = Color3.fromRGB(240, 240, 240),
 		TextSize = 13,
 		TextTruncate = Enum.TextTruncate.AtEnd,
@@ -2824,8 +2825,7 @@ function p:Window(_)
 		ZIndex = 2,
 		Parent = j,
 	})
-
-	local a = p:Create("Frame", {
+	local optionFrame = p:Create("Frame", {
 		Name = "OptionFrame",
 		BackgroundColor3 = Color3.fromRGB(45, 45, 45),
 		BorderColor3 = Color3.fromRGB(0, 0, 0),
@@ -2833,9 +2833,8 @@ function p:Window(_)
 		Size = UDim2.fromScale(1, 1),
 		Parent = f,
 	}, {
-		p:Create("UICorner", { Name = "UICorner", CornerRadius = UDim.new(0, 6) }),
+		p:Create("UICorner", { CornerRadius = UDim.new(0, 6) }),
 		p:Create("UIStroke", {
-			Name = "UIStroke",
 			ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
 			Color = Color3.fromRGB(35, 35, 35),
 		}),
@@ -2856,37 +2855,29 @@ function p:Window(_)
 		BorderColor3 = Color3.fromRGB(0, 0, 0),
 		Size = UDim2.new(1, -10, 0, 30),
 		Position = UDim2.new(0, 5, 0, 5),
-		Parent = a,
+		Parent = optionFrame,
 	}, {
 		p:Create("UICorner", { CornerRadius = UDim.new(0, 4) }),
 		p:Create("UIPadding", { PaddingLeft = UDim.new(0, 8) }),
 	})
 
-	-- ✅ ScrollFrame (แก้ AutomaticCanvasSize → ใช้ AbsoluteContentSize แทน)
+	-- ScrollFrame (fix scroll)
 	local c = p:Create("ScrollingFrame", {
 		Name = "OptionScrollingFrame",
-		BottomImage = "rbxassetid://6889812791",
 		CanvasSize = UDim2.fromOffset(0, 0),
-		MidImage = "rbxassetid://6889812721",
 		ScrollBarImageTransparency = 0.95,
 		ScrollBarThickness = 4,
-		TopImage = "rbxassetid://6276641225",
-		BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 		BackgroundTransparency = 1,
-		BorderColor3 = Color3.fromRGB(0, 0, 0),
-		BorderSizePixel = 0,
 		Position = UDim2.fromOffset(5, 40),
 		Size = UDim2.new(1, -5, 1, -45),
-		Parent = a,
+		Parent = optionFrame,
 	})
-	local listLayout = p:Create("UIListLayout", { Name = "UIListLayout", Padding = UDim.new(0, 3), Parent = c })
-
-	-- ✅ Auto update CanvasSize
-	p:Connect(listLayout:GetPropertyChangedSignal("AbsoluteContentSize"), function()
+	local listLayout = p:Create("UIListLayout", { Padding = UDim.new(0, 3), Parent = c })
+	listLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
 		c.CanvasSize = UDim2.new(0, 0, 0, listLayout.AbsoluteContentSize.Y)
 	end)
 
-	-- Filter options
+	-- filter
 	local function filterOptions(searchText)
 		searchText = string.lower(searchText)
 		for _, optionData in pairs(h.Options) do
@@ -2894,30 +2885,63 @@ function p:Window(_)
 			local label = option:FindFirstChild("OptionLabel")
 			if label then
 				local optionText = string.lower(label.Text)
-				if searchText == "" or string.find(optionText, searchText) then
-					option.Visible = true
-				else
-					option.Visible = false
-				end
+				option.Visible = (searchText == "" or string.find(optionText, searchText))
 			end
 		end
-		-- ✅ update หลัง filter
 		task.wait()
 		c.CanvasSize = UDim2.new(0, 0, 0, listLayout.AbsoluteContentSize.Y)
 	end
-
-	p:Connect(searchBox:GetPropertyChangedSignal("Text"), function()
+	searchBox:GetPropertyChangedSignal("Text"):Connect(function()
 		filterOptions(searchBox.Text)
 	end)
 
-	-- ส่วน Add, SetValues, Hide, Update เดิมของคุณอยู่เหมือนเดิม (ไม่ลบออก)
-	-- ...
-	-- (<<< ของคุณยังครบ ไม่ตัดออกนะครับ)
+	-- ✅ toggle dropdown open/close
+	local arrow = d:FindFirstChild("ImageLabel")
+	d.MouseButton1Click:Connect(function()
+		h.Expanded = not h.Expanded
+		f.Visible = h.Expanded
+		if arrow then arrow.Rotation = h.Expanded and 90 or 270 end
+	end)
 
-	-- ✅ เพิ่ม OnChanged (แก้ error)
+	-- ✅ OnChanged
 	function h:OnChanged(callback)
 		h.Callback = callback
 		return h
+	end
+
+	-- ✅ Add option
+	function h:AddOption(optionName)
+		local optionButton = p:Create("TextButton", {
+			Name = optionName,
+			Text = "",
+			Size = UDim2.new(1, -10, 0, 30),
+			BackgroundColor3 = Color3.fromRGB(55, 55, 55),
+			Parent = c
+		}, {
+			p:Create("UICorner", { CornerRadius = UDim.new(0, 4) }),
+			p:Create("TextLabel", {
+				Name = "OptionLabel",
+				Text = optionName,
+				Size = UDim2.new(1, -10, 1, 0),
+				TextColor3 = Color3.fromRGB(240, 240, 240),
+				BackgroundTransparency = 1,
+				TextXAlignment = Enum.TextXAlignment.Left,
+				Parent = optionButton
+			})
+		})
+		table.insert(h.Options, { Name = optionName, Option = optionButton })
+		optionButton.MouseButton1Click:Connect(function()
+			e.Text = optionName
+			f.Visible = false
+			h.Expanded = false
+			if arrow then arrow.Rotation = 270 end
+			if h.Callback then h.Callback(optionName) end
+		end)
+	end
+
+	-- ใส่ values เริ่มต้น
+	for _, v in ipairs(i.Values) do
+		h:AddOption(v)
 	end
 
 	return h
