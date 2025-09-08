@@ -2682,7 +2682,7 @@ function p:Window(_)
 		TextSize = 14,
 		AutomaticSize = Enum.AutomaticSize.Y,
 		BackgroundColor3 = Color3.fromRGB(120, 120, 120),
-		BackgroundTransparency = 0.8700000047683716,
+		BackgroundTransparency = 0.87,
 		BorderColor3 = Color3.fromRGB(0, 0, 0),
 		LayoutOrder = 7,
 		Size = UDim2.new(1, 0, 0, 0),
@@ -2705,7 +2705,11 @@ function p:Window(_)
 		Name = "DropdownFrame",
 		Parent = a,
 	}, {
-		p:Create("UIListLayout", { VerticalAlignment = Enum.VerticalAlignment.Center, SortOrder = Enum.SortOrder.LayoutOrder, Padding = UDim.new(0, 5) }),
+		p:Create("UIListLayout", {
+			VerticalAlignment = Enum.VerticalAlignment.Center,
+			SortOrder = Enum.SortOrder.LayoutOrder,
+			Padding = UDim.new(0, 5),
+		}),
 		p:Create("UIPadding", { PaddingTop = UDim.new(0, 13), PaddingBottom = UDim.new(0, 13) }),
 	})
 	local _ = p:Create("TextLabel", {
@@ -2738,6 +2742,7 @@ function p:Window(_)
 		Parent = b,
 	})
 	_.Size = UDim2.new(0.592, -54, 0, _.TextBounds.Y)
+
 	local d = p:Create("TextButton", {
 		Name = "DropdownOptions",
 		FontFace = p.Settings.FontFace or Font.new("rbxasset://fonts/families/SourceSansPro.json"),
@@ -2771,6 +2776,7 @@ function p:Window(_)
 			Size = UDim2.fromOffset(16, 16),
 		}),
 	})
+
 	local _ = typeof(i.Default) == "table" and table.concat(i.Default, ", ") or i.Default
 	local e = p:Create("TextLabel", {
 		Name = "TextLabel",
@@ -2789,7 +2795,6 @@ function p:Window(_)
 		Parent = d,
 	})
 
-	-- Option Popup & ScrollingFrame
 	local f = p:Create("Frame", {
 		Name = "OptionPopupHolder",
 		BackgroundColor3 = Color3.fromRGB(255, 255, 255),
@@ -2797,11 +2802,12 @@ function p:Window(_)
 		BorderColor3 = Color3.fromRGB(0, 0, 0),
 		BorderSizePixel = 0,
 		Position = UDim2.fromOffset(478, 219),
-		Size = UDim2.fromOffset(170, 392),
+		Size = UDim2.fromOffset(200, 392),
 		Visible = false,
 		ZIndex = 2,
 		Parent = j,
 	})
+
 	local a = p:Create("Frame", {
 		Name = "OptionFrame",
 		BackgroundColor3 = Color3.fromRGB(45, 45, 45),
@@ -2812,7 +2818,23 @@ function p:Window(_)
 	}, {
 		p:Create("UICorner", { Name = "UICorner", CornerRadius = UDim.new(0, 6) }),
 		p:Create("UIStroke", { Name = "UIStroke", ApplyStrokeMode = Enum.ApplyStrokeMode.Border, Color = Color3.fromRGB(35, 35, 35) }),
+		p:Create("ImageLabel", {
+			Name = "ImageLabel",
+			Image = "http://www.roblox.com/asset/?id=5554236805",
+			ImageColor3 = Color3.fromRGB(0, 0, 0),
+			ImageTransparency = 0.1,
+			ScaleType = Enum.ScaleType.Slice,
+			SliceCenter = Rect.new(23, 23, 277, 277),
+			BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+			BackgroundTransparency = 1,
+			BorderColor3 = Color3.fromRGB(0, 0, 0),
+			BorderSizePixel = 0,
+			Position = UDim2.fromOffset(-15, -15),
+			Size = UDim2.new(1, 30, 1, 30),
+		}),
 	})
+
+	-- Add search box
 	local searchBox = p:Create("TextBox", {
 		Name = "SearchBox",
 		FontFace = p.Settings.FontFace or Font.new("rbxasset://fonts/families/GothamSSm.json"),
@@ -2828,7 +2850,10 @@ function p:Window(_)
 		Size = UDim2.new(1, -10, 0, 30),
 		Position = UDim2.new(0, 5, 0, 5),
 		Parent = a,
-	}, { p:Create("UICorner", { CornerRadius = UDim.new(0, 4) }), p:Create("UIPadding", { PaddingLeft = UDim.new(0, 8) }) })
+	}, {
+		p:Create("UICorner", { CornerRadius = UDim.new(0, 4) }),
+		p:Create("UIPadding", { PaddingLeft = UDim.new(0, 8) }),
+	})
 
 	local c = p:Create("ScrollingFrame", {
 		Name = "OptionScrollingFrame",
@@ -2847,20 +2872,9 @@ function p:Window(_)
 		Size = UDim2.new(1, -5, 1, -45),
 		Parent = a,
 	})
-
 	local _ = p:Create("UIListLayout", { Name = "UIListLayout", Padding = UDim.new(0, 3), Parent = c })
 
-	-- เพิ่มฟังก์ชัน Update CanvasSize เพื่อเลื่อนจนสุด
-	local function UpdateCanvasSize()
-		task.defer(function()
-			if c and c:IsA("ScrollingFrame") and c:FindFirstChild("UIListLayout") then
-				local layout = c.UIListLayout
-				c.CanvasSize = UDim2.new(0,0,0,layout.AbsoluteContentSize.Y + 5)
-			end
-		end)
-	end
-
-	-- เรียก UpdateCanvasSize หลัง Filter หรือ Add Option
+	-- Function to filter options based on search text
 	local function filterOptions(searchText)
 		searchText = string.lower(searchText)
 		for _, optionData in pairs(h.Options) do
@@ -2871,60 +2885,22 @@ function p:Window(_)
 				option.Visible = (searchText == "" or string.find(optionText, searchText))
 			end
 		end
-		UpdateCanvasSize()
 	end
 
 	p:Connect(searchBox:GetPropertyChangedSignal("Text"), function()
 		filterOptions(searchBox.Text)
 	end)
 
-	-- Add Option
-	function h:Add(a, _)
-		local b = a or "OptionValue"
-		local _ = _ or false
-		local a = p:Create("TextButton", {
-			Name = "Option",
-			FontFace = p.Settings.FontFace or Font.new("rbxasset://fonts/families/SourceSansPro.json"),
-			Text = "",
-			TextColor3 = Color3.fromRGB(0, 0, 0),
-			TextSize = 14,
-			AutoButtonColor = false,
-			BackgroundColor3 = Color3.fromRGB(120, 120, 120),
-			BackgroundTransparency = _ and 0.9 or 1,
-			BorderColor3 = Color3.fromRGB(0, 0, 0),
-			Size = UDim2.new(1, -5, 0, 32),
-			ZIndex = 23,
-			Parent = c,
-		}, {
-			p:Create("UICorner", { Name = "UICorner", CornerRadius = UDim.new(0, 6) }),
-			p:Create("TextLabel", {
-				Name = "OptionLabel",
-				FontFace = p.Settings.FontFace or Font.new("rbxasset://fonts/families/GothamSSm.json"),
-				Text = b,
-				TextColor3 = Color3.fromRGB(240, 240, 240),
-				TextSize = 13,
-				TextWrapped = true,
-				TextXAlignment = Enum.TextXAlignment.Left,
-				AutomaticSize = Enum.AutomaticSize.Y,
-				BackgroundColor3 = Color3.fromRGB(255, 255, 255),
-				BackgroundTransparency = 1,
-				BorderColor3 = Color3.fromRGB(0, 0, 0),
-				Position = UDim2.fromOffset(10, 0),
-				Size = UDim2.fromScale(0.96, 1),
-			}),
-		})
-		table.insert(h.Options, { Selected = _, Option = a })
-		UpdateCanvasSize()
+	function h:OnChanged(callback)
+		h.Callback = callback
+		if h.Callback then
+			local valueToSend = typeof(i.Default) == "table" and table.clone(i.Default) or i.Default
+			h.Callback(valueToSend)
+		end
+		return h
 	end
 
-	-- เรียก UpdateCanvasSize เมื่อ Layout เปลี่ยน
-	if c:FindFirstChild("UIListLayout") then
-		c.UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(UpdateCanvasSize)
-	end
-
-	-- ฟีเจอร์อื่น ๆ เดิมทั้งหมด (MultiSelect, Flags, Callback) ไม่แก้ไข
-	-- ...
-
+	table.insert(p.Elements.Dropdowns, h)
 	return h
 end
 		function h:AddSlider(_)
