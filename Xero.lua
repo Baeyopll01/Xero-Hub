@@ -2859,7 +2859,7 @@ function p:Window(_)
         Name = "OptionScrollingFrame", 
         BottomImage = "rbxassetid://6889812791", 
         CanvasSize = UDim2.fromOffset(0, 0), 
-        AutomaticCanvasSize = Enum.AutomaticCanvasSize.Y, 
+        AutomaticCanvasSize = Enum.AutomaticSize.Y, -- ✅ แก้แล้ว
         MidImage = "rbxassetid://6889812721", 
         ScrollBarImageTransparency = 0.95, 
         ScrollBarThickness = 4, 
@@ -2890,17 +2890,14 @@ function p:Window(_)
                 end
             end
         end
-        -- 🟢 Refresh CanvasSize after filter
         task.wait()
         c.CanvasSize = UDim2.fromOffset(0, _.AbsoluteContentSize.Y)
     end
 
-    -- Connect search box text changed event
     p:Connect(searchBox:GetPropertyChangedSignal("Text"), function()
         filterOptions(searchBox.Text)
     end)
 
-    -- เปิด dropdown
     p:Connect(d.Activated, function()
         h.Expanded = not h.Expanded
         if h.Expanded then
@@ -2914,7 +2911,6 @@ function p:Window(_)
             f.Position = not p.Maximized and UDim2.fromOffset(_.X + 0, _.Y) or UDim2.fromOffset(_.X, _.Y)
             o:Animation(f, { Visible = true }, p.AnimationSpeed, p.EasingStyle.Quad, p.EasingDirection.Out)
 
-            -- 🟢 Refresh ตอนเปิด dropdown
             task.wait()
             c.CanvasSize = UDim2.fromOffset(0, _.AbsoluteContentSize.Y)
 
