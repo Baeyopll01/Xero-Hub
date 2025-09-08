@@ -2662,7 +2662,7 @@ function p:Window(_)
 			end
 			return i
 		end
-		-- Dropdown UI Function
+-- Dropdown UI Function (Final Version)
 function h:AddDropdown(_)
     local h = { Expanded = false, Options = {}, Callback = function() end }
     local _ = _ or {}
@@ -2683,7 +2683,6 @@ function h:AddDropdown(_)
         Text = "",
         TextColor3 = Color3.fromRGB(0, 0, 0),
         TextSize = 14,
-        AutomaticSize = Enum.AutomaticSize.Y,
         BackgroundColor3 = Color3.fromRGB(120, 120, 120),
         BackgroundTransparency = 0.87,
         BorderColor3 = Color3.fromRGB(0, 0, 0),
@@ -2701,7 +2700,6 @@ function h:AddDropdown(_)
 
     -- Frame
     local b = p:Create("Frame", {
-        AutomaticSize = Enum.AutomaticSize.Y,
         BackgroundTransparency = 1,
         Position = UDim2.new(0, 10, 0, 0),
         Size = UDim2.new(1, -28, 0, 0),
@@ -2737,7 +2735,6 @@ function h:AddDropdown(_)
         TextSize = 12,
         TextWrapped = true,
         TextXAlignment = Enum.TextXAlignment.Left,
-        AutomaticSize = Enum.AutomaticSize.Y,
         BackgroundTransparency = 1,
         Size = UDim2.new(0.592, -54, 0, 14),
         Visible = i.Description and true or false,
@@ -2829,16 +2826,28 @@ function h:AddDropdown(_)
         p:Create("UIPadding", { PaddingLeft = UDim.new(0, 8) }),
     })
 
-    -- Scroll Options
+    -- Scroll Options (แก้ไขแล้ว)
     local c = p:Create("ScrollingFrame", {
         Name = "OptionScrollingFrame",
-        AutomaticCanvasSize = Enum.AutomaticCanvasSize.Y,
         ScrollBarThickness = 4,
         Position = UDim2.fromOffset(5, 40),
         Size = UDim2.new(1, -5, 1, -45),
         Parent = optionFrame,
     })
-    p:Create("UIListLayout", { Padding = UDim.new(0, 3), Parent = c })
+
+    local listLayout = p:Create("UIListLayout", {
+        Padding = UDim.new(0, 3),
+        Parent = c,
+    })
+
+    -- รองรับ Roblox ใหม่/เก่า
+    if Enum.AutomaticSize then
+        c.AutomaticCanvasSize = Enum.AutomaticSize.Y
+    else
+        listLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+            c.CanvasSize = UDim2.new(0, 0, 0, listLayout.AbsoluteContentSize.Y)
+        end)
+    end
 
     -- Filter Search
     local function filterOptions(text)
@@ -2880,6 +2889,7 @@ function h:AddDropdown(_)
                 BackgroundTransparency = 1,
             }),
         })
+
         local indicator = p:Create("Frame", {
             Name = "Selected",
             BackgroundColor3 = p.Themes.BackgroundColor,
@@ -2942,6 +2952,7 @@ function h:AddDropdown(_)
         f.Visible = false
         searchBox.Text = ""
     end
+
     function h:SetValues(values, default)
         for _, child in pairs(c:GetChildren()) do
             if child:IsA("TextButton") then child:Destroy() end
@@ -2954,6 +2965,7 @@ function h:AddDropdown(_)
         e.Text = typeof(default) == "table" and table.concat(default, ", ") or default
         searchBox.Text = ""
     end
+
     function h:OnChanged(fn)
         h.Callback = fn
         if h.Callback then h.Callback(i.Default) end
