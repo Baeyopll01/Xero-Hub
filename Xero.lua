@@ -2662,245 +2662,305 @@ function p:Window(_)
 			end
 			return i
 		end
-		function h:AddDropdown(_)
-	local h = { Expanded = false, Options = {}, Callback = function() end }
-	local _ = _ or {}
-	local i = {
-		Title = _.title or _.Title or "Dropdown",
-		Description = _.description or _.Description or _.desc or _.Desc,
-		Values = _.values or _.Values or _.options or _.Options or _.list or _.List or {},
-		Multi = _.multi or _.Multi or false,
-		Default = _.default or _.Default or {},
-		Flags = _.flags or _.Flags or _.pointer or _.Pointer or _.flag or _.Flag or false,
-		Sections = _.sections or _.Sections or false,
-	}
+		-- Dropdown UI Function
+function h:AddDropdown(_)
+    local h = { Expanded = false, Options = {}, Callback = function() end }
+    local _ = _ or {}
+    local i = {
+        Title = _.title or _.Title or "Dropdown",
+        Description = _.description or _.Description or _.desc or _.Desc,
+        Values = _.values or _.Values or _.options or _.Options or _.list or _.List or {},
+        Multi = _.multi or _.Multi or false,
+        Default = _.default or _.Default or {},
+        Flags = _.flags or _.Flags or _.pointer or _.Pointer or _.flag or _.Flag or false,
+        Sections = _.sections or _.Sections or false,
+    }
+    local _ = i.Sections and i.Sections or g
 
-	-- === UI หลัก ===
-	local container = p:Create("TextButton", {
-		Name = "DropdownHolder",
-		BackgroundTransparency = 1,
-		Size = UDim2.new(1, 0, 0, 60),
-		Parent = j
-	})
+    -- Dropdown Holder
+    local a = p:Create("TextButton", {
+        FontFace = p.Settings.FontFace or Font.new("rbxasset://fonts/families/SourceSansPro.json"),
+        Text = "",
+        TextColor3 = Color3.fromRGB(0, 0, 0),
+        TextSize = 14,
+        AutomaticSize = Enum.AutomaticSize.Y,
+        BackgroundColor3 = Color3.fromRGB(120, 120, 120),
+        BackgroundTransparency = 0.87,
+        BorderColor3 = Color3.fromRGB(0, 0, 0),
+        LayoutOrder = 7,
+        Size = UDim2.new(1, 0, 0, 0),
+        Name = "DropdownHolder",
+        Parent = _,
+    }, {
+        p:Create("UICorner", { CornerRadius = UDim.new(0, 4) }),
+        p:Create("UIStroke", {
+            ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
+            Color = Color3.fromRGB(35, 35, 35),
+        }),
+    })
 
-	local header = p:Create("Frame", {
-		Name = "DropdownFrame",
-		Parent = container,
-		Size = UDim2.new(1, 0, 0, 50),
-		BackgroundTransparency = 1,
-	}, {
-		p:Create("TextLabel", {
-			Name = "DropdownTitle",
-			Text = i.Title,
-			TextXAlignment = Enum.TextXAlignment.Left,
-			Size = UDim2.new(1, -150, 0, 20),
-			Position = UDim2.new(0, 10, 0, 5),
-			BackgroundTransparency = 1,
-			Font = Enum.Font.GothamBold,
-			TextSize = 14,
-			TextColor3 = Color3.fromRGB(255, 255, 255),
-		}),
-		p:Create("TextLabel", {
-			Name = "DropdownDesc",
-			Text = i.Description or "",
-			TextXAlignment = Enum.TextXAlignment.Left,
-			Size = UDim2.new(1, -150, 0, 15),
-			Position = UDim2.new(0, 10, 0, 25),
-			BackgroundTransparency = 1,
-			Font = Enum.Font.Gotham,
-			TextSize = 12,
-			TextColor3 = Color3.fromRGB(200, 200, 200),
-		}),
-	})
+    -- Frame
+    local b = p:Create("Frame", {
+        AutomaticSize = Enum.AutomaticSize.Y,
+        BackgroundTransparency = 1,
+        Position = UDim2.new(0, 10, 0, 0),
+        Size = UDim2.new(1, -28, 0, 0),
+        Name = "DropdownFrame",
+        Parent = a,
+    }, {
+        p:Create("UIListLayout", {
+            VerticalAlignment = Enum.VerticalAlignment.Center,
+            SortOrder = Enum.SortOrder.LayoutOrder,
+            Padding = UDim.new(0, 5),
+        }),
+        p:Create("UIPadding", { PaddingTop = UDim.new(0, 13), PaddingBottom = UDim.new(0, 13) }),
+    })
 
-	local d = p:Create("TextButton", {
-		Name = "DropdownOptions",
-		Size = UDim2.new(0, 140, 0, 30),
-		Position = UDim2.new(1, -150, 0, 10),
-		Parent = container,
-		BackgroundColor3 = Color3.fromRGB(30, 30, 30),
-		AutoButtonColor = true,
-	}, {
-		p:Create("UICorner", { CornerRadius = UDim.new(0, 6) }),
-		p:Create("ImageLabel", {
-			Name = "Arrow",
-			AnchorPoint = Vector2.new(1, 0.5),
-			Position = UDim2.new(1, -5, 0.5, 0),
-			Size = UDim2.new(0, 15, 0, 15),
-			BackgroundTransparency = 1,
-			Image = "rbxassetid://7072717697",
-			Rotation = 270,
-		}),
-	})
+    -- Title
+    p:Create("TextLabel", {
+        Name = "DropdownTitle",
+        FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Medium),
+        Text = i.Title,
+        TextColor3 = Color3.fromRGB(240, 240, 240),
+        TextSize = 13,
+        TextXAlignment = Enum.TextXAlignment.Left,
+        BackgroundTransparency = 1,
+        Size = UDim2.new(0.55, 0, 0, 14),
+        Parent = b,
+    })
 
-	local e = p:Create("TextLabel", {
-		Name = "TextLabel",
-		Text = typeof(i.Default) == "table" and table.concat(i.Default, ", ") or i.Default,
-		Size = UDim2.new(1, -25, 1, 0),
-		Position = UDim2.new(0, 5, 0, 0),
-		Parent = d,
-		BackgroundTransparency = 1,
-		Font = Enum.Font.Gotham,
-		TextSize = 13,
-		TextColor3 = Color3.fromRGB(255, 255, 255),
-		TextXAlignment = Enum.TextXAlignment.Left,
-	})
+    -- Description
+    local desc = p:Create("TextLabel", {
+        FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json"),
+        Text = i.Description,
+        TextColor3 = Color3.fromRGB(170, 170, 170),
+        TextSize = 12,
+        TextWrapped = true,
+        TextXAlignment = Enum.TextXAlignment.Left,
+        AutomaticSize = Enum.AutomaticSize.Y,
+        BackgroundTransparency = 1,
+        Size = UDim2.new(0.592, -54, 0, 14),
+        Visible = i.Description and true or false,
+        Name = "DropdownDesc",
+        Parent = b,
+    })
+    desc.Size = UDim2.new(0.592, -54, 0, desc.TextBounds.Y)
 
-	-- Popup holder
-	local f = p:Create("Frame", {
-		Name = "OptionPopupHolder",
-		Size = UDim2.new(0, 180, 0, 200),
-		Position = UDim2.new(0, d.AbsolutePosition.X, 0, d.AbsolutePosition.Y + d.AbsoluteSize.Y + 5),
-		Parent = j,
-		BackgroundColor3 = Color3.fromRGB(25, 25, 25),
-		Visible = false,
-		ZIndex = 50,
-	}, {
-		p:Create("UICorner", { CornerRadius = UDim.new(0, 6) }),
-	})
+    -- Options Button
+    local d = p:Create("TextButton", {
+        Name = "DropdownOptions",
+        Text = "",
+        AutoButtonColor = false,
+        AnchorPoint = Vector2.new(1, 0.5),
+        BackgroundColor3 = Color3.fromRGB(160, 160, 160),
+        BackgroundTransparency = 0.9,
+        Position = UDim2.new(1, -10, 0.5, 0),
+        Size = UDim2.fromOffset(160, 30),
+        Parent = a,
+    }, {
+        p:Create("UICorner", { CornerRadius = UDim.new(0, 5) }),
+        p:Create("UIStroke", { Color = Color3.fromRGB(90, 90, 90), Transparency = 0.5 }),
+        p:Create("ImageLabel", {
+            Name = "ImageLabel",
+            Image = "rbxassetid://10709790948",
+            ImageColor3 = Color3.fromRGB(170, 170, 170),
+            AnchorPoint = Vector2.new(1, 0.5),
+            BackgroundTransparency = 1,
+            Rotation = 270,
+            Position = UDim2.new(1, -8, 0.5, 0),
+            Size = UDim2.fromOffset(16, 16),
+        }),
+    })
 
-	-- Search box
-	local searchBox = p:Create("TextBox", {
-		Name = "SearchBox",
-		PlaceholderText = "Search...",
-		Size = UDim2.new(1, -10, 0, 25),
-		Position = UDim2.new(0, 5, 0, 5),
-		Parent = f,
-		BackgroundColor3 = Color3.fromRGB(35, 35, 35),
-		TextColor3 = Color3.fromRGB(255, 255, 255),
-		Font = Enum.Font.Gotham,
-		TextSize = 12,
-		ClearTextOnFocus = false,
-	}, {
-		p:Create("UICorner", { CornerRadius = UDim.new(0, 4) }),
-	})
+    -- Selected Value
+    local e = p:Create("TextLabel", {
+        Name = "TextLabel",
+        FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json"),
+        Text = typeof(i.Default) == "table" and table.concat(i.Default, ", ") or i.Default,
+        TextColor3 = Color3.fromRGB(240, 240, 240),
+        TextSize = 13,
+        TextTruncate = Enum.TextTruncate.AtEnd,
+        TextXAlignment = Enum.TextXAlignment.Left,
+        AnchorPoint = Vector2.new(0, 0.5),
+        BackgroundTransparency = 1,
+        Position = UDim2.new(0, 8, 0.5, 0),
+        Size = UDim2.new(1, -30, 0, 14),
+        Parent = d,
+    })
 
-	-- ScrollingFrame
-	local c = p:Create("ScrollingFrame", {
-		Name = "OptionScrollingFrame",
-		Size = UDim2.new(1, -10, 1, -40),
-		Position = UDim2.new(0, 5, 0, 35),
-		Parent = f,
-		BackgroundTransparency = 1,
-		BorderSizePixel = 0,
-		ScrollBarThickness = 4,
-		ScrollingDirection = Enum.ScrollingDirection.Y,
-		CanvasSize = UDim2.new(0, 0, 0, 0),
-		AutomaticCanvasSize = Enum.AutomaticSize.Y,
-	}, {
-		p:Create("UIListLayout", {
-			SortOrder = Enum.SortOrder.LayoutOrder,
-			Padding = UDim.new(0, 2),
-		}),
-	})
+    -- Popup Holder
+    local f = p:Create("Frame", {
+        Name = "OptionPopupHolder",
+        BackgroundTransparency = 1,
+        Position = UDim2.fromOffset(478, 219),
+        Size = UDim2.fromOffset(170, 392),
+        Visible = false,
+        ZIndex = 2,
+        Parent = j,
+    })
 
-	-- === Logic ===
-	local function filterOptions(txt)
-		txt = string.lower(txt)
-		for _, opt in pairs(h.Options) do
-			local lbl = opt.Option:FindFirstChild("OptionLabel")
-			if lbl then
-				opt.Option.Visible = (txt == "" or string.find(string.lower(lbl.Text), txt))
-			end
-		end
-	end
-	p:Connect(searchBox:GetPropertyChangedSignal("Text"), function()
-		filterOptions(searchBox.Text)
-	end)
+    local optionFrame = p:Create("Frame", {
+        Name = "OptionFrame",
+        BackgroundColor3 = Color3.fromRGB(45, 45, 45),
+        Size = UDim2.fromScale(1, 1),
+        Parent = f,
+    }, {
+        p:Create("UICorner", { CornerRadius = UDim.new(0, 6) }),
+        p:Create("UIStroke", { Color = Color3.fromRGB(35, 35, 35) }),
+    })
 
-	function h:Add(val, selected)
-		local v = tostring(val)
-		local opt = p:Create("TextButton", {
-			Name = "Option",
-			Size = UDim2.new(1, 0, 0, 25),
-			BackgroundColor3 = Color3.fromRGB(30, 30, 30),
-			Parent = c,
-			AutoButtonColor = true,
-		}, {
-			p:Create("TextLabel", {
-				Name = "OptionLabel",
-				Text = v,
-				Size = UDim2.new(1, -10, 1, 0),
-				Position = UDim2.new(0, 5, 0, 0),
-				BackgroundTransparency = 1,
-				Font = Enum.Font.Gotham,
-				TextSize = 12,
-				TextXAlignment = Enum.TextXAlignment.Left,
-				TextColor3 = Color3.fromRGB(255, 255, 255),
-			}),
-		})
-		local sel = p:Create("Frame", {
-			Name = "Selected",
-			Size = UDim2.new(0, 4, 1, 0),
-			BackgroundColor3 = Color3.fromRGB(0, 170, 255),
-			Visible = selected or false,
-			Parent = opt,
-		})
+    -- Search Box
+    local searchBox = p:Create("TextBox", {
+        Name = "SearchBox",
+        FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json"),
+        Text = "",
+        PlaceholderText = "Search...",
+        TextColor3 = Color3.fromRGB(240, 240, 240),
+        PlaceholderColor3 = Color3.fromRGB(140, 140, 140),
+        TextSize = 13,
+        TextXAlignment = Enum.TextXAlignment.Left,
+        BackgroundColor3 = Color3.fromRGB(60, 60, 60),
+        BackgroundTransparency = 0.5,
+        Size = UDim2.new(1, -10, 0, 30),
+        Position = UDim2.new(0, 5, 0, 5),
+        Parent = optionFrame,
+    }, {
+        p:Create("UICorner", { CornerRadius = UDim.new(0, 4) }),
+        p:Create("UIPadding", { PaddingLeft = UDim.new(0, 8) }),
+    })
 
-		table.insert(h.Options, { Selected = sel, Option = opt })
+    -- Scroll Options
+    local c = p:Create("ScrollingFrame", {
+        Name = "OptionScrollingFrame",
+        AutomaticCanvasSize = Enum.AutomaticCanvasSize.Y,
+        ScrollBarThickness = 4,
+        Position = UDim2.fromOffset(5, 40),
+        Size = UDim2.new(1, -5, 1, -45),
+        Parent = optionFrame,
+    })
+    p:Create("UIListLayout", { Padding = UDim.new(0, 3), Parent = c })
 
-		p:Connect(opt.Activated, function()
-			if i.Multi then
-				if table.find(i.Default, v) then
-					table.remove(i.Default, table.find(i.Default, v))
-					sel.Visible = false
-				else
-					table.insert(i.Default, v)
-					sel.Visible = true
-				end
-			else
-				i.Default = v
-				for _, o in pairs(h.Options) do
-					o.Selected.Visible = false
-				end
-				sel.Visible = true
-				h:Hide()
-			end
+    -- Filter Search
+    local function filterOptions(text)
+        text = string.lower(text)
+        for _, optionData in pairs(h.Options) do
+            local label = optionData.Option:FindFirstChild("OptionLabel")
+            if label then
+                local match = string.find(string.lower(label.Text), text)
+                optionData.Option.Visible = (text == "" or match)
+            end
+        end
+    end
+    p:Connect(searchBox:GetPropertyChangedSignal("Text"), function()
+        filterOptions(searchBox.Text)
+    end)
 
-			e.Text = typeof(i.Default) == "table" and table.concat(i.Default, ", ") or i.Default
-			if h.Callback then h.Callback(i.Default) end
-		end)
-	end
+    -- Add Option Function
+    function h:Add(name, selected)
+        local optionBtn = p:Create("TextButton", {
+            Name = "Option",
+            Text = "",
+            AutoButtonColor = false,
+            BackgroundColor3 = Color3.fromRGB(120, 120, 120),
+            BackgroundTransparency = selected and 0.9 or 1,
+            Size = UDim2.new(1, -5, 0, 32),
+            Parent = c,
+        }, {
+            p:Create("UICorner", { CornerRadius = UDim.new(0, 6) }),
+            p:Create("TextLabel", {
+                Name = "OptionLabel",
+                Text = name,
+                TextColor3 = Color3.fromRGB(240, 240, 240),
+                TextSize = 13,
+                TextWrapped = true,
+                TextXAlignment = Enum.TextXAlignment.Left,
+                AutomaticSize = Enum.AutomaticSize.Y,
+                Position = UDim2.fromOffset(10, 0),
+                Size = UDim2.fromScale(0.96, 1),
+                BackgroundTransparency = 1,
+            }),
+        })
+        local indicator = p:Create("Frame", {
+            Name = "Selected",
+            BackgroundColor3 = p.Themes.BackgroundColor,
+            Position = UDim2.fromOffset(-1, 16),
+            Size = UDim2.fromOffset(4, 14),
+            Visible = selected,
+            Parent = optionBtn,
+        }, {
+            p:Create("UICorner", { CornerRadius = UDim.new(0, 2) })
+        })
 
-	function h:SetValues(values, default)
-		for _, child in pairs(c:GetChildren()) do
-			if child:IsA("TextButton") then child:Destroy() end
-		end
-		h.Options = {}
-		i.Values = values
-		i.Default = default or {}
+        table.insert(h.Options, { Selected = indicator, Option = optionBtn })
 
-		for _, v in pairs(i.Values) do
-			h:Add(v, typeof(i.Default) == "table" and table.find(i.Default, v) or i.Default == v)
-		end
+        p:Connect(optionBtn.Activated, function()
+            if i.Multi then
+                if table.find(i.Default, name) then
+                    table.remove(i.Default, table.find(i.Default, name))
+                else
+                    table.insert(i.Default, name)
+                end
+                indicator.Visible = table.find(i.Default, name) ~= nil
+            else
+                i.Default = name
+                for _, opt in pairs(h.Options) do
+                    opt.Selected.Visible = false
+                    opt.Option.BackgroundTransparency = 1
+                end
+                indicator.Visible = true
+                optionBtn.BackgroundTransparency = 0.9
+            end
+            if i.Flags then
+                p.Flags[tostring(i.Flags)] = i.Default
+            end
+            e.Text = typeof(i.Default) == "table" and table.concat(i.Default, ", ") or i.Default
+            if h.Callback then
+                h.Callback(i.Default)
+            end
+        end)
+    end
 
-		e.Text = typeof(i.Default) == "table" and table.concat(i.Default, ", ") or i.Default
-		if h.Callback then h.Callback(i.Default) end
-	end
+    -- Load Values
+    for _, val in pairs(i.Values) do
+        h:Add(val, typeof(i.Default) == "table" and table.find(i.Default, val) or i.Default == val)
+    end
 
-	function h:Hide()
-		h.Expanded = false
-		f.Visible = false
-		searchBox.Text = ""
-	end
+    -- Toggle Dropdown
+    p:Connect(d.Activated, function()
+        h.Expanded = not h.Expanded
+        f.Visible = h.Expanded
+        if h.Expanded then
+            searchBox:CaptureFocus()
+        else
+            searchBox.Text = ""
+        end
+    end)
 
-	function h:OnChanged(fn)
-		h.Callback = fn
-		if h.Callback then h.Callback(i.Default) end
-		return h
-	end
+    -- API
+    function h:Hide()
+        h.Expanded = false
+        f.Visible = false
+        searchBox.Text = ""
+    end
+    function h:SetValues(values, default)
+        for _, child in pairs(c:GetChildren()) do
+            if child:IsA("TextButton") then child:Destroy() end
+        end
+        h.Options = {}
+        i.Values, i.Default = values, default
+        for _, val in pairs(values) do
+            h:Add(val, typeof(default) == "table" and table.find(default, val) or default == val)
+        end
+        e.Text = typeof(default) == "table" and table.concat(default, ", ") or default
+        searchBox.Text = ""
+    end
+    function h:OnChanged(fn)
+        h.Callback = fn
+        if h.Callback then h.Callback(i.Default) end
+        return h
+    end
 
-	h:SetValues(i.Values, i.Default)
-
-	p:Connect(d.Activated, function()
-		h.Expanded = not h.Expanded
-		f.Visible = h.Expanded
-		if h.Expanded then
-			searchBox:CaptureFocus()
-		end
-	end)
-
-	return h
+    return h
 end
 		function h:AddSlider(_)
 			local f = { Holding = false, Callback = function() end }
