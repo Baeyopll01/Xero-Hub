@@ -1059,7 +1059,7 @@ function Library.Func:CreateToggle(option)
     CheckIcon.AnchorPoint = Vector2.new(0.5, 0.5)
     CheckIcon.Position = UDim2.new(0.5, 0, 0.5, 0)
     CheckIcon.Size = UDim2.new(0, 16, 0, 16)
-    CheckIcon.Image = "rbxassetid://10709783474"
+    CheckIcon.Image = "rbxassetid://99035215947422"
     CheckIcon.ImageColor3 = Color3.fromRGB(0, 200, 0)
     CheckIcon.BackgroundTransparency = 1
     CheckIcon.ImageTransparency = 0.5
@@ -3449,38 +3449,32 @@ end
         ThemeClick_1.MouseButton1Click:Connect(changeTheme)
         delay(0, changeTheme)
         
---// สร้าง Frame หลัก
 local Frame = Instance.new("Frame")
-local UICorner_1 = Instance.new("UICorner")
-local ImageLabel_1 = Instance.new("ImageLabel")
-
 Frame.Parent = ScreenGui
 Frame.AnchorPoint = Vector2.new(0.5, 0)
-Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- สีดำ
-Frame.BackgroundTransparency = 0.5               -- โปร่งใส 0.5
+Frame.Position = UDim2.new(0.5, 0, 0.1, 0)
+Frame.Size = UDim2.new(0, 50, 0, 50)
+Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Frame.BackgroundTransparency = 0.3
 Frame.BorderSizePixel = 0
-Frame.Position = UDim2.new(0.5, 0, 0, 0)
-Frame.Size = UDim2.new(0, 60, 0, 30) -- ไม่ใหญ่เกินไป
 
---// มุมโค้ง Squircle
+local UICorner_1 = Instance.new("UICorner")
+UICorner_1.CornerRadius = UDim.new(0.3, 0)
 UICorner_1.Parent = Frame
-UICorner_1.CornerRadius = UDim.new(0.4, 0) -- โค้งแบบ squircle
 
---// Icon ตรงกลาง
+local ImageLabel_1 = Instance.new("ImageLabel")
 ImageLabel_1.Parent = Frame
 ImageLabel_1.AnchorPoint = Vector2.new(0.5, 0.5)
 ImageLabel_1.BackgroundTransparency = 1
 ImageLabel_1.BorderSizePixel = 0
 ImageLabel_1.Position = UDim2.new(0.5, 0, 0.5, 0)
-ImageLabel_1.Size = UDim2.new(0, 18, 0, 18)
+ImageLabel_1.Size = UDim2.new(0, 28, 0, 28)
 ImageLabel_1.Image = "rbxassetid://71698121444093"
-ImageLabel_1.ImageColor3 = Color3.fromRGB(255, 255, 255) -- ไอคอนสีขาว
+ImageLabel_1.ImageColor3 = Color3.fromRGB(255, 255, 255)
 
---// ทำให้ Frame กดได้
 local Click = click(Frame)
 lak2(Click, Frame)
 
---// ตัวแปรควบคุมการเปิด–ปิด UI
 local isopen = false
 local close = tw({
     v = BackGround_1,
@@ -3523,7 +3517,6 @@ U.InputBegan:Connect(function(i)
         end
     end
 end)
-
 end
     
     return Library.Tabs
