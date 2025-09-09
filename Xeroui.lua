@@ -466,7 +466,7 @@ function Library:GenerateWindow(option)
     PatinumText_1.BorderSizePixel = 0
     PatinumText_1.Size = UDim2.new(0, 50,1, 0)
     PatinumText_1.Font = Enum.Font.GothamBold
-    PatinumText_1.Text = "By : Smooth X"
+    PatinumText_1.Text = "By.Smooth X"
     PatinumText_1.TextSize = 11
     
     addToTheme('Title', PatinumText_1)
@@ -501,7 +501,7 @@ function Library:GenerateWindow(option)
     NameText_1.Position = UDim2.new(0.410958916, 0,0, 0)
     NameText_1.Size = UDim2.new(-0, 50,1, 0)
     NameText_1.Font = Enum.Font.GothamBold
-    NameText_1.Text = ""
+    NameText_1.Text = options.NameMap
     NameText_1.TextSize = 9
     NameText_1.TextTransparency = 0.4000000059604645
     NameText_1.TextXAlignment = Enum.TextXAlignment.Left
@@ -539,7 +539,7 @@ function Library:GenerateWindow(option)
     Time_1.Position = UDim2.new(0.410958916, 0,0, 0)
     Time_1.Size = UDim2.new(-0, 50,1, 0)
     Time_1.Font = Enum.Font.GothamBold
-    Time_1.Text = "00:00:00"
+    Time_1.Text = 
     Time_1.TextSize = 9
     Time_1.TextTransparency = 0.4000000059604645
     Time_1.TextWrapped = true
