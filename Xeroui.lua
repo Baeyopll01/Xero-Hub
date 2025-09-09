@@ -466,7 +466,7 @@ function Library:GenerateWindow(option)
     PatinumText_1.BorderSizePixel = 0
     PatinumText_1.Size = UDim2.new(0, 50,1, 0)
     PatinumText_1.Font = Enum.Font.GothamBold
-    PatinumText_1.Text = "By.Smooth X"
+    PatinumText_1.Text = "Xero Hub"
     PatinumText_1.TextSize = 11
     
     addToTheme('Title', PatinumText_1)
@@ -1059,7 +1059,7 @@ function Library.Func:CreateToggle(option)
     CheckIcon.AnchorPoint = Vector2.new(0.5, 0.5)
     CheckIcon.Position = UDim2.new(0.5, 0, 0.5, 0)
     CheckIcon.Size = UDim2.new(0, 16, 0, 16)
-    CheckIcon.Image = "rbxassetid://10709752405"
+    CheckIcon.Image = "rbxassetid://10709783474"
     CheckIcon.ImageColor3 = Color3.fromRGB(0, 200, 0)
     CheckIcon.BackgroundTransparency = 1
     CheckIcon.ImageTransparency = 0.5
