@@ -32,7 +32,7 @@ end
 
 function Library:setTheme(st)
     local function tw(info)
-        return game:GetService("TweenService"):Create(info.v, TweenInfo.new(info.t, info.s, Enum.EasingDirection[info.d]), info.g)
+        return game:GetService("TweenService"):Create(info.v, TweenInfo.new(info.t, info.s, Enum.EasingDirection.InOut), info.g)
     end
 
     for name, color in pairs(st) do
@@ -44,7 +44,7 @@ function Library:setTheme(st)
                     tw({v = obj, t = 0.15, s = Enum.EasingStyle.Linear, d = "InOut", g = {TextColor3 = color}}):Play()
                 elseif obj:IsA("ImageLabel") or obj:IsA("ImageButton") then
                     tw({v = obj, t = 0.15, s = Enum.EasingStyle.Linear, d = "InOut", g = {ImageColor3 = color}}):Play()
-                elseif obj:IsA("ScrollingFrame") then
+                elseif obj:IsA("ScrollingFrame") -- fixed from broken codellingFrame") then
                     tw({v = obj, t = 0.15, s = Enum.EasingStyle.Linear, d = "InOut", g = {ScrollBarImageColor3 = color}}):Play()
                 elseif obj:IsA("UIStroke") then
                     tw({v = obj, t = 0.15, s = Enum.EasingStyle.Linear, d = "InOut", g = {Color = color}}):Play()
@@ -77,7 +77,7 @@ function Library:GenerateWindow(option)
         end
     end
     local function tw(info)
-        return Tw:Create(info.v,TweenInfo.new(info.t, info.s, Enum.EasingDirection[info.d]),info.g)
+        return Tw:Create(info.v,TweenInfo.new(info.t, info.s, Enum.EasingDirection.InOut),info.g)
     end
     local function changecanvas(ScrollingFrame, UIListLayout, Plus)
         UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
