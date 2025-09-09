@@ -14,7 +14,7 @@ local themes = {
         ['Icon'] = Color3.fromRGB(255, 255, 255),
         ['Back'] = Color3.fromRGB(20, 10, 10),
         ['Function'] = Color3.fromRGB(130, 60, 60),
-        ['Main Color'] = Color3.fromRGB(255, 80, 80), -- ✔️ สีแดง
+        ['Main Color'] = Color3.fromRGB(255, 80, 80),
         ['UIStroke'] = Color3.fromRGB(255, 255, 255),
         ['Background Dialog'] = Color3.fromRGB(60, 25, 25)
     },
@@ -27,7 +27,7 @@ local themes = {
         ['Icon'] = Color3.fromRGB(120, 150, 220),
         ['Back'] = Color3.fromRGB(10, 15, 25),
         ['Function'] = Color3.fromRGB(60, 80, 130),
-        ['Main Color'] = Color3.fromRGB(80, 120, 255), -- ✔️ สีน้ำเงิน
+        ['Main Color'] = Color3.fromRGB(80, 120, 255),
         ['UIStroke'] = Color3.fromRGB(255, 255, 255),
         ['Background Dialog'] = Color3.fromRGB(25, 35, 55)
     }
@@ -466,7 +466,7 @@ function Library:GenerateWindow(option)
     PatinumText_1.BorderSizePixel = 0
     PatinumText_1.Size = UDim2.new(0, 50,1, 0)
     PatinumText_1.Font = Enum.Font.GothamBold
-    PatinumText_1.Text = "Platinum"
+    PatinumText_1.Text = "By : Smooth X"
     PatinumText_1.TextSize = 11
     
     addToTheme('Title', PatinumText_1)
@@ -1011,7 +1011,7 @@ function Library:GenerateWindow(option)
             
             Library.Func = {}
             
-            -- 🌟 Tween Function (แก้ error)
+
 local TweenService = game:GetService("TweenService")
 
 local function tween(object, properties, duration)
@@ -1022,7 +1022,7 @@ local function tween(object, properties, duration)
     return tween
 end
 
--- 🌟 Toggle Function
+
 function Library.Func:CreateToggle(option)
     local Value = option.Value or false
     local Callback = option.Callback or function() end
@@ -1059,14 +1059,14 @@ function Library.Func:CreateToggle(option)
     CheckIcon.AnchorPoint = Vector2.new(0.5, 0.5)
     CheckIcon.Position = UDim2.new(0.5, 0, 0.5, 0)
     CheckIcon.Size = UDim2.new(0, 16, 0, 16)
-    CheckIcon.Image = "rbxassetid://6031094678" -- ✔️ ไอคอน Roblox
+    CheckIcon.Image = "rbxassetid://6031094678"
     CheckIcon.ImageColor3 = Color3.fromRGB(0, 200, 0)
     CheckIcon.BackgroundTransparency = 1
-    CheckIcon.ImageTransparency = 1 -- ปิดเริ่มต้น
+    CheckIcon.ImageTransparency = 0.5
     addToTheme('Main Color', CheckIcon)
 
     UICorner.Parent = ToggleBox
-    UICorner.CornerRadius = UDim.new(0, 4) -- มุมโค้งเล็ก
+    UICorner.CornerRadius = UDim.new(0, 4)
 
     UIPadding.Parent = ListFunctionToggle
     UIPadding.PaddingRight = UDim.new(0, 8)
@@ -1077,11 +1077,9 @@ function Library.Func:CreateToggle(option)
         Value = not Value
         Callback(Value)
         if Value then
-            -- ON → แสดงเครื่องหมาย ✔️
             tween(CheckIcon, {ImageTransparency = 0}, 0.2)
         else
-            -- OFF → ไม่มี
-            tween(CheckIcon, {ImageTransparency = 1}, 0.2)
+            tween(CheckIcon, {ImageTransparency = 0.5}, 0.2)
         end
     end
 
@@ -3451,7 +3449,7 @@ end
         ThemeClick_1.MouseButton1Click:Connect(changeTheme)
         delay(0, changeTheme)
         
-        --// สร้าง Frame หลัก
+--// สร้าง Frame หลัก
 local Frame = Instance.new("Frame")
 local UICorner_1 = Instance.new("UICorner")
 local ImageLabel_1 = Instance.new("ImageLabel")
@@ -3461,20 +3459,20 @@ Frame.AnchorPoint = Vector2.new(0.5, 0)
 Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- สีดำ
 Frame.BackgroundTransparency = 0.5               -- โปร่งใส 0.5
 Frame.BorderSizePixel = 0
-Frame.Position = UDim2.new(0.5, 0,0, 0)
-Frame.Size = UDim2.new(0, 70,0, 25)
+Frame.Position = UDim2.new(0.5, 0, 0, 0)
+Frame.Size = UDim2.new(0, 60, 0, 30) -- ไม่ใหญ่เกินไป
 
 --// มุมโค้ง Squircle
 UICorner_1.Parent = Frame
-UICorner_1.CornerRadius = UDim.new(0.25, 0)
+UICorner_1.CornerRadius = UDim.new(0.4, 0) -- โค้งแบบ squircle
 
 --// Icon ตรงกลาง
 ImageLabel_1.Parent = Frame
 ImageLabel_1.AnchorPoint = Vector2.new(0.5, 0.5)
 ImageLabel_1.BackgroundTransparency = 1
 ImageLabel_1.BorderSizePixel = 0
-ImageLabel_1.Position = UDim2.new(0.5, 0,0.5, 0)
-ImageLabel_1.Size = UDim2.new(0, 15,0, 15)
+ImageLabel_1.Position = UDim2.new(0.5, 0, 0.5, 0)
+ImageLabel_1.Size = UDim2.new(0, 18, 0, 18)
 ImageLabel_1.Image = "rbxassetid://71698121444093"
 ImageLabel_1.ImageColor3 = Color3.fromRGB(255, 255, 255) -- ไอคอนสีขาว
 
@@ -3515,10 +3513,8 @@ local function closeui()
     end
 end
 
---// เชื่อมต่อปุ่มคลิก
 Click.MouseButton1Click:Connect(closeui)
 
---// เชื่อมต่อ Keybind
 U.InputBegan:Connect(function(i)
     if i.KeyCode == options.Keybind then
         local focusedTextBox = U:GetFocusedTextBox()
@@ -3527,6 +3523,7 @@ U.InputBegan:Connect(function(i)
         end
     end
 end)
+
 end
     
     return Library.Tabs
