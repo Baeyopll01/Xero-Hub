@@ -10,8 +10,8 @@ local themes = {
         ['Background'] = Color3.fromRGB(30, 15, 15),  
         ['Main'] = Color3.fromRGB(50, 20, 20),           
         ['Tab'] = Color3.fromRGB(70, 30, 30),
-        ['Title'] = Color3.fromRGB(255, 200, 200),    
-        ['Icon'] = Color3.fromRGB(220, 100, 100),
+        ['Title'] = Color3.fromRGB(255, 255, 255),
+        ['Icon'] = Color3.fromRGB(255, 255, 255),
         ['Back'] = Color3.fromRGB(20, 10, 10),
         ['Function'] = Color3.fromRGB(130, 60, 60),
         ['Main Color'] = Color3.fromRGB(255, 80, 80), 
@@ -1012,103 +1012,89 @@ function Library:GenerateWindow(option)
             Library.Func = {}
             
             function Library.Func:CreateToggle(option)
-                local Value = option.Value or false
-                local Callback = option.Callback or function() end
-                local Title = option.Title
-                local Desc = option.Desc or ''
-                
-                local Toggle = background(
-                    gs(options.Side, PageLeft, PageRight),
-                    Title, Desc
-                )
-                
-                local ListFunctionToggle = Instance.new("Frame")
-                local ToggleBarO_1 = Instance.new("Frame")
-                local GlowDot_1 = Instance.new("ImageLabel")
-                local Dot_1 = Instance.new("ImageLabel")
-                local UICorner_1 = Instance.new("UICorner")
-                local UIPadding_1 = Instance.new("UIPadding")
+    local Value = option.Value or false
+    local Callback = option.Callback or function() end
+    local Title = option.Title
+    local Desc = option.Desc or ''
+    
+    local Toggle = background(
+        gs(options.Side, PageLeft, PageRight),
+        Title, Desc
+    )
+    
+    local ListFunctionToggle = Instance.new("Frame")
+    local ToggleBarO_1 = Instance.new("Frame")
+    local GlowDot_1 = Instance.new("ImageLabel")
+    local Dot_1 = Instance.new("ImageLabel")
+    local UICorner_1 = Instance.new("UICorner")
+    local UIPadding_1 = Instance.new("UIPadding")
 
-                ListFunctionToggle.Name = "ListFunctionToggle"
-                ListFunctionToggle.Parent = Toggle
-                ListFunctionToggle.BackgroundColor3 = Color3.fromRGB(255,255,255)
-                ListFunctionToggle.BackgroundTransparency = 1
-                ListFunctionToggle.BorderColor3 = Color3.fromRGB(0,0,0)
-                ListFunctionToggle.BorderSizePixel = 0
-                ListFunctionToggle.Size = UDim2.new(1, 0,1, 0)
+    ListFunctionToggle.Name = "ListFunctionToggle"
+    ListFunctionToggle.Parent = Toggle
+    ListFunctionToggle.BackgroundTransparency = 1
+    ListFunctionToggle.Size = UDim2.new(1, 0, 1, 0)
 
-                ToggleBarO_1.Name = "ToggleBarO"
-                ToggleBarO_1.Parent = ListFunctionToggle
-                ToggleBarO_1.AnchorPoint = Vector2.new(1, 0.5)
-                ToggleBarO_1.BackgroundColor3 = Color3.fromRGB(216,216,216)
-                ToggleBarO_1.BorderColor3 = Color3.fromRGB(0,0,0)
-                ToggleBarO_1.BorderSizePixel = 0
-                ToggleBarO_1.Position = UDim2.new(1, 0,0.5, 0)
-                ToggleBarO_1.Size = UDim2.new(0, 30,0, 15)
-                
-                addToTheme('Back', ToggleBarO_1)
+    ToggleBarO_1.Name = "ToggleBarO"
+    ToggleBarO_1.Parent = ListFunctionToggle
+    ToggleBarO_1.AnchorPoint = Vector2.new(1, 0.5)
+    ToggleBarO_1.BackgroundColor3 = Color3.fromRGB(216,216,216)
+    ToggleBarO_1.Position = UDim2.new(1, 0, 0.5, 0)
+    ToggleBarO_1.Size = UDim2.new(0, 30, 0, 15)
+    ToggleBarO_1.BorderSizePixel = 0
+    addToTheme('Back', ToggleBarO_1)
 
-                GlowDot_1.Name = "GlowDot"
-                GlowDot_1.Parent = ToggleBarO_1
-                GlowDot_1.AnchorPoint = Vector2.new(0.5, 0.5)
-                GlowDot_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-                GlowDot_1.BackgroundTransparency = 1
-                GlowDot_1.BorderColor3 = Color3.fromRGB(0,0,0)
-                GlowDot_1.BorderSizePixel = 0
-                GlowDot_1.Position = UDim2.new(0.75, 0,0.5, 0)
-                GlowDot_1.Size = UDim2.new(0, 14,0, 14)
-                GlowDot_1.Image = "rbxassetid://105506802034513"
-                GlowDot_1.ImageColor3 = Color3.fromRGB(0,104,255)
-                GlowDot_1.ImageTransparency = 0.5
-                
-                addToTheme('Main Color', GlowDot_1)
+    GlowDot_1.Name = "GlowDot"
+    GlowDot_1.Parent = ToggleBarO_1
+    GlowDot_1.AnchorPoint = Vector2.new(0.5, 0.5)
+    GlowDot_1.BackgroundTransparency = 1
+    GlowDot_1.Position = UDim2.new(0.5, 0, 0.5, 0)
+    GlowDot_1.Size = UDim2.new(0, 14, 0, 14)
+    GlowDot_1.Image = "rbxassetid://6031094678" -- ✔️ check icon
+    GlowDot_1.ImageColor3 = Color3.fromRGB(0, 200, 0)
+    GlowDot_1.ImageTransparency = 0.5 -- เริ่มต้น OFF แบบโป่งใส
+    addToTheme('Main Color', GlowDot_1)
 
-                Dot_1.Name = "Dot"
-                Dot_1.Parent = GlowDot_1
-                Dot_1.AnchorPoint = Vector2.new(0.5, 0.5)
-                Dot_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-                Dot_1.BackgroundTransparency = 1
-                Dot_1.BorderColor3 = Color3.fromRGB(0,0,0)
-                Dot_1.BorderSizePixel = 0
-                Dot_1.Position = UDim2.new(0.5, 0,0.5, 0)
-                Dot_1.Size = UDim2.new(0, 8,0, 8)
-                Dot_1.Image = "rbxassetid://105506802034513"
-                Dot_1.ImageColor3 = Color3.fromRGB(0,104,255)
+    Dot_1.Name = "Dot"
+    Dot_1.Parent = GlowDot_1
+    Dot_1.AnchorPoint = Vector2.new(0.5, 0.5)
+    Dot_1.BackgroundTransparency = 1
+    Dot_1.Position = UDim2.new(0.5, 0, 0.5, 0)
+    Dot_1.Size = UDim2.new(0, 12, 0, 12)
+    Dot_1.Image = "rbxassetid://6031094678"
+    Dot_1.ImageColor3 = GlowDot_1.ImageColor3
+    Dot_1.ImageTransparency = 0.5
 
-                UICorner_1.Parent = ToggleBarO_1
-                UICorner_1.CornerRadius = UDim.new(1,0)
+    UICorner_1.Parent = ToggleBarO_1
+    UICorner_1.CornerRadius = UDim.new(1, 0)
 
-                UIPadding_1.Parent = ListFunctionToggle
-                UIPadding_1.PaddingRight = UDim.new(0,8)
-                
-                local Click = click(Toggle)
-                
-                Value = not Value
+    UIPadding_1.Parent = ListFunctionToggle
+    UIPadding_1.PaddingRight = UDim.new(0, 8)
 
-                local function change()
-                    Value = not Value
-                    Callback(Value)
-                    if Value then
-                        tw({v = Toggle.TitleList.Title, t = 0.15, s = Enum.EasingStyle.Linear, d = "Out", g = {TextTransparency = 0}}):Play()
-                        tw({v = GlowDot_1, t = 0.15, s = Enum.EasingStyle.Linear, d = "Out", g = {Position = UDim2.new(0.75, 0,0.5, 0), ImageTransparency = 0.5}}):Play()
-                        tw({v = Dot_1, t = 0.15, s = Enum.EasingStyle.Linear, d = "Out", g = {ImageColor3 = GlowDot_1.ImageColor3, Size = UDim2.new(0, 8, 0, 8)}}):Play()
-                    else
-                        tw({v = Toggle.TitleList.Title, t = 0.15, s = Enum.EasingStyle.Linear, d = "Out", g = {TextTransparency = 0.5}}):Play()
-                        tw({v = GlowDot_1, t = 0.15, s = Enum.EasingStyle.Linear, d = "Out", g = {Position = UDim2.new(0.3, 0,0.5, 0), ImageTransparency = 1}}):Play()
-                        tw({v = Dot_1, t = 0.15, s = Enum.EasingStyle.Linear, d = "Out", g = {ImageColor3 = Color3.fromRGB(153, 153, 153), Size = UDim2.new(0, 10, 0, 10)}}):Play()    
-                    end
-                end
-                
-                GlowDot_1:GetPropertyChangedSignal("ImageColor3"):Connect(function()
-                    if Value and GlowDot_1.ImageTransparency == 0.5 then
-                        Dot_1.ImageColor3 = GlowDot_1.ImageColor3
-                    end
-                end)
+    local Click = click(Toggle)
 
-                Click.MouseButton1Click:Connect(change)
+    local function change()
+        Value = not Value
+        Callback(Value)
+        if Value then
+            -- ON
+            tw({v = GlowDot_1, t = 0.2, g = {ImageTransparency = 0}}):Play()
+            tw({v = Dot_1, t = 0.2, g = {ImageTransparency = 0}}):Play()
+        else
+            -- OFF
+            tw({v = GlowDot_1, t = 0.2, g = {ImageTransparency = 0.5}}):Play()
+            tw({v = Dot_1, t = 0.2, g = {ImageTransparency = 0.5}}):Play()
+        end
+    end
 
-                delay(0.1, change)
-            end
+    GlowDot_1:GetPropertyChangedSignal("ImageColor3"):Connect(function()
+        if Value then
+            Dot_1.ImageColor3 = GlowDot_1.ImageColor3
+        end
+    end)
+
+    Click.MouseButton1Click:Connect(change)
+    delay(0.1, change)
+end
             
             function Library.Func:CreateSlider(option)
                 local Min = option.Min or 0
