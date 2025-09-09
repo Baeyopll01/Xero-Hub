@@ -111,7 +111,7 @@ function Library:GenerateWindow(option)
         local ClickButtonCircle = Instance.new("Frame")
         ClickButtonCircle.Parent = p
         ClickButtonCircle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-        ClickButtonCircle.BackgroundTransparency = 0.5.7
+        ClickButtonCircle.BackgroundTransparency = 0.7
         ClickButtonCircle.BorderSizePixel = 0
         ClickButtonCircle.AnchorPoint = Vector2.new(0.5, 0.5)
         ClickButtonCircle.Position = UDim2.new(0, relativeX, 0, relativeY)
@@ -141,7 +141,7 @@ function Library:GenerateWindow(option)
         local ClickButtonCircle = Instance.new("Frame")
         ClickButtonCircle.Parent = p
         ClickButtonCircle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-        ClickButtonCircle.BackgroundTransparency = 0.5.7
+        ClickButtonCircle.BackgroundTransparency = 0.7
         ClickButtonCircle.BorderSizePixel = 0
         ClickButtonCircle.AnchorPoint = Vector2.new(0.5, 0.5)
         ClickButtonCircle.Position = UDim2.new(0, p2.AbsolutePosition.X - p.AbsolutePosition.X + p2.AbsoluteSize.X / 2, 
@@ -325,7 +325,7 @@ function Library:GenerateWindow(option)
     Size_1.Active = true
     Size_1.AnchorPoint = Vector2.new(1, 1)
     Size_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-    Size_1.BackgroundTransparency = 0.5.5
+    Size_1.BackgroundTransparency = 0.5
     Size_1.BorderColor3 = Color3.fromRGB(0,0,0)
     Size_1.BorderSizePixel = 0
     Size_1.Position = UDim2.new(1, 0,1, 0)
@@ -460,7 +460,7 @@ function Library:GenerateWindow(option)
     Line_1.Name = "Line"
     Line_1.Parent = List_1
     Line_1.BackgroundColor3 = Color3.fromRGB(136,136,136)
-    Line_1.BackgroundTransparency = 0.5.6
+    Line_1.BackgroundTransparency = 0.6
     Line_1.BorderColor3 = Color3.fromRGB(0,0,0)
     Line_1.BorderSizePixel = 0
     Line_1.LayoutOrder = 1
@@ -498,7 +498,7 @@ function Library:GenerateWindow(option)
     Line2_1.Name = "Line2"
     Line2_1.Parent = List_1
     Line2_1.BackgroundColor3 = Color3.fromRGB(136,136,136)
-    Line2_1.BackgroundTransparency = 0.5.6
+    Line2_1.BackgroundTransparency = 0.6
     Line2_1.BorderColor3 = Color3.fromRGB(0,0,0)
     Line2_1.BorderSizePixel = 0
     Line2_1.LayoutOrder = 4
@@ -717,7 +717,7 @@ function Library:GenerateWindow(option)
         GlowDot_1.Parent = Tab_1
         GlowDot_1.AnchorPoint = Vector2.new(1, 0)
         GlowDot_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-        GlowDot_1.BackgroundTransparency = 0.5.5
+        GlowDot_1.BackgroundTransparency = 0.5
         GlowDot_1.BorderColor3 = Color3.fromRGB(0,0,0)
         GlowDot_1.BorderSizePixel = 0
         GlowDot_1.Position = UDim2.new(0.970000029, 0,0.0299999993, 0)
@@ -732,7 +732,7 @@ function Library:GenerateWindow(option)
         Dot_1.Parent = GlowDot_1
         Dot_1.AnchorPoint = Vector2.new(0.5, 0.5)
         Dot_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-        Dot_1.BackgroundTransparency = 0.5.5
+        Dot_1.BackgroundTransparency = 0.5
         Dot_1.BorderColor3 = Color3.fromRGB(0,0,0)
         Dot_1.BorderSizePixel = 0
         Dot_1.Position = UDim2.new(0.5, 0,0.5, 0)
@@ -747,7 +747,7 @@ function Library:GenerateWindow(option)
         Dot_2.Parent = Dot_1
         Dot_2.AnchorPoint = Vector2.new(0.5, 0.5)
         Dot_2.BackgroundColor3 = Color3.fromRGB(255,255,255)
-        Dot_2.BackgroundTransparency = 0.5.5
+        Dot_2.BackgroundTransparency = 0.5
         Dot_2.BorderColor3 = Color3.fromRGB(0,0,0)
         Dot_2.BorderSizePixel = 0
         Dot_2.Position = UDim2.new(0.5, 0,0.5, 0)
@@ -845,7 +845,7 @@ function Library:GenerateWindow(option)
         PageRight.Active = true
         PageRight.AnchorPoint = Vector2.new(1, 0)
         PageRight.BackgroundColor3 = Color3.fromRGB(255,255,255)
-        PageRight.BackgroundTransparency = 0.5.6
+        PageRight.BackgroundTransparency = 0.6
         PageRight.BorderColor3 = Color3.fromRGB(0,0,0)
         PageRight.BorderSizePixel = 0
         PageRight.Size = UDim2.new(0.49, 0,1, 0)
@@ -993,110 +993,11 @@ function Library:GenerateWindow(option)
             Line_2.BorderSizePixel = 0
             Line_2.Position = UDim2.new(0, 0,1, 0)
             Line_2.Size = UDim2.new(1, 0,0, 1)
-            Line_2.BackgroundTransparency = 0.5.6
+            Line_2.BackgroundTransparency = 0.6
             
             Library.Func = {}
             
             
-function Library.Func:CreateToggle(option)
-    local Value = option.Value or false
-    local Callback = option.Callback or function() end
-    local Title = option.Title
-    local Desc = option.Desc or ''
-    
-    local Toggle = background(
-        gs(options.Side, PageLeft, PageRight),
-        Title, Desc
-    )
-    
-    local ListFunctionToggle = Instance.new("Frame")
-    local ToggleBarO_1 = Instance.new("Frame")
-    local GlowDot_1 = Instance.new("ImageLabel")
-    local Dot_1 = Instance.new("ImageLabel")
-    local UICorner_1 = Instance.new("UICorner")
-    local UIPadding_1 = Instance.new("UIPadding")
-    local UIStroke_1 = Instance.new("UIStroke")
-
-    ListFunctionToggle.Name = "ListFunctionToggle"
-    ListFunctionToggle.Parent = Toggle
-    ListFunctionToggle.BackgroundTransparency = 1
-    ListFunctionToggle.BorderSizePixel = 0
-    ListFunctionToggle.Size = UDim2.new(1, 0,1, 0)
-
-    ToggleBarO_1.Name = "ToggleBarO"
-    ToggleBarO_1.Parent = ListFunctionToggle
-    ToggleBarO_1.AnchorPoint = Vector2.new(1, 0.5)
-    ToggleBarO_1.BackgroundColor3 = Color3.fromRGB(0,200,0)
-    ToggleBarO_1.BackgroundTransparency = 1 -- start hidden
-    ToggleBarO_1.BorderSizePixel = 0
-    ToggleBarO_1.Position = UDim2.new(1, 0,0.5, 0)
-    ToggleBarO_1.Size = UDim2.new(0, 36,0, 18)
-    
-    addToTheme('Back', ToggleBarO_1)
-
-    GlowDot_1.Name = "GlowDot"
-    GlowDot_1.Parent = ToggleBarO_1
-    GlowDot_1.AnchorPoint = Vector2.new(0.5, 0.5)
-    GlowDot_1.BackgroundTransparency = 1
-    GlowDot_1.Position = UDim2.new(0.3, 0,0.5, 0)
-    GlowDot_1.Size = UDim2.new(0, 14,0, 14)
-    GlowDot_1.Image = "rbxassetid://105506802034513"
-    GlowDot_1.ImageColor3 = Color3.fromRGB(0,200,0)
-    GlowDot_1.ImageTransparency = 1
-    
-    addToTheme('Main Color', GlowDot_1)
-
-    Dot_1.Name = "Dot"
-    Dot_1.Parent = GlowDot_1
-    Dot_1.AnchorPoint = Vector2.new(0.5, 0.5)
-    Dot_1.BackgroundTransparency = 1
-    Dot_1.Position = UDim2.new(0.5, 0,0.5, 0)
-    Dot_1.Size = UDim2.new(0, 8,0, 8)
-    Dot_1.Image = "rbxassetid://105506802034513"
-    Dot_1.ImageColor3 = Color3.fromRGB(153,153,153)
-
-    UICorner_1.Parent = ToggleBarO_1
-    UICorner_1.CornerRadius = UDim.new(1,0)
-
-    UIStroke_1.Parent = ToggleBarO_1
-    UIStroke_1.Color = Color3.fromRGB(255,255,255)
-    UIStroke_1.Thickness = 1
-    UIStroke_1.Transparency = 0.6
-
-    UIPadding_1.Parent = ListFunctionToggle
-    UIPadding_1.PaddingRight = UDim.new(0,8)
-    
-    local Click = click(Toggle)
-    
-    Value = not Value
-
-    local function change()
-        Value = not Value
-        Callback(Value)
-        if Value then
-            tw({v = ToggleBarO_1, t = 0.2, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 0}}):Play()
-            tw({v = Toggle.TitleList.Title, t = 0.15, s = Enum.EasingStyle.Linear, d = "Out", g = {TextTransparency = 0}}):Play()
-            tw({v = GlowDot_1, t = 0.2, s = Enum.EasingStyle.Quad, d = "Out", g = {Position = UDim2.new(0.75, 0,0.5, 0), ImageTransparency = 0.5}}):Play()
-            tw({v = Dot_1, t = 0.15, s = Enum.EasingStyle.Linear, d = "Out", g = {ImageColor3 = GlowDot_1.ImageColor3, Size = UDim2.new(0, 8, 0, 8)}}):Play()
-        else
-            tw({v = ToggleBarO_1, t = 0.2, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 1}}):Play()
-            tw({v = Toggle.TitleList.Title, t = 0.15, s = Enum.EasingStyle.Linear, d = "Out", g = {TextTransparency = 0.5}}):Play()
-            tw({v = GlowDot_1, t = 0.2, s = Enum.EasingStyle.Quad, d = "Out", g = {Position = UDim2.new(0.3, 0,0.5, 0), ImageTransparency = 1}}):Play()
-            tw({v = Dot_1, t = 0.15, s = Enum.EasingStyle.Linear, d = "Out", g = {ImageColor3 = Color3.fromRGB(153, 153, 153), Size = UDim2.new(0, 10, 0, 10)}}):Play()    
-        end
-    end
-    
-    GlowDot_1:GetPropertyChangedSignal("ImageColor3"):Connect(function()
-        if Value and GlowDot_1.ImageTransparency == 0.5 then
-            Dot_1.ImageColor3 = GlowDot_1.ImageColor3
-        end
-    end)
-
-    Click.MouseButton1Click:Connect(change)
-
-    delay(0.1, change)
-end
-
     local Title = option.Title
     local Desc = option.Desc or ''
     
@@ -1174,7 +1075,7 @@ end
         Callback(Value)
         if Value then
             -- เปิด
-            tw({v = ToggleBarO_1, t = 0.2, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 0.5}}):Play()
+            tw({v = ToggleBarO_1, t = 0.2, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 0}}):Play()
             tw({v = Toggle.TitleList.Title, t = 0.15, s = Enum.EasingStyle.Linear, d = "Out", g = {TextTransparency = 0}}):Play()
             tw({v = GlowDot_1, t = 0.2, s = Enum.EasingStyle.Quad, d = "Out", g = {Position = UDim2.new(0.75, 0,0.5, 0), ImageTransparency = 0.5}}):Play()
             tw({v = Dot_1, t = 0.15, s = Enum.EasingStyle.Linear, d = "Out", g = {ImageColor3 = GlowDot_1.ImageColor3, Size = UDim2.new(0, 8, 0, 8)}}):Play()
@@ -1482,7 +1383,7 @@ end
                 addToTheme('Back', DropdownSelect)
                 
                 BackgroundSelect.Parent = BackGround_1
-                BackgroundSelect.BackgroundTransparency = 0.5.3
+                BackgroundSelect.BackgroundTransparency = 0.3
                 BackgroundSelect.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
                 BackgroundSelect.Size = UDim2.new(1, 0, 1, 0)
                 BackgroundSelect.Visible = false
@@ -3152,7 +3053,7 @@ end
         Line_1.Parent = TextLabel_1
         Line_1.AnchorPoint = Vector2.new(0.5, 1)
         Line_1.BackgroundColor3 = Frame_1.BackgroundColor3
-        Line_1.BackgroundTransparency = 0.5.75
+        Line_1.BackgroundTransparency = 0.75
         Line_1.BorderColor3 = Color3.fromRGB(0,0,0)
         Line_1.BorderSizePixel = 0
         Line_1.Position = UDim2.new(0.5, 0,1, 0)
@@ -3293,7 +3194,7 @@ end
         UIPadding_1.Parent = Description_1
         UIPadding_1.PaddingTop = UDim.new(0,5)
         
-        tw({v = Dialog, t = 0.15, s = Enum.EasingStyle.Linear, d = "Out", g = {BackgroundTransparency = 0.5.2}}):Play()
+        tw({v = Dialog, t = 0.15, s = Enum.EasingStyle.Linear, d = "Out", g = {BackgroundTransparency = 0.2}}):Play()
         tw({v = Frame_1, t = 0.15, s = Enum.EasingStyle.Linear, d = "Out", g = {Size = UDim2.new(0, 250,0, 150)}}):Play()
         local close = tw({v = Dialog, t = 0.15, s = Enum.EasingStyle.Linear, d = "Out", g = {BackgroundTransparency = 1}})
         local close2 = tw({v = Frame_1, t = 0.15, s = Enum.EasingStyle.Linear, d = "Out", g = {Size = UDim2.new(0, 270,0, 170)}})
@@ -3531,7 +3432,7 @@ end
             LoadImage_1.Size = UDim2.new(0, 100,0, 100)
             LoadImage_1.Image = "rbxassetid://86678925156329"
 
-            tw({v = Load, t = 0.15, s = Enum.EasingStyle.Linear, d = "Out", g = {BackgroundTransparency = 0.5.2}}):Play()
+            tw({v = Load, t = 0.15, s = Enum.EasingStyle.Linear, d = "Out", g = {BackgroundTransparency = 0.2}}):Play()
             tw({v = LoadImage_1, t = 5, s = Enum.EasingStyle.Linear, d = "Out", g = {Rotation = 720}}):Play()
 
             delay(.5, function()
@@ -3562,7 +3463,7 @@ local ImageLabel_1 = Instance.new("ImageLabel")
 Frame.Parent = ScreenGui
 Frame.AnchorPoint = Vector2.new(0.5, 0)
 Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- สีดำ
-Frame.BackgroundTransparency = 0.5.5               -- โปร่งใส 0.5
+Frame.BackgroundTransparency = 0.5               -- โปร่งใส 0.5
 Frame.BorderSizePixel = 0
 Frame.Position = UDim2.new(0.5, 0,0, 0)
 Frame.Size = UDim2.new(0, 70,0, 25)
@@ -3636,4 +3537,105 @@ end
 end
 
 return Library
+
+
+
+function Library.Func:CreateToggle(option)
+    local Value = option.Value or false
+    local Callback = option.Callback or function() end
+    local Title = option.Title
+    local Desc = option.Desc or ''
+    
+    local Toggle = background(
+        gs(options.Side, PageLeft, PageRight),
+        Title, Desc
+    )
+    
+    local ListFunctionToggle = Instance.new("Frame")
+    local ToggleBarO_1 = Instance.new("Frame")
+    local GlowDot_1 = Instance.new("ImageLabel")
+    local Dot_1 = Instance.new("ImageLabel")
+    local UICorner_1 = Instance.new("UICorner")
+    local UIPadding_1 = Instance.new("UIPadding")
+    local UIStroke_1 = Instance.new("UIStroke")
+
+    ListFunctionToggle.Name = "ListFunctionToggle"
+    ListFunctionToggle.Parent = Toggle
+    ListFunctionToggle.BackgroundTransparency = 1
+    ListFunctionToggle.BorderSizePixel = 0
+    ListFunctionToggle.Size = UDim2.new(1, 0,1, 0)
+
+    ToggleBarO_1.Name = "ToggleBarO"
+    ToggleBarO_1.Parent = ListFunctionToggle
+    ToggleBarO_1.AnchorPoint = Vector2.new(1, 0.5)
+    ToggleBarO_1.BackgroundColor3 = Color3.fromRGB(0,200,0)
+    ToggleBarO_1.BackgroundTransparency = 1 -- start hidden
+    ToggleBarO_1.BorderSizePixel = 0
+    ToggleBarO_1.Position = UDim2.new(1, 0,0.5, 0)
+    ToggleBarO_1.Size = UDim2.new(0, 36,0, 18)
+    
+    addToTheme('Back', ToggleBarO_1)
+
+    GlowDot_1.Name = "GlowDot"
+    GlowDot_1.Parent = ToggleBarO_1
+    GlowDot_1.AnchorPoint = Vector2.new(0.5, 0.5)
+    GlowDot_1.BackgroundTransparency = 1
+    GlowDot_1.Position = UDim2.new(0.3, 0,0.5, 0)
+    GlowDot_1.Size = UDim2.new(0, 14,0, 14)
+    GlowDot_1.Image = "rbxassetid://105506802034513"
+    GlowDot_1.ImageColor3 = Color3.fromRGB(0,200,0)
+    GlowDot_1.ImageTransparency = 1
+    
+    addToTheme('Main Color', GlowDot_1)
+
+    Dot_1.Name = "Dot"
+    Dot_1.Parent = GlowDot_1
+    Dot_1.AnchorPoint = Vector2.new(0.5, 0.5)
+    Dot_1.BackgroundTransparency = 1
+    Dot_1.Position = UDim2.new(0.5, 0,0.5, 0)
+    Dot_1.Size = UDim2.new(0, 8,0, 8)
+    Dot_1.Image = "rbxassetid://105506802034513"
+    Dot_1.ImageColor3 = Color3.fromRGB(153,153,153)
+
+    UICorner_1.Parent = ToggleBarO_1
+    UICorner_1.CornerRadius = UDim.new(1,0)
+
+    UIStroke_1.Parent = ToggleBarO_1
+    UIStroke_1.Color = Color3.fromRGB(255,255,255)
+    UIStroke_1.Thickness = 1
+    UIStroke_1.Transparency = 0.6
+
+    UIPadding_1.Parent = ListFunctionToggle
+    UIPadding_1.PaddingRight = UDim.new(0,8)
+    
+    local Click = click(Toggle)
+    
+    Value = not Value
+
+    local function change()
+        Value = not Value
+        Callback(Value)
+        if Value then
+            tw({v = ToggleBarO_1, t = 0.2, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 0}}):Play()
+            tw({v = Toggle.TitleList.Title, t = 0.15, s = Enum.EasingStyle.Linear, d = "Out", g = {TextTransparency = 0}}):Play()
+            tw({v = GlowDot_1, t = 0.2, s = Enum.EasingStyle.Quad, d = "Out", g = {Position = UDim2.new(0.75, 0,0.5, 0), ImageTransparency = 0.5}}):Play()
+            tw({v = Dot_1, t = 0.15, s = Enum.EasingStyle.Linear, d = "Out", g = {ImageColor3 = GlowDot_1.ImageColor3, Size = UDim2.new(0, 8, 0, 8)}}):Play()
+        else
+            tw({v = ToggleBarO_1, t = 0.2, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 1}}):Play()
+            tw({v = Toggle.TitleList.Title, t = 0.15, s = Enum.EasingStyle.Linear, d = "Out", g = {TextTransparency = 0.5}}):Play()
+            tw({v = GlowDot_1, t = 0.2, s = Enum.EasingStyle.Quad, d = "Out", g = {Position = UDim2.new(0.3, 0,0.5, 0), ImageTransparency = 1}}):Play()
+            tw({v = Dot_1, t = 0.15, s = Enum.EasingStyle.Linear, d = "Out", g = {ImageColor3 = Color3.fromRGB(153, 153, 153), Size = UDim2.new(0, 10, 0, 10)}}):Play()    
+        end
+    end
+    
+    GlowDot_1:GetPropertyChangedSignal("ImageColor3"):Connect(function()
+        if Value and GlowDot_1.ImageTransparency == 0.5 then
+            Dot_1.ImageColor3 = GlowDot_1.ImageColor3
+        end
+    end)
+
+    Click.MouseButton1Click:Connect(change)
+
+    delay(0.1, change)
+end
 
