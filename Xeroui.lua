@@ -1,34 +1,37 @@
--- Modernized Version of Original Xeroui.lua
+--Ui Xero Hub By.SmoothX
+
 Library = {}
 SaveTheme = {}
 
 local themes = {
-    index = {"BlueGray", "RedGray"},
+    index = {"NeoBlue", "Sunset"},
 
-    ["BlueGray"] = {
-        ['Background'] = Color3.fromRGB(15, 20, 30),    -- dark grayish blue background
-        ['Main'] = Color3.fromRGB(30, 40, 60),          -- deep navy
-        ['Tab'] = Color3.fromRGB(25, 35, 50),
-        ['Title'] = Color3.fromRGB(180, 200, 230),      -- light bluish text
-        ['Icon'] = Color3.fromRGB(120, 160, 200),
-        ['Back'] = Color3.fromRGB(10, 15, 20),
-        ['Function'] = Color3.fromRGB(50, 70, 100),
-        ['Main Color'] = Color3.fromRGB(0, 120, 255),   -- accent bright blue
+    ["NeoBlue"] = {
+        ['Background'] = Color3.fromRGB(15, 18, 30),    
+        ['BackgroundTransparency'] = 0.5,               
+        ['Main'] = Color3.fromRGB(25, 30, 50),           
+        ['Tab'] = Color3.fromRGB(35, 45, 70),
+        ['Title'] = Color3.fromRGB(200, 220, 255),    
+        ['Icon'] = Color3.fromRGB(120, 160, 220),
+        ['Back'] = Color3.fromRGB(10, 12, 20),
+        ['Function'] = Color3.fromRGB(60, 80, 130),
+        ['Main Color'] = Color3.fromRGB(90, 140, 255), 
         ['UIStroke'] = Color3.fromRGB(255, 255, 255),
-        ['Background Dialog'] = Color3.fromRGB(20, 30, 45)
+        ['Background Dialog'] = Color3.fromRGB(25, 30, 50)
     },
 
-    ["RedGray"] = {
-        ['Background'] = Color3.fromRGB(25, 15, 15),    -- dark grayish red background
-        ['Main'] = Color3.fromRGB(50, 25, 25),          -- deep red-brown
-        ['Tab'] = Color3.fromRGB(40, 20, 20),
-        ['Title'] = Color3.fromRGB(230, 180, 180),      -- soft red text
-        ['Icon'] = Color3.fromRGB(200, 100, 100),
-        ['Back'] = Color3.fromRGB(15, 10, 10),
-        ['Function'] = Color3.fromRGB(80, 40, 40),
-        ['Main Color'] = Color3.fromRGB(200, 40, 40),   -- accent deep red
+    ["Sunset"] = {
+        ['Background'] = Color3.fromRGB(30, 20, 20),     
+        ['BackgroundTransparency'] = 0.5,              
+        ['Main'] = Color3.fromRGB(50, 30, 30),           
+        ['Tab'] = Color3.fromRGB(60, 35, 35),
+        ['Title'] = Color3.fromRGB(255, 210, 200),     
+        ['Icon'] = Color3.fromRGB(255, 150, 120),
+        ['Back'] = Color3.fromRGB(20, 12, 12),
+        ['Function'] = Color3.fromRGB(100, 60, 60),
+        ['Main Color'] = Color3.fromRGB(255, 100, 80), 
         ['UIStroke'] = Color3.fromRGB(255, 255, 255),
-        ['Background Dialog'] = Color3.fromRGB(35, 20, 20)
+        ['Background Dialog'] = Color3.fromRGB(45, 25, 25)
     }
 }
 
