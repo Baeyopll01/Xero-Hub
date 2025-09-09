@@ -73,7 +73,6 @@ function Library:GenerateWindow(option)
         Name = option.Name or 'Frosinsa',
         Theme = option.Theme or 'Light',
         Keybind = option.Keybind or Enum.KeyCode.LeftControl,
-        NameMap = options.NameMap or ""
     }
     local U, Tw =
         game:GetService("UserInputService"),
@@ -489,7 +488,7 @@ function Library:GenerateWindow(option)
     ProfileImage_1.BorderSizePixel = 0
     ProfileImage_1.LayoutOrder = 2
     ProfileImage_1.Size = UDim2.new(0, 15,0, 15)
-    ProfileImage_1.Image = ""
+    ProfileImage_1.Image = "rbxassetid://10734887603"
     ProfileImage_1.ImageColor3 = Color3.fromRGB(117, 117, 117)
     
     NameText_1.Name = "NameText"
@@ -502,7 +501,7 @@ function Library:GenerateWindow(option)
     NameText_1.Position = UDim2.new(0.410958916, 0,0, 0)
     NameText_1.Size = UDim2.new(-0, 50,1, 0)
     NameText_1.Font = Enum.Font.GothamBold
-    NameText_1.Text = options.NameMap
+    NameText_1.Text = game:GetService("Players").LocalPlayer.Name
     NameText_1.TextSize = 9
     NameText_1.TextTransparency = 0.4000000059604645
     NameText_1.TextXAlignment = Enum.TextXAlignment.Left
