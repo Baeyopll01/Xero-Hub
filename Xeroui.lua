@@ -72,7 +72,7 @@ function Library:GenerateWindow(option)
     local options = {
         Name = option.Name or 'Frosinsa',
         Theme = option.Theme or 'Light',
-        Keybind = option.Keybind or Enum.KeyCode.,LeftControl
+        Keybind = option.Keybind or Enum.KeyCode.LeftControl,
         NameMap = options.NameMap or ""
     }
     local U, Tw =
