@@ -1011,7 +1011,19 @@ function Library:GenerateWindow(option)
             
             Library.Func = {}
             
-            function Library.Func:CreateToggle(option)
+            -- 🌟 Tween Function (แก้ error)
+local TweenService = game:GetService("TweenService")
+
+local function tween(object, properties, duration)
+    duration = duration or 0.2
+    local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
+    local tween = TweenService:Create(object, tweenInfo, properties)
+    tween:Play()
+    return tween
+end
+
+-- 🌟 Toggle Function
+function Library.Func:CreateToggle(option)
     local Value = option.Value or false
     local Callback = option.Callback or function() end
     local Title = option.Title
@@ -1036,7 +1048,7 @@ function Library:GenerateWindow(option)
     ToggleBox.Name = "ToggleBox"
     ToggleBox.Parent = ListFunctionToggle
     ToggleBox.AnchorPoint = Vector2.new(1, 0.5)
-    ToggleBox.BackgroundColor3 = themes["RedTheme"]["Back"] -- ใช้สีจาก Theme
+    ToggleBox.BackgroundColor3 = Color3.fromRGB(216, 216, 216)
     ToggleBox.Position = UDim2.new(1, 0, 0.5, 0)
     ToggleBox.Size = UDim2.new(0, 20, 0, 20)
     ToggleBox.BorderSizePixel = 0
@@ -1047,14 +1059,14 @@ function Library:GenerateWindow(option)
     CheckIcon.AnchorPoint = Vector2.new(0.5, 0.5)
     CheckIcon.Position = UDim2.new(0.5, 0, 0.5, 0)
     CheckIcon.Size = UDim2.new(0, 16, 0, 16)
-    CheckIcon.Image = "rbxassetid://6031094678" -- ✔️ icon Roblox
-    CheckIcon.ImageColor3 = themes["RedTheme"]["Main Color"] -- ใช้สีตาม Theme
+    CheckIcon.Image = "rbxassetid://6031094678" -- ✔️ ไอคอน Roblox
+    CheckIcon.ImageColor3 = Color3.fromRGB(0, 200, 0)
     CheckIcon.BackgroundTransparency = 1
-    CheckIcon.ImageTransparency = 1 -- เริ่มต้นปิด
+    CheckIcon.ImageTransparency = 1 -- ปิดเริ่มต้น
     addToTheme('Main Color', CheckIcon)
 
     UICorner.Parent = ToggleBox
-    UICorner.CornerRadius = UDim.new(0, 4)
+    UICorner.CornerRadius = UDim.new(0, 4) -- มุมโค้งเล็ก
 
     UIPadding.Parent = ListFunctionToggle
     UIPadding.PaddingRight = UDim.new(0, 8)
@@ -1065,17 +1077,17 @@ function Library:GenerateWindow(option)
         Value = not Value
         Callback(Value)
         if Value then
-            -- เปิด → แสดง ✔️
-            tw({v = CheckIcon, t = 0.2, g = {ImageTransparency = 0}}):Play()
+            -- ON → แสดงเครื่องหมาย ✔️
+            tween(CheckIcon, {ImageTransparency = 0}, 0.2)
         else
-            -- ปิด → ไม่มีอะไร
-            tw({v = CheckIcon, t = 0.2, g = {ImageTransparency = 1}}):Play()
+            -- OFF → ไม่มี
+            tween(CheckIcon, {ImageTransparency = 1}, 0.2)
         end
     end
 
     CheckIcon:GetPropertyChangedSignal("ImageColor3"):Connect(function()
         if Value then
-            CheckIcon.ImageColor3 = themes["RedTheme"]["Main Color"]
+            CheckIcon.ImageColor3 = CheckIcon.ImageColor3
         end
     end)
 
