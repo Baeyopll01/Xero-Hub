@@ -4,34 +4,32 @@ Library = {}
 SaveTheme = {}
 
 local themes = {
-    index = {"NeoBlue", "Sunset"},
+    index = {"RedTheme", "BlueTheme"},
 
-    ["NeoBlue"] = {
-        ['Background'] = Color3.fromRGB(15, 18, 30),    
-        ['BackgroundTransparency'] = 0.5,               
-        ['Main'] = Color3.fromRGB(25, 30, 50),           
-        ['Tab'] = Color3.fromRGB(35, 45, 70),
-        ['Title'] = Color3.fromRGB(200, 220, 255),    
-        ['Icon'] = Color3.fromRGB(120, 160, 220),
-        ['Back'] = Color3.fromRGB(10, 12, 20),
-        ['Function'] = Color3.fromRGB(60, 80, 130),
-        ['Main Color'] = Color3.fromRGB(90, 140, 255), 
+    ["RedTheme"] = {
+        ['Background'] = Color3.fromRGB(30, 15, 15),  
+        ['Main'] = Color3.fromRGB(50, 20, 20),           
+        ['Tab'] = Color3.fromRGB(70, 30, 30),
+        ['Title'] = Color3.fromRGB(255, 200, 200),    
+        ['Icon'] = Color3.fromRGB(220, 100, 100),
+        ['Back'] = Color3.fromRGB(20, 10, 10),
+        ['Function'] = Color3.fromRGB(130, 60, 60),
+        ['Main Color'] = Color3.fromRGB(255, 80, 80), 
         ['UIStroke'] = Color3.fromRGB(255, 255, 255),
-        ['Background Dialog'] = Color3.fromRGB(25, 30, 50)
+        ['Background Dialog'] = Color3.fromRGB(60, 25, 25)
     },
 
-    ["Sunset"] = {
-        ['Background'] = Color3.fromRGB(30, 20, 20),     
-        ['BackgroundTransparency'] = 0.5,              
-        ['Main'] = Color3.fromRGB(50, 30, 30),           
-        ['Tab'] = Color3.fromRGB(60, 35, 35),
-        ['Title'] = Color3.fromRGB(255, 210, 200),     
-        ['Icon'] = Color3.fromRGB(255, 150, 120),
-        ['Back'] = Color3.fromRGB(20, 12, 12),
-        ['Function'] = Color3.fromRGB(100, 60, 60),
-        ['Main Color'] = Color3.fromRGB(255, 100, 80), 
+    ["BlueTheme"] = {
+        ['Background'] = Color3.fromRGB(15, 20, 30),  
+        ['Main'] = Color3.fromRGB(20, 30, 50),           
+        ['Tab'] = Color3.fromRGB(30, 45, 70),
+        ['Title'] = Color3.fromRGB(200, 220, 255),     
+        ['Icon'] = Color3.fromRGB(120, 150, 220),
+        ['Back'] = Color3.fromRGB(10, 15, 25),
+        ['Function'] = Color3.fromRGB(60, 80, 130),
+        ['Main Color'] = Color3.fromRGB(80, 120, 255), 
         ['UIStroke'] = Color3.fromRGB(255, 255, 255),
-        ['Background Dialog'] = Color3.fromRGB(45, 25, 25)
+        ['Background Dialog'] = Color3.fromRGB(25, 35, 55)
     }
 }
 
@@ -341,7 +339,7 @@ function Library:GenerateWindow(option)
     Size_1.Active = true
     Size_1.AnchorPoint = Vector2.new(1, 1)
     Size_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-    Size_1.BackgroundTransparency = 1
+    Size_1.BackgroundTransparency = 0.5
     Size_1.BorderColor3 = Color3.fromRGB(0,0,0)
     Size_1.BorderSizePixel = 0
     Size_1.Position = UDim2.new(1, 0,1, 0)
