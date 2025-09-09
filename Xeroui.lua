@@ -3,32 +3,32 @@ Library = {}
 SaveTheme = {}
 
 local themes = {
-    index = {"RedBlack", "PurpleBlack"},
+    index = {"BlueGray", "RedGray"},
 
-    ["RedBlack"] = {
-        ['Background'] = Color3.fromRGB(20, 0, 0),      -- almost black with hint of red
-        ['Main'] = Color3.fromRGB(60, 0, 0),            -- dark red
-        ['Tab'] = Color3.fromRGB(40, 0, 0),
-        ['Title'] = Color3.fromRGB(255, 180, 180),      -- soft red text
-        ['Icon'] = Color3.fromRGB(255, 100, 100),
-        ['Back'] = Color3.fromRGB(10, 0, 0),
-        ['Function'] = Color3.fromRGB(90, 0, 0),
-        ['Main Color'] = Color3.fromRGB(200, 0, 0),     -- vibrant red
+    ["BlueGray"] = {
+        ['Background'] = Color3.fromRGB(15, 20, 30),    -- dark grayish blue background
+        ['Main'] = Color3.fromRGB(30, 40, 60),          -- deep navy
+        ['Tab'] = Color3.fromRGB(25, 35, 50),
+        ['Title'] = Color3.fromRGB(180, 200, 230),      -- light bluish text
+        ['Icon'] = Color3.fromRGB(120, 160, 200),
+        ['Back'] = Color3.fromRGB(10, 15, 20),
+        ['Function'] = Color3.fromRGB(50, 70, 100),
+        ['Main Color'] = Color3.fromRGB(0, 120, 255),   -- accent bright blue
         ['UIStroke'] = Color3.fromRGB(255, 255, 255),
-        ['Background Dialog'] = Color3.fromRGB(30, 0, 0)
+        ['Background Dialog'] = Color3.fromRGB(20, 30, 45)
     },
 
-    ["PurpleBlack"] = {
-        ['Background'] = Color3.fromRGB(10, 0, 20),     -- dark purple black
-        ['Main'] = Color3.fromRGB(40, 0, 60),
-        ['Tab'] = Color3.fromRGB(30, 0, 40),
-        ['Title'] = Color3.fromRGB(220, 180, 255),      -- light purple text
-        ['Icon'] = Color3.fromRGB(180, 100, 255),
-        ['Back'] = Color3.fromRGB(5, 0, 10),
-        ['Function'] = Color3.fromRGB(70, 0, 120),
-        ['Main Color'] = Color3.fromRGB(120, 0, 200),   -- vibrant purple
+    ["RedGray"] = {
+        ['Background'] = Color3.fromRGB(25, 15, 15),    -- dark grayish red background
+        ['Main'] = Color3.fromRGB(50, 25, 25),          -- deep red-brown
+        ['Tab'] = Color3.fromRGB(40, 20, 20),
+        ['Title'] = Color3.fromRGB(230, 180, 180),      -- soft red text
+        ['Icon'] = Color3.fromRGB(200, 100, 100),
+        ['Back'] = Color3.fromRGB(15, 10, 10),
+        ['Function'] = Color3.fromRGB(80, 40, 40),
+        ['Main Color'] = Color3.fromRGB(200, 40, 40),   -- accent deep red
         ['UIStroke'] = Color3.fromRGB(255, 255, 255),
-        ['Background Dialog'] = Color3.fromRGB(20, 0, 40)
+        ['Background Dialog'] = Color3.fromRGB(35, 20, 20)
     }
 }
 
@@ -3465,71 +3465,83 @@ function Library:GenerateWindow(option)
         ThemeClick_1.MouseButton1Click:Connect(changeTheme)
         delay(0, changeTheme)
         
-        local Frame = Instance.new("Frame")
-        local UICorner_1 = Instance.new("UICorner")
-        local ImageLabel_1 = Instance.new("ImageLabel")
+        --// สร้าง Frame หลัก
+local Frame = Instance.new("Frame")
+local UICorner_1 = Instance.new("UICorner")
+local ImageLabel_1 = Instance.new("ImageLabel")
 
-        Frame.Parent = ScreenGui
-        Frame.AnchorPoint = Vector2.new(0.5, 0)
-        Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-        Frame.BorderColor3 = Color3.fromRGB(0,0,0)
-        Frame.BorderSizePixel = 0
-        Frame.Position = UDim2.new(0.5, 0,0, 0)
-        Frame.Size = UDim2.new(0, 70,0, 25)
-        
-        addToTheme('Main', Frame)
+Frame.Parent = ScreenGui
+Frame.AnchorPoint = Vector2.new(0.5, 0)
+Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- สีดำ
+Frame.BackgroundTransparency = 0.5               -- โปร่งใส 0.5
+Frame.BorderSizePixel = 0
+Frame.Position = UDim2.new(0.5, 0,0, 0)
+Frame.Size = UDim2.new(0, 70,0, 25)
 
-        UICorner_1.Parent = Frame
-        UICorner_1.CornerRadius = UDim.new(1,0)
+--// มุมโค้ง Squircle
+UICorner_1.Parent = Frame
+UICorner_1.CornerRadius = UDim.new(0.25, 0)
 
-        ImageLabel_1.Parent = Frame
-        ImageLabel_1.AnchorPoint = Vector2.new(0.5, 0.5)
-        ImageLabel_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-        ImageLabel_1.BackgroundTransparency = 1
-        ImageLabel_1.BorderColor3 = Color3.fromRGB(0,0,0)
-        ImageLabel_1.BorderSizePixel = 0
-        ImageLabel_1.Position = UDim2.new(0.5, 0,0.5, 0)
-        ImageLabel_1.Size = UDim2.new(0, 15,0, 15)
-        ImageLabel_1.Image = "rbxassetid://14942474023"
-        ImageLabel_1.ImageColor3 = Color3.fromRGB(0, 0, 0)
-        
-        addToTheme('Icon', ImageLabel_1)
-        
-        local Click = click(Frame)
-        
-        lak2(Click, Frame)
-        
-        local isopen = false
-        local close = tw({v = BackGround_1, t = 0.25, s = Enum.EasingStyle.Linear, d = "InOut", g = {GroupTransparency = 1}})
-        local function closeui()
-            isopen = not isopen
+--// Icon ตรงกลาง
+ImageLabel_1.Parent = Frame
+ImageLabel_1.AnchorPoint = Vector2.new(0.5, 0.5)
+ImageLabel_1.BackgroundTransparency = 1
+ImageLabel_1.BorderSizePixel = 0
+ImageLabel_1.Position = UDim2.new(0.5, 0,0.5, 0)
+ImageLabel_1.Size = UDim2.new(0, 15,0, 15)
+ImageLabel_1.Image = "rbxassetid://71698121444093"
+ImageLabel_1.ImageColor3 = Color3.fromRGB(255, 255, 255) -- ไอคอนสีขาว
 
-            if isopen then
-                close:Play()
-                close.Completed:Wait()
-                BackGround_1.Visible = false
-            else
-                if close then
-                    close:Cancel()
-                end
-                BackGround_1.Visible = true  
-                local open = tw({v = BackGround_1, t = 0.25, s = Enum.EasingStyle.Linear, d = "InOut", g = {GroupTransparency = 0}})
-                open:Play()
-            end
+--// ทำให้ Frame กดได้
+local Click = click(Frame)
+lak2(Click, Frame)
+
+--// ตัวแปรควบคุมการเปิด–ปิด UI
+local isopen = false
+local close = tw({
+    v = BackGround_1,
+    t = 0.25,
+    s = Enum.EasingStyle.Linear,
+    d = "InOut",
+    g = {GroupTransparency = 1}
+})
+
+local function closeui()
+    isopen = not isopen
+
+    if isopen then
+        close:Play()
+        close.Completed:Wait()
+        BackGround_1.Visible = false
+    else
+        if close then
+            close:Cancel()
         end
-
-        Click.MouseButton1Click:Connect(closeui)
-
-        U.InputBegan:Connect(function(i)
-            if i.KeyCode == options.Keybind then
-                local focusedTextBox = U:GetFocusedTextBox()
-
-                if not focusedTextBox then
-                    closeui()
-                end
-            end
-        end)
+        BackGround_1.Visible = true  
+        local open = tw({
+            v = BackGround_1,
+            t = 0.25,
+            s = Enum.EasingStyle.Linear,
+            d = "InOut",
+            g = {GroupTransparency = 0}
+        })
+        open:Play()
     end
+end
+
+--// เชื่อมต่อปุ่มคลิก
+Click.MouseButton1Click:Connect(closeui)
+
+--// เชื่อมต่อ Keybind
+U.InputBegan:Connect(function(i)
+    if i.KeyCode == options.Keybind then
+        local focusedTextBox = U:GetFocusedTextBox()
+        if not focusedTextBox then
+            closeui()
+        end
+    end
+end)
+end
     
     return Library.Tabs
 end
