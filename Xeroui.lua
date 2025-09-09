@@ -4,7 +4,7 @@ Library = {}
 SaveTheme = {}
 
 local themes = {
-    index = {"RedTheme"},
+    index = {"RedTheme", "BlueTheme"},
 
     ["RedTheme"] = {
         ['Background'] = Color3.fromRGB(30, 15, 15),  
@@ -14,7 +14,7 @@ local themes = {
         ['Icon'] = Color3.fromRGB(255, 255, 255),
         ['Back'] = Color3.fromRGB(20, 10, 10),
         ['Function'] = Color3.fromRGB(130, 60, 60),
-        ['Main Color'] = Color3.fromRGB(255, 80, 80), 
+        ['Main Color'] = Color3.fromRGB(255, 80, 80), -- ✔️ สีแดง
         ['UIStroke'] = Color3.fromRGB(255, 255, 255),
         ['Background Dialog'] = Color3.fromRGB(60, 25, 25)
     },
@@ -27,7 +27,7 @@ local themes = {
         ['Icon'] = Color3.fromRGB(120, 150, 220),
         ['Back'] = Color3.fromRGB(10, 15, 25),
         ['Function'] = Color3.fromRGB(60, 80, 130),
-        ['Main Color'] = Color3.fromRGB(80, 120, 255), 
+        ['Main Color'] = Color3.fromRGB(80, 120, 255), -- ✔️ สีน้ำเงิน
         ['UIStroke'] = Color3.fromRGB(255, 255, 255),
         ['Background Dialog'] = Color3.fromRGB(25, 35, 55)
     }
@@ -1023,52 +1023,41 @@ function Library:GenerateWindow(option)
     )
     
     local ListFunctionToggle = Instance.new("Frame")
-    local ToggleBarO_1 = Instance.new("Frame")
-    local GlowDot_1 = Instance.new("ImageLabel")
-    local Dot_1 = Instance.new("ImageLabel")
-    local UICorner_1 = Instance.new("UICorner")
-    local UIPadding_1 = Instance.new("UIPadding")
+    local ToggleBox = Instance.new("Frame")
+    local CheckIcon = Instance.new("ImageLabel")
+    local UICorner = Instance.new("UICorner")
+    local UIPadding = Instance.new("UIPadding")
 
     ListFunctionToggle.Name = "ListFunctionToggle"
     ListFunctionToggle.Parent = Toggle
     ListFunctionToggle.BackgroundTransparency = 1
     ListFunctionToggle.Size = UDim2.new(1, 0, 1, 0)
 
-    ToggleBarO_1.Name = "ToggleBarO"
-    ToggleBarO_1.Parent = ListFunctionToggle
-    ToggleBarO_1.AnchorPoint = Vector2.new(1, 0.5)
-    ToggleBarO_1.BackgroundColor3 = Color3.fromRGB(216,216,216)
-    ToggleBarO_1.Position = UDim2.new(1, 0, 0.5, 0)
-    ToggleBarO_1.Size = UDim2.new(0, 30, 0, 15)
-    ToggleBarO_1.BorderSizePixel = 0
-    addToTheme('Back', ToggleBarO_1)
+    ToggleBox.Name = "ToggleBox"
+    ToggleBox.Parent = ListFunctionToggle
+    ToggleBox.AnchorPoint = Vector2.new(1, 0.5)
+    ToggleBox.BackgroundColor3 = themes["RedTheme"]["Back"] -- ใช้สีจาก Theme
+    ToggleBox.Position = UDim2.new(1, 0, 0.5, 0)
+    ToggleBox.Size = UDim2.new(0, 20, 0, 20)
+    ToggleBox.BorderSizePixel = 0
+    addToTheme('Back', ToggleBox)
 
-    GlowDot_1.Name = "GlowDot"
-    GlowDot_1.Parent = ToggleBarO_1
-    GlowDot_1.AnchorPoint = Vector2.new(0.5, 0.5)
-    GlowDot_1.BackgroundTransparency = 1
-    GlowDot_1.Position = UDim2.new(0.5, 0, 0.5, 0)
-    GlowDot_1.Size = UDim2.new(0, 14, 0, 14)
-    GlowDot_1.Image = "rbxassetid://6031094678" -- ✔️ check icon
-    GlowDot_1.ImageColor3 = Color3.fromRGB(0, 200, 0)
-    GlowDot_1.ImageTransparency = 0.5 -- เริ่มต้น OFF แบบโป่งใส
-    addToTheme('Main Color', GlowDot_1)
+    CheckIcon.Name = "CheckIcon"
+    CheckIcon.Parent = ToggleBox
+    CheckIcon.AnchorPoint = Vector2.new(0.5, 0.5)
+    CheckIcon.Position = UDim2.new(0.5, 0, 0.5, 0)
+    CheckIcon.Size = UDim2.new(0, 16, 0, 16)
+    CheckIcon.Image = "rbxassetid://6031094678" -- ✔️ icon Roblox
+    CheckIcon.ImageColor3 = themes["RedTheme"]["Main Color"] -- ใช้สีตาม Theme
+    CheckIcon.BackgroundTransparency = 1
+    CheckIcon.ImageTransparency = 1 -- เริ่มต้นปิด
+    addToTheme('Main Color', CheckIcon)
 
-    Dot_1.Name = "Dot"
-    Dot_1.Parent = GlowDot_1
-    Dot_1.AnchorPoint = Vector2.new(0.5, 0.5)
-    Dot_1.BackgroundTransparency = 1
-    Dot_1.Position = UDim2.new(0.5, 0, 0.5, 0)
-    Dot_1.Size = UDim2.new(0, 12, 0, 12)
-    Dot_1.Image = "rbxassetid://6031094678"
-    Dot_1.ImageColor3 = GlowDot_1.ImageColor3
-    Dot_1.ImageTransparency = 0.5
+    UICorner.Parent = ToggleBox
+    UICorner.CornerRadius = UDim.new(0, 4)
 
-    UICorner_1.Parent = ToggleBarO_1
-    UICorner_1.CornerRadius = UDim.new(1, 0)
-
-    UIPadding_1.Parent = ListFunctionToggle
-    UIPadding_1.PaddingRight = UDim.new(0, 8)
+    UIPadding.Parent = ListFunctionToggle
+    UIPadding.PaddingRight = UDim.new(0, 8)
 
     local Click = click(Toggle)
 
@@ -1076,19 +1065,17 @@ function Library:GenerateWindow(option)
         Value = not Value
         Callback(Value)
         if Value then
-            -- ON
-            tw({v = GlowDot_1, t = 0.2, g = {ImageTransparency = 0}}):Play()
-            tw({v = Dot_1, t = 0.2, g = {ImageTransparency = 0}}):Play()
+            -- เปิด → แสดง ✔️
+            tw({v = CheckIcon, t = 0.2, g = {ImageTransparency = 0}}):Play()
         else
-            -- OFF
-            tw({v = GlowDot_1, t = 0.2, g = {ImageTransparency = 0.5}}):Play()
-            tw({v = Dot_1, t = 0.2, g = {ImageTransparency = 0.5}}):Play()
+            -- ปิด → ไม่มีอะไร
+            tw({v = CheckIcon, t = 0.2, g = {ImageTransparency = 1}}):Play()
         end
     end
 
-    GlowDot_1:GetPropertyChangedSignal("ImageColor3"):Connect(function()
+    CheckIcon:GetPropertyChangedSignal("ImageColor3"):Connect(function()
         if Value then
-            Dot_1.ImageColor3 = GlowDot_1.ImageColor3
+            CheckIcon.ImageColor3 = themes["RedTheme"]["Main Color"]
         end
     end)
 
