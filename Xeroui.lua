@@ -4,7 +4,7 @@ Library = {}
 SaveTheme = {}
 
 local themes = {
-    index = {"RedTheme"}
+    index = {"RedTheme"},
     ["RedTheme"] = {
         ['Background'] = Color3.fromRGB(30, 15, 15),  
         ['Main'] = Color3.fromRGB(50, 20, 20),           
