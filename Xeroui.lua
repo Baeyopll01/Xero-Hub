@@ -3,32 +3,32 @@ Library = {}
 SaveTheme = {}
 
 local themes = {
-    index = {"RedPurple", "PurpleRed"},
-    
-    ["RedPurple"] = {
-        ['Background'] = Color3.fromRGB(80, 0, 40),     -- dark reddish purple
-        ['Main'] = Color3.fromRGB(120, 0, 60),          -- strong red-purple
-        ['Tab'] = Color3.fromRGB(100, 0, 50),
-        ['Title'] = Color3.fromRGB(255, 220, 240),      -- light pink text
-        ['Icon'] = Color3.fromRGB(255, 200, 220),
-        ['Back'] = Color3.fromRGB(60, 0, 30),
-        ['Function'] = Color3.fromRGB(90, 0, 45),
-        ['Main Color'] = Color3.fromRGB(200, 0, 120),   -- vibrant magenta
+    index = {"RedBlack", "PurpleBlack"},
+
+    ["RedBlack"] = {
+        ['Background'] = Color3.fromRGB(20, 0, 0),      -- almost black with hint of red
+        ['Main'] = Color3.fromRGB(60, 0, 0),            -- dark red
+        ['Tab'] = Color3.fromRGB(40, 0, 0),
+        ['Title'] = Color3.fromRGB(255, 180, 180),      -- soft red text
+        ['Icon'] = Color3.fromRGB(255, 100, 100),
+        ['Back'] = Color3.fromRGB(10, 0, 0),
+        ['Function'] = Color3.fromRGB(90, 0, 0),
+        ['Main Color'] = Color3.fromRGB(200, 0, 0),     -- vibrant red
         ['UIStroke'] = Color3.fromRGB(255, 255, 255),
-        ['Background Dialog'] = Color3.fromRGB(70, 0, 35)
+        ['Background Dialog'] = Color3.fromRGB(30, 0, 0)
     },
-    
-    ["PurpleRed"] = {
-        ['Background'] = Color3.fromRGB(240, 200, 220), -- soft purple-red background
-        ['Main'] = Color3.fromRGB(255, 230, 240),
-        ['Tab'] = Color3.fromRGB(250, 210, 230),
-        ['Title'] = Color3.fromRGB(80, 0, 40),          -- dark text for contrast
-        ['Icon'] = Color3.fromRGB(100, 0, 60),
-        ['Back'] = Color3.fromRGB(220, 180, 200),
-        ['Function'] = Color3.fromRGB(245, 210, 225),
-        ['Main Color'] = Color3.fromRGB(180, 0, 100),   -- vibrant purple-red
-        ['UIStroke'] = Color3.fromRGB(80, 0, 40),
-        ['Background Dialog'] = Color3.fromRGB(100, 0, 60)
+
+    ["PurpleBlack"] = {
+        ['Background'] = Color3.fromRGB(10, 0, 20),     -- dark purple black
+        ['Main'] = Color3.fromRGB(40, 0, 60),
+        ['Tab'] = Color3.fromRGB(30, 0, 40),
+        ['Title'] = Color3.fromRGB(220, 180, 255),      -- light purple text
+        ['Icon'] = Color3.fromRGB(180, 100, 255),
+        ['Back'] = Color3.fromRGB(5, 0, 10),
+        ['Function'] = Color3.fromRGB(70, 0, 120),
+        ['Main Color'] = Color3.fromRGB(120, 0, 200),   -- vibrant purple
+        ['UIStroke'] = Color3.fromRGB(255, 255, 255),
+        ['Background Dialog'] = Color3.fromRGB(20, 0, 40)
     }
 }
 
