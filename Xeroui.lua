@@ -539,7 +539,7 @@ function Library:GenerateWindow(option)
     Time_1.Position = UDim2.new(0.410958916, 0,0, 0)
     Time_1.Size = UDim2.new(-0, 50,1, 0)
     Time_1.Font = Enum.Font.GothamBold
-    Time_1.Text = 
+    Time_1.Text = "00:00"
     Time_1.TextSize = 9
     Time_1.TextTransparency = 0.4000000059604645
     Time_1.TextWrapped = true
@@ -1059,7 +1059,7 @@ function Library.Func:CreateToggle(option)
     CheckIcon.AnchorPoint = Vector2.new(0.5, 0.5)
     CheckIcon.Position = UDim2.new(0.5, 0, 0.5, 0)
     CheckIcon.Size = UDim2.new(0, 16, 0, 16)
-    CheckIcon.Image = "rbxassetid://6031094678"
+    CheckIcon.Image = "rbxassetid://10709752405"
     CheckIcon.ImageColor3 = Color3.fromRGB(0, 200, 0)
     CheckIcon.BackgroundTransparency = 1
     CheckIcon.ImageTransparency = 0.5
