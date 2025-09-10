@@ -1283,7 +1283,8 @@ end
                 end)
             end
             
-            function Library.Func:CreateDropdown(option)
+            --// Dropdown Function
+function Library.Func:CreateDropdown(option)
     local List = option.List or {}
     local Value = option.Value or List[1]
     local Callback = option.Callback or function() end
@@ -1313,7 +1314,7 @@ end
     DropdownValue_1.Name = "DropdownValue"
     DropdownValue_1.Parent = ListFunctionDropdown
     DropdownValue_1.AnchorPoint = Vector2.new(1, 0.5)
-    DropdownValue_1.BackgroundColor3 = Color3.fromRGB(30, 30, 40) -- พื้นหลังเข้ม
+    DropdownValue_1.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
     DropdownValue_1.BorderSizePixel = 0
     DropdownValue_1.Position = UDim2.new(1, 0, 0.5, 0)
     DropdownValue_1.Size = UDim2.new(0, 140, 0, 32)
@@ -1327,9 +1328,9 @@ end
     TextLabelValue_1.BackgroundTransparency = 1
     TextLabelValue_1.Size = UDim2.new(1, -20, 1, 0)
     TextLabelValue_1.Font = Enum.Font.GothamSemibold
-    TextLabelValue_1.Text = "Select 1"
+    TextLabelValue_1.Text = Value or "Select 1"
     TextLabelValue_1.TextSize = 13
-    TextLabelValue_1.TextColor3 = Color3.fromRGB(255, 255, 255) -- ข้อความขาว
+    TextLabelValue_1.TextColor3 = Color3.fromRGB(255, 255, 255)
     TextLabelValue_1.TextXAlignment = Enum.TextXAlignment.Left
     addToTheme('Title', TextLabelValue_1)
 
@@ -1341,7 +1342,7 @@ end
     ImageLabel_1.Position = UDim2.new(1, -8, 0.5, 0)
     ImageLabel_1.Size = UDim2.new(0, 14, 0, 14)
     ImageLabel_1.Image = "rbxassetid://13858680846"
-    ImageLabel_1.ImageColor3 = Color3.fromRGB(255, 255, 255) -- ไอคอนขาว
+    ImageLabel_1.ImageColor3 = Color3.fromRGB(255, 255, 255)
     addToTheme('Icon', ImageLabel_1)
 
     UIPadding_2.Parent = ListFunctionDropdown
