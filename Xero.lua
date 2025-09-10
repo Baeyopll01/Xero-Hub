@@ -1,17 +1,3 @@
---[[
-    𝐂𝐫𝐞𝐝𝐢𝐭 𝗤𝗪𝗘𝗥𝗧𝗬 𝗛𝗨𝗕
-
-    𝐅𝐢𝐱 𝐁𝐮𝐠 ฺ 𝐁𝐲 𝐄𝐱・서나리 / @ex_ren
-    𝗗𝗶𝘀𝗰𝗼𝗿𝗱 : 𝗵𝘁𝘁𝗽𝘀://𝗱𝗶𝘀𝗰𝗼𝗿𝗱.𝗴𝗴/𝟲𝟰𝗮𝗵𝗩𝗿𝗭𝗽𝟱𝗛
-
-	𝐋𝐢𝐬𝐭 𝐁𝐮𝐠 𝐅𝐢𝐱 = {
-
-	}
-	𝐀𝐝𝐝 𝐅𝐮𝐧𝐜𝐭𝐢𝐨𝐧 = {
-		𝐃𝐫𝐨𝐩𝐝𝐨𝐰𝐧 𝐒𝐞𝐚𝐫𝐜𝐡
-	}
-]]
---k
 
 local a = cloneref or function(...)
 	return ...
@@ -1215,107 +1201,54 @@ do
 	end
 end
 function p:Window(_)
-	local k = { Active = nil, Maximized = false, Visible = true, Ready = false }
-	local _ = _ or {}
-	local m = {
-		StartupName = _.StartupName or _.startname or "Qwerty",
-		Title = _.title or _.Title or "Window",
-		SubTitle = _.subtitle or _.Subtitle or _.SubTitle or "Copyright QWERTY HUB",
-		TabWidth = _.tabwidth or _.TabWidth or 160,
-		Size = _.size or _.Size or self.IsMobile and UDim2.fromOffset(464, 368) or UDim2.fromOffset(580, 460),
-		MinimizeKey = _.minimizekey or _.MinimizeKey or Enum.KeyCode.Home,
-		Theme = _.theme or _.Theme or "Default",
-		ExitCallback = _.exitcallback or _.ExitCallback or function() end,
-		Transparency = _.transparency or _.Transparency or 0.85,
-		FontFace = _.font or _.Font or nil,
-	}
-	p.Settings.FontFace = m.FontFace
-	self.Settings.Keybind = m.MinimizeKey
-	self.Settings.Transparency = m.Transparency
-	self.Theme = m.Theme
-	local _ = c:IsStudio() and a.PlayerGui or game:GetService("CoreGui")
-	local j = self:Create("ScreenGui", {
-		Name = "NEXT_GEN",
-		Parent = _,
-		ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
-		ResetOnSpawn = false,
-		DisplayOrder = 100000000000,
-		IgnoreGuiInset = true,
-	})
-	local _ = p:Create("Frame", {
-		Parent = j,
-		AnchorPoint = Vector2.new(0.5, 0.5),
-		BackgroundColor3 = Color3.new(1, 1, 1),
-		BackgroundTransparency = 1,
-		BorderColor3 = Color3.new(0, 0, 0),
-		BorderSizePixel = 0,
-		Position = UDim2.new(0.5, 0, 0.5, 0),
-		Size = UDim2.new(0.151, 0, 0.093, 0),
-	})
-	local a = p:Create("TextLabel", {
-		Name = "StartupLabel",
-		Parent = _,
-		AnchorPoint = Vector2.new(0.5, 0.5),
-		BackgroundColor3 = Color3.new(1, 1, 1),
-		BackgroundTransparency = 1,
-		BorderColor3 = Color3.new(0, 0, 0),
-		BorderSizePixel = 0,
-		Position = UDim2.new(0.5, 0, 0.5, 0),
-		Size = UDim2.new(1, 0, 0.234, 0),
-		ZIndex = 2,
-		Font = Enum.Font.GothamBold,
-		Text = "Starting up! " .. m.StartupName .. " Hub",
-		TextColor3 = Color3.new(1, 1, 1),
-		TextScaled = true,
-		TextSize = 14,
-		TextWrapped = true,
-	})
-	local b = p:Create("TextLabel", {
-		Name = "InitializingLabel",
-		AnchorPoint = Vector2.new(0.5, 0.5),
-		BackgroundColor3 = Color3.new(1, 1, 1),
-		BackgroundTransparency = 1,
-		BorderColor3 = Color3.new(0, 0, 0),
-		BorderSizePixel = 0,
-		Position = UDim2.new(0.5, 0, 0.667, 0),
-		Size = UDim2.new(1, 0, 0.222, 0),
-		ZIndex = 2,
-		Font = Enum.Font.GothamBold,
-		Text = "Initializing the UI...",
-		TextColor3 = Color3.new(1, 1, 1),
-		TextScaled = true,
-		TextSize = 14,
-		TextWrapped = true,
-		TextTransparency = 1,
-	})
-	task.delay(1, function()
-		b.Parent = _
-		o:Animation(a, { Position = UDim2.new(0.5, 0, 0.345, 0) }, 0.1, Enum.EasingStyle.Linear)
-		o:Animation(b, { TextTransparency = 0 }, 0.1, Enum.EasingStyle.Linear)
-		task.wait(3)
-		o:Animation(a, { Position = UDim2.new(0.5, 0, 0.275, 0), TextTransparency = 1 }, 0.1, Enum.EasingStyle.Linear)
-		o:Animation(b, { Position = UDim2.new(0.5, 0, 0.5, 0) }, 0.1, Enum.EasingStyle.Linear)
-		task.wait(1)
-		local _ = o:Animation(b, { TextTransparency = 1 }, 0.1, Enum.EasingStyle.Linear)
-		_.Completed:Connect(function()
-			k.Ready = true
-			if a then
-				a:Destroy()
-			end
-			if b then
-				b:Destroy()
-			end
-		end)
-	end)
-	repeat
-		task.wait()
-	until k.Ready
-	function p:Destroy()
-		for _, _ in pairs(self.Connections) do
-			_:Disconnect()
-		end
-		j:Destroy()
-	end
+    local k = { Active = nil, Maximized = false, Visible = true, Ready = true } -- Ready = true ทันที
+    local _ = _ or {}
+    local m = {
+        StartupName = _.StartupName or _.startname or "Xero Hub",
+        Title = _.title or _.Title or "Window",
+        SubTitle = _.subtitle or _.Subtitle or _.SubTitle or "Xero Hub",
+        TabWidth = _.tabwidth or _.TabWidth or 160,
+        Size = _.size or _.Size or self.IsMobile and UDim2.fromOffset(464, 368) or UDim2.fromOffset(580, 460),
+        MinimizeKey = _.minimizekey or _.MinimizeKey or Enum.KeyCode.Home,
+        Theme = _.theme or _.Theme or "Default",
+        ExitCallback = _.exitcallback or _.ExitCallback or function() end,
+        Transparency = _.transparency or _.Transparency or 0.85,
+        FontFace = _.font or _.Font or nil,
+    }
+
+    p.Settings.FontFace = m.FontFace
+    self.Settings.Keybind = m.MinimizeKey
+    self.Settings.Transparency = m.Transparency
+    self.Theme = m.Theme
+
+    local _ = c:IsStudio() and a.PlayerGui or game:GetService("CoreGui")
+
+    local j = self:Create("ScreenGui", {
+        Name = "NEXT_GEN",
+        Parent = _,
+        ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
+        ResetOnSpawn = false,
+        DisplayOrder = 100000000000,
+        IgnoreGuiInset = true,
+    })
+
+    local _ = p:Create("Frame", {
+        Parent = j,
+        AnchorPoint = Vector2.new(0.5, 0.5),
+        BackgroundColor3 = Color3.new(1, 1, 1),
+        BackgroundTransparency = 1,
+        BorderColor3 = Color3.new(0, 0, 0),
+        BorderSizePixel = 0,
+        Position = UDim2.new(0.5, 0, 0.5, 0),
+        Size = UDim2.new(0.151, 0, 0.093, 0),
+    })
+    function p:Destroy()
+        for _, _ in pairs(self.Connections) do
+            _:Disconnect()
+        end
+        j:Destroy()
+    end
+end
 	local n = self:Create("Frame", {
 		Name = "MainFrame",
 		Parent = j,
