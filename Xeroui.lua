@@ -1283,7 +1283,6 @@ end
                 end)
             end
             
-            --// Dropdown Function
 function Library.Func:CreateDropdown(option)
     local List = option.List or {}
     local Value = option.Value or List[1]
@@ -1307,58 +1306,71 @@ function Library.Func:CreateDropdown(option)
 
     ListFunctionDropdown.Name = "ListFunctionDropdown"
     ListFunctionDropdown.Parent = Dropdown
+    ListFunctionDropdown.BackgroundColor3 = Color3.fromRGB(255,255,255)
     ListFunctionDropdown.BackgroundTransparency = 1
-    ListFunctionDropdown.Size = UDim2.new(1, 0, 1, 0)
+    ListFunctionDropdown.BorderColor3 = Color3.fromRGB(0,0,0)
+    ListFunctionDropdown.BorderSizePixel = 0
+    ListFunctionDropdown.Size = UDim2.new(1, 0,1, 0)
 
-    -- ▼ ปุ่ม DropdownValue (Pill Shape)
     DropdownValue_1.Name = "DropdownValue"
     DropdownValue_1.Parent = ListFunctionDropdown
     DropdownValue_1.AnchorPoint = Vector2.new(1, 0.5)
-    DropdownValue_1.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+    DropdownValue_1.BackgroundColor3 = Color3.fromRGB(217,217,217)
+    DropdownValue_1.BorderColor3 = Color3.fromRGB(0,0,0)
     DropdownValue_1.BorderSizePixel = 0
-    DropdownValue_1.Position = UDim2.new(1, 0, 0.5, 0)
-    DropdownValue_1.Size = UDim2.new(0, 140, 0, 32)
-    addToTheme('Main', DropdownValue_1)
+    DropdownValue_1.Position = UDim2.new(1, 0,0.5, 0)
+    -- ✅ แก้ไข: ทำให้ใหญ่ขึ้นและเป็นสี่เหลี่ยม
+    DropdownValue_1.Size = UDim2.new(0, 120,0, 30)
 
-    local UICorner_1 = Instance.new("UICorner")
-    UICorner_1.CornerRadius = UDim.new(0.5, 0) -- pill shape
-    UICorner_1.Parent = DropdownValue_1
+    addToTheme('Back', DropdownValue_1)
+
+    -- ❌ ลบ UICorner เพื่อให้เป็นสี่เหลี่ยม Square
 
     TextLabelValue_1.Parent = DropdownValue_1
+    TextLabelValue_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
     TextLabelValue_1.BackgroundTransparency = 1
-    TextLabelValue_1.Size = UDim2.new(1, -20, 1, 0)
-    TextLabelValue_1.Font = Enum.Font.GothamSemibold
-    TextLabelValue_1.Text = Value or "Select 1"
-    TextLabelValue_1.TextSize = 13
-    TextLabelValue_1.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TextLabelValue_1.BorderColor3 = Color3.fromRGB(0,0,0)
+    TextLabelValue_1.BorderSizePixel = 0
+    TextLabelValue_1.Size = UDim2.new(1, -15,1, 0)
+    TextLabelValue_1.Font = Enum.Font.Gotham
+    TextLabelValue_1.Text = "Select 1"
+    TextLabelValue_1.TextSize = 12
     TextLabelValue_1.TextXAlignment = Enum.TextXAlignment.Left
+    TextLabelValue_1.TextTruncate = Enum.TextTruncate.AtEnd
     addToTheme('Title', TextLabelValue_1)
 
     UIPadding_1.Parent = DropdownValue_1
-    UIPadding_1.PaddingLeft = UDim.new(0, 10)
+    UIPadding_1.PaddingLeft = UDim.new(0,5)
+    UIPadding_1.PaddingRight = UDim.new(0,3)
 
     ImageLabel_1.Parent = DropdownValue_1
     ImageLabel_1.AnchorPoint = Vector2.new(1, 0.5)
-    ImageLabel_1.Position = UDim2.new(1, -8, 0.5, 0)
-    ImageLabel_1.Size = UDim2.new(0, 14, 0, 14)
+    ImageLabel_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
+    ImageLabel_1.BackgroundTransparency = 1
+    ImageLabel_1.BorderColor3 = Color3.fromRGB(0,0,0)
+    ImageLabel_1.BorderSizePixel = 0
+    ImageLabel_1.Position = UDim2.new(1, -5,0.5, 0)
+    ImageLabel_1.Size = UDim2.new(0, 12,0, 12)
     ImageLabel_1.Image = "rbxassetid://13858680846"
-    ImageLabel_1.ImageColor3 = Color3.fromRGB(255, 255, 255)
-    addToTheme('Icon', ImageLabel_1)
+    ImageLabel_1.ImageColor3 = Color3.fromRGB(0,0,0)
+    addToTheme('Title', ImageLabel_1)
 
     UIPadding_2.Parent = ListFunctionDropdown
-    UIPadding_2.PaddingRight = UDim.new(0, 8)
+    UIPadding_2.PaddingRight = UDim.new(0,8)
 
     local ClickDropdown = click(Dropdown)
 
-    -- ▼ Dropdown Select
+    -- ▼▼▼ ส่วน DropdownSelect ▼▼▼
     local BackgroundSelect = Instance.new("Frame")
     local DropdownSelect = Instance.new("Frame")
-    local UICorner_2 = Instance.new("UICorner")
+    local UICorner_1 = Instance.new("UICorner")
     local FrameDrop = Instance.new("Frame")
     local ScrollingFrame_1 = Instance.new("ScrollingFrame")
     local UIListLayout_1 = Instance.new("UIListLayout")
     local UIStroke_1 = Instance.new("UIStroke")
     local UIPadding_3 = Instance.new("UIPadding")
+    local Line_1 = Instance.new("Frame")
+    local UICornerLine_1 = Instance.new("UICorner")
 
     addToTheme('Back', DropdownSelect)
 
@@ -1370,44 +1382,54 @@ function Library.Func:CreateDropdown(option)
 
     DropdownSelect.Name = "DropdownSelect"
     DropdownSelect.Parent = BackgroundSelect
-    DropdownSelect.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+    DropdownSelect.BackgroundColor3 = Color3.fromRGB(217,217,217)
+    DropdownSelect.BorderColor3 = Color3.fromRGB(0,0,0)
     DropdownSelect.BorderSizePixel = 0
-    DropdownSelect.Size = UDim2.new(0, 300, 0, 0)
+    DropdownSelect.Size = UDim2.new(0, 300,0, 0)
     DropdownSelect.ClipsDescendants = true
     DropdownSelect.Position = UDim2.new(0.5, 0, 0.5, 0)
-    DropdownSelect.AnchorPoint = Vector2.new(0.5, 0.5)
+    DropdownSelect.AnchorPoint = Vector2.new(0.5,0.5)
 
-    UICorner_2.Parent = DropdownSelect
+    UICorner_1.Parent = DropdownSelect
 
     FrameDrop.Parent = DropdownSelect
+    FrameDrop.BackgroundColor3 = Color3.fromRGB(255,255,255)
     FrameDrop.BackgroundTransparency = 1
-    FrameDrop.Size = UDim2.new(1, 0, 1, 0)
+    FrameDrop.BorderColor3 = Color3.fromRGB(0,0,0)
+    FrameDrop.BorderSizePixel = 0
+    FrameDrop.Size = UDim2.new(1, 0,1, 0)
+
+    UICornerLine_1.Parent = Line_1
+    addToTheme('Main', Line_1)
 
     ScrollingFrame_1.Name = "ScrollingFrame"
     ScrollingFrame_1.Parent = FrameDrop
     ScrollingFrame_1.Active = true
+    ScrollingFrame_1.AnchorPoint = Vector2.new(1, 0)
     ScrollingFrame_1.BackgroundTransparency = 1
-    ScrollingFrame_1.Size = UDim2.new(1, 0, 1, 0)
+    ScrollingFrame_1.BorderSizePixel = 0
+    ScrollingFrame_1.Size = UDim2.new(1, 0,1, 0)
+    ScrollingFrame_1.ClipsDescendants = true
     ScrollingFrame_1.ScrollBarThickness = 0
     ScrollingFrame_1.ScrollingDirection = Enum.ScrollingDirection.Y
 
     UIListLayout_1.Parent = ScrollingFrame_1
-    UIListLayout_1.Padding = UDim.new(0, 3)
+    UIListLayout_1.Padding = UDim.new(0,3)
     UIListLayout_1.HorizontalAlignment = Enum.HorizontalAlignment.Center
     UIListLayout_1.SortOrder = Enum.SortOrder.LayoutOrder
 
     UIPadding_3.Parent = DropdownSelect
-    UIPadding_3.PaddingBottom = UDim.new(0, 5)
-    UIPadding_3.PaddingLeft = UDim.new(0, 5)
-    UIPadding_3.PaddingRight = UDim.new(0, 5)
-    UIPadding_3.PaddingTop = UDim.new(0, 5)
+    UIPadding_3.PaddingBottom = UDim.new(0,5)
+    UIPadding_3.PaddingLeft = UDim.new(0,5)
+    UIPadding_3.PaddingRight = UDim.new(0,5)
+    UIPadding_3.PaddingTop = UDim.new(0,5)
 
     UIStroke_1.Parent = DropdownSelect
     UIStroke_1.Thickness = 1
     UIStroke_1.Transparency = 0.95
     addToTheme('UIStroke', UIStroke_1)
 
-    -- ▼ Search Box
+    -- ▼▼▼ Search Box ▼▼▼
     local Search = Instance.new("Frame")
     local SearchBox_1 = Instance.new("TextBox")
     local IconSearch_1 = Instance.new("ImageLabel")
@@ -1415,16 +1437,16 @@ function Library.Func:CreateDropdown(option)
 
     Search.Name = "Search"
     Search.Parent = DropdownSelect
-    Search.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
-    Search.Size = UDim2.new(1, 0, 0, 25)
+    Search.BackgroundColor3 = Color3.fromRGB(255,255,255)
+    Search.Size = UDim2.new(1, 0,0, 25)
     Search.LayoutOrder = -1
     addToTheme('Main', Search)
 
     SearchBox_1.Parent = Search
     SearchBox_1.BackgroundTransparency = 1
-    SearchBox_1.Size = UDim2.new(1, 0, 1, 0)
+    SearchBox_1.Size = UDim2.new(1, 0,1, 0)
     SearchBox_1.Font = Enum.Font.Gotham
-    SearchBox_1.PlaceholderColor3 = Color3.fromRGB(140, 140, 140)
+    SearchBox_1.PlaceholderColor3 = Color3.fromRGB(140,140,140)
     SearchBox_1.PlaceholderText = "Search"
     SearchBox_1.Text = ""
     SearchBox_1.TextSize = 10
@@ -1432,17 +1454,17 @@ function Library.Func:CreateDropdown(option)
 
     IconSearch_1.Parent = Search
     IconSearch_1.AnchorPoint = Vector2.new(1, 0.5)
-    IconSearch_1.Position = UDim2.new(1, -5, 0.5, 0)
-    IconSearch_1.Size = UDim2.new(0, 12, 0, 12)
+    IconSearch_1.Position = UDim2.new(1, -5,0.5, 0)
+    IconSearch_1.Size = UDim2.new(0, 12,0, 12)
     IconSearch_1.Image = "rbxassetid://14897613248"
     IconSearch_1.ImageTransparency = 0.5
     addToTheme('Icon', IconSearch_1)
 
     UIPaddingSearch.Parent = Search
-    UIPaddingSearch.PaddingLeft = UDim.new(0, 5)
-    UIPaddingSearch.PaddingRight = UDim.new(0, 5)
+    UIPaddingSearch.PaddingLeft = UDim.new(0,5)
+    UIPaddingSearch.PaddingRight = UDim.new(0,5)
 
-    -- ▼ Logic เปิด/ปิด
+    -- ▼▼▼ Logic เปิด/ปิด ▼▼▼
     local isopen = false
     local function open()
         BackgroundSelect.Visible = true
@@ -1468,8 +1490,11 @@ function Library.Func:CreateDropdown(option)
         end
     end)
 
-    -- ▼ Items
+    -- ▼▼▼ Items ▼▼▼
     local itemslist = {}
+    local selectedValues = {}
+    local selectedItem
+
     function itemslist:Add(text)
         local Item_1 = Instance.new("Frame")
         local TextLabel_1 = Instance.new("TextLabel")
@@ -1478,12 +1503,12 @@ function Library.Func:CreateDropdown(option)
         Item_1.Name = "Item"
         Item_1.Parent = ScrollingFrame_1
         Item_1.BackgroundColor3 = themes[IsTheme]['Main']
-        Item_1.Size = UDim2.new(1, 0, 0, 25)
+        Item_1.Size = UDim2.new(1, 0,0, 25)
         addToTheme('Main', Item_1)
 
         TextLabel_1.Parent = Item_1
         TextLabel_1.BackgroundTransparency = 1
-        TextLabel_1.Size = UDim2.new(1, 0, 1, 0)
+        TextLabel_1.Size = UDim2.new(1, 0,1, 0)
         TextLabel_1.Font = Enum.Font.Gotham
         TextLabel_1.Text = text
         TextLabel_1.TextSize = 12
@@ -1493,7 +1518,7 @@ function Library.Func:CreateDropdown(option)
         addToTheme('Title', TextLabel_1)
 
         UIPaddingItem.Parent = Item_1
-        UIPaddingItem.PaddingLeft = UDim.new(0, 3)
+        UIPaddingItem.PaddingLeft = UDim.new(0,3)
 
         local ClickItem = click(Item_1)
         ClickItem.MouseButton1Click:Connect(function()
