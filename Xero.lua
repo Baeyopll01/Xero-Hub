@@ -2930,9 +2930,21 @@ function p:Window(_)
 			end)
 
 			function h:Add(optionText, isSelected)
+	local UserInputService = game:GetService("UserInputService")
+	local mouse = game:GetService("Players").LocalPlayer:GetMouse()
+
+	-- ฟังก์ชันปิด dropdown
+	function h:CloseDropdown()
+		h.Expanded = false
+		f.Visible = false
+		g.ScrollingEnabled = true
+	end
+
+	-- 🟢 ข้อมูล option
 	local text = optionText or "OptionValue"
 	local selectedState = isSelected or false
 
+	-- 🟢 ปุ่ม option
 	local optionButton = p:Create("TextButton", {
 		Name = "Option",
 		FontFace = p.Settings.FontFace or Font.new("rbxasset://fonts/families/SourceSansPro.json"),
@@ -2963,6 +2975,7 @@ function p:Window(_)
 		}),
 	})
 
+	-- 🟢 Mark ตอนเลือก
 	local selectedMark = p:Create("Frame", {
 		Name = "Selected",
 		AnchorPoint = Vector2.new(0, 0.5),
@@ -2974,51 +2987,68 @@ function p:Window(_)
 		Parent = optionButton,
 	}, { p:Create("UICorner", { CornerRadius = UDim.new(0, 2) }) })
 
+	-- 🟢 เก็บลง storage
 	table.insert(p.Storage.Selected, selectedMark)
 	table.insert(h.Options, { Selected = selectedMark, Option = optionButton })
 
-	-- คลิกเลือก
+	-- 🟢 คลิกเลือก option
 	p:Connect(optionButton.Activated, function()
 		if i.Multi then
+			-- Multi select
 			if table.find(i.Default, text) then
 				table.remove(i.Default, table.find(i.Default, text))
 			else
 				table.insert(i.Default, text)
 			end
-			o:Thread(function()
-				selectedMark.Visible = type(i.Default) == "table" and table.find(i.Default, text) or i.Default == text
-				o:Animation(
-					optionButton,
-					{ BackgroundTransparency = table.find(i.Default, text) and 0.9 or 1 },
-					p.AnimationSpeed,
-					p.EasingStyle.Quad,
-					p.EasingDirection.Out
-				)
-			end)
+			selectedMark.Visible = table.find(i.Default, text) ~= nil
+			optionButton.BackgroundTransparency = selectedMark.Visible and 0.9 or 1
 		else
+			-- Single select
 			i.Default = text
-			o:Thread(function()
-				for _, opt in pairs(h.Options) do
-					opt.Selected.Visible = false
-					o:Animation(opt.Option, { BackgroundTransparency = 1 }, p.AnimationSpeed, p.EasingStyle.Quad, p.EasingDirection.Out)
-				end
-				selectedMark.Visible = type(i.Default) == "table" and table.find(i.Default, text) or i.Default == text
-				o:Animation(optionButton, { BackgroundTransparency = 0.9 }, p.AnimationSpeed, p.EasingStyle.Quad, p.EasingDirection.Out)
-			end)
+			for _, opt in pairs(h.Options) do
+				opt.Selected.Visible = false
+				opt.Option.BackgroundTransparency = 1
+			end
+			selectedMark.Visible = true
+			optionButton.BackgroundTransparency = 0.9
+
+			-- ปิด dropdown ทันที
+			h:CloseDropdown()
 		end
 
+		-- Flags
 		if i.Flags then
 			p.Flags[tostring(i.Flags)] = i.Default
 		end
 
+		-- Update label
 		e.Text = typeof(i.Default) == "table" and table.concat(i.Default, ", ") or i.Default
+
+		-- Callback
 		if h.Callback then
 			h.Callback(i.Default)
 		end
 	end)
+
+	-- 🟢 กดนอก dropdown ให้ปิด
+	p:Connect(UserInputService.InputBegan, function(input, gp)
+		if gp then return end
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			if h.Expanded or f.Visible then
+				local guiPos = f.AbsolutePosition
+				local guiSize = f.AbsoluteSize
+				local insideX = mouse.X >= guiPos.X and mouse.X <= guiPos.X + guiSize.X
+				local insideY = mouse.Y >= guiPos.Y and mouse.Y <= guiPos.Y + guiSize.Y
+
+				if not (insideX and insideY) then
+					h:CloseDropdown()
+				end
+			end
+		end
+	end)
 end
 
--- loop สร้าง option
+-- 🟢 loop เพิ่ม option
 for _, value in pairs(i.Values) do
 	h:Add(value, typeof(i.Default) == "table" and table.find(i.Default, value) or i.Default == value)
 end
