@@ -2929,23 +2929,11 @@ function p:Window(_)
 				filterOptions(searchBox.Text)
 			end)
 
-			function h:Add(optionText, isSelected)
-	local UserInputService = game:GetService("UserInputService")
-	local mouse = game:GetService("Players").LocalPlayer:GetMouse()
+			function h:Add(a, _)
+	local b = a or "OptionValue"
+	local _ = _ or false
 
-	-- ฟังก์ชันปิด dropdown
-	function h:CloseDropdown()
-		h.Expanded = false
-		f.Visible = false
-		g.ScrollingEnabled = true
-	end
-
-	-- 🟢 ข้อมูล option
-	local text = optionText or "OptionValue"
-	local selectedState = isSelected or false
-
-	-- 🟢 ปุ่ม option
-	local optionButton = p:Create("TextButton", {
+	local optionBtn = p:Create("TextButton", {
 		Name = "Option",
 		FontFace = p.Settings.FontFace or Font.new("rbxasset://fonts/families/SourceSansPro.json"),
 		Text = "",
@@ -2953,105 +2941,133 @@ function p:Window(_)
 		TextSize = 14,
 		AutoButtonColor = false,
 		BackgroundColor3 = Color3.fromRGB(120, 120, 120),
-		BackgroundTransparency = selectedState and 0.9 or 1,
+		BackgroundTransparency = _ and 0.9 or 1,
 		BorderColor3 = Color3.fromRGB(0, 0, 0),
 		Size = UDim2.new(1, -5, 0, 32),
 		ZIndex = 23,
 		Parent = c,
 	}, {
-		p:Create("UICorner", { CornerRadius = UDim.new(0, 6) }),
+		p:Create("UICorner", { Name = "UICorner", CornerRadius = UDim.new(0, 6) }),
 		p:Create("TextLabel", {
 			Name = "OptionLabel",
 			FontFace = p.Settings.FontFace or Font.new("rbxasset://fonts/families/GothamSSm.json"),
-			Text = text,
+			Text = b,
 			TextColor3 = Color3.fromRGB(240, 240, 240),
 			TextSize = 13,
 			TextWrapped = true,
 			TextXAlignment = Enum.TextXAlignment.Left,
 			AutomaticSize = Enum.AutomaticSize.Y,
+			BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 			BackgroundTransparency = 1,
+			BorderColor3 = Color3.fromRGB(0, 0, 0),
 			Position = UDim2.fromOffset(10, 0),
 			Size = UDim2.fromScale(0.96, 1),
 		}),
 	})
 
-	-- 🟢 Mark ตอนเลือก
-	local selectedMark = p:Create("Frame", {
+	local selectedFrame = p:Create("Frame", {
 		Name = "Selected",
 		AnchorPoint = Vector2.new(0, 0.5),
 		BackgroundColor3 = p.Themes.BackgroundColor,
+		BorderColor3 = Color3.fromRGB(0, 0, 0),
 		BorderSizePixel = 0,
 		Position = UDim2.fromOffset(-1, 16),
 		Size = UDim2.fromOffset(4, 14),
-		Visible = selectedState,
-		Parent = optionButton,
-	}, { p:Create("UICorner", { CornerRadius = UDim.new(0, 2) }) })
+		Visible = _,
+		Parent = optionBtn,
+	}, {
+		p:Create("UICorner", { Name = "UICorner", CornerRadius = UDim.new(0, 2) })
+	})
 
-	-- 🟢 เก็บลง storage
-	table.insert(p.Storage.Selected, selectedMark)
-	table.insert(h.Options, { Selected = selectedMark, Option = optionButton })
+	table.insert(p.Storage.Selected, selectedFrame)
+	table.insert(h.Options, { Selected = selectedFrame, Option = optionBtn })
 
-	-- 🟢 คลิกเลือก option
-	p:Connect(optionButton.Activated, function()
+	p:Connect(optionBtn.Activated, function()
 		if i.Multi then
-			-- Multi select
-			if table.find(i.Default, text) then
-				table.remove(i.Default, table.find(i.Default, text))
+			if table.find(i.Default, b) then
+				table.remove(i.Default, table.find(i.Default, b))
 			else
-				table.insert(i.Default, text)
+				table.insert(i.Default, b)
 			end
-			selectedMark.Visible = table.find(i.Default, text) ~= nil
-			optionButton.BackgroundTransparency = selectedMark.Visible and 0.9 or 1
+			o:Thread(function()
+				selectedFrame.Visible = type(i.Default) == "table" and table.find(i.Default, b) or i.Default == b
+				o:Animation(
+					optionBtn,
+					{ BackgroundTransparency = table.find(i.Default, b) and 0.9 or 1 },
+					p.AnimationSpeed,
+					p.EasingStyle.Quad,
+					p.EasingDirection.Out
+				)
+			end)
 		else
-			-- Single select
-			i.Default = text
-			for _, opt in pairs(h.Options) do
-				opt.Selected.Visible = false
-				opt.Option.BackgroundTransparency = 1
-			end
-			selectedMark.Visible = true
-			optionButton.BackgroundTransparency = 0.9
-
-			-- ปิด dropdown ทันที
-			h:CloseDropdown()
+			i.Default = b
+			o:Thread(function()
+				for _, v in pairs(h.Options) do
+					v.Selected.Visible = false
+					o:Animation(
+						v.Option,
+						{ BackgroundTransparency = 1 },
+						p.AnimationSpeed,
+						p.EasingStyle.Quad,
+						p.EasingDirection.Out
+					)
+				end
+				selectedFrame.Visible = type(i.Default) == "table" and table.find(i.Default, b) or i.Default == b
+				o:Animation(
+					optionBtn,
+					{ BackgroundTransparency = 0.9 },
+					p.AnimationSpeed,
+					p.EasingStyle.Quad,
+					p.EasingDirection.Out
+				)
+			end)
 		end
 
-		-- Flags
 		if i.Flags then
 			p.Flags[tostring(i.Flags)] = i.Default
 		end
-
-		-- Update label
 		e.Text = typeof(i.Default) == "table" and table.concat(i.Default, ", ") or i.Default
-
-		-- Callback
 		if h.Callback then
 			h.Callback(i.Default)
 		end
 	end)
+end
 
-	-- 🟢 กดนอก dropdown ให้ปิด
-	p:Connect(UserInputService.InputBegan, function(input, gp)
-		if gp then return end
-		if input.UserInputType == Enum.UserInputType.MouseButton1 then
-			if h.Expanded or f.Visible then
-				local guiPos = f.AbsolutePosition
-				local guiSize = f.AbsoluteSize
-				local insideX = mouse.X >= guiPos.X and mouse.X <= guiPos.X + guiSize.X
-				local insideY = mouse.Y >= guiPos.Y and mouse.Y <= guiPos.Y + guiSize.Y
+-- loop add values
+for _, v in pairs(i.Values) do
+	h:Add(v, typeof(i.Default) == "table" and table.find(i.Default, v) or i.Default == v)
+end
 
-				if not (insideX and insideY) then
-					h:CloseDropdown()
-				end
-			end
+a()
+if i.Flags then
+	p.Flags[tostring(i.Flags)] = i.Default
+end
+
+p:Connect(l.InputBegan, function(a, _)
+	if (a.UserInputType == Enum.UserInputType.MouseButton1 or a.UserInputType == Enum.UserInputType.Touch) and not _ then
+		if h.Expanded or f.Visible then
+			h.Expanded = false
+			f.Visible = false
+			g.ScrollingEnabled = true
 		end
-	end)
-end
+	end
+end)
 
--- 🟢 loop เพิ่ม option
-for _, value in pairs(i.Values) do
-	h:Add(value, typeof(i.Default) == "table" and table.find(i.Default, value) or i.Default == value)
-end
+p:Connect(g:GetPropertyChangedSignal("Visible"), function()
+	if h.Expanded or f.Visible then
+		h.Expanded = false
+		f.Visible = false
+		g.ScrollingEnabled = true
+	end
+end)
+
+p:Connect(n:GetPropertyChangedSignal("Visible"), function()
+	if h.Expanded or f.Visible then
+		h.Expanded = false
+		f.Visible = false
+		g.ScrollingEnabled = true
+	end
+end)
 			function h:Hide()
 				h.Expanded = false
 				f.Visible = false
