@@ -2839,7 +2839,7 @@ function p:Window(_)
 		p:Create("UIListLayout", { Padding = UDim.new(0, 3) }),
 	})
 
-	-- ฟังก์ชัน Add (แก้แล้ว)
+	-- ฟังก์ชัน Add
 	function h:Add(value, selected)
 		local optionValue = value or "OptionValue"
 		local isSelected = selected or false
@@ -2899,7 +2899,11 @@ function p:Window(_)
 				end
 				selectedFrame.Visible = true
 				optionButton.BackgroundTransparency = 0.9
+
+				-- ✅ เลือกแล้วปิด dropdown
+				h:Hide()
 			end
+
 			if i.Flags then
 				p.Flags[tostring(i.Flags)] = i.Default
 			end
@@ -2967,6 +2971,18 @@ function p:Window(_)
 			searchBox:CaptureFocus()
 		else
 			h:Hide()
+		end
+	end)
+
+	-- ✅ คลิกข้างนอกแล้วปิด
+	p:Connect(game:GetService("UserInputService").InputBegan, function(input)
+		if h.Expanded and input.UserInputType == Enum.UserInputType.MouseButton1 then
+			local mouse = game:GetService("UserInputService"):GetMouseLocation()
+			local absPos, absSize = popup.AbsolutePosition, popup.AbsoluteSize
+			if not (mouse.X >= absPos.X and mouse.X <= absPos.X + absSize.X and
+					mouse.Y >= absPos.Y and mouse.Y <= absPos.Y + absSize.Y) then
+				h:Hide()
+			end
 		end
 	end)
 
