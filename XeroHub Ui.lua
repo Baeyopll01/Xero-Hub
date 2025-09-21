@@ -2749,119 +2749,183 @@ function Library:CreateWindow(info)
 	end
 	
 	function Library.Tabs:Notify(info)
-    local Title = info.Title
-    local Desc = info.Desc or ''
-    local Time = info.Time or 5
-    local Image = info.Image or "rbxassetid://107475662985726" -- ใส่ ID รูป default
+	local Title = info.Title
+	local Desc = info.Desc or ''
+	local Time = info.Time or 5
+	local Button = info.Button or {}
+	local Notifytemple_1 = Instance.new("Frame")
+	local UICorner_1 = Instance.new("UICorner")
+	local UIStroke_1 = Instance.new("UIStroke")
+	local Frame_1 = Instance.new("Frame")
+	local UIPadding_1 = Instance.new("UIPadding")
+	local Desc_1 = Instance.new("TextLabel")
+	local UIListLayout_2 = Instance.new("UIListLayout")
+	local Title_1 = Instance.new("TextLabel")
+	local ImageLabel_1 = Instance.new("ImageLabel")
 
-    local PlayerGui = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
-    local ScreenGui = PlayerGui:FindFirstChild("NotifyGui") or Instance.new("ScreenGui")
-    ScreenGui.Name = "NotifyGui"
-    ScreenGui.Parent = PlayerGui
+	local Background = Instance.new("Frame")  
+	local UIListLayoutBackgorund = Instance.new("UIListLayout")  
 
-    local Background = Instance.new("Frame")
-    Background.Name = "Background"
-    Background.Parent = ScreenGui
-    Background.AnchorPoint = Vector2.new(1, 0) -- ขวาบน
-    Background.Position = UDim2.new(1, 0, 0, 100) -- ลงจากขอบบน 100px
-    Background.Size = UDim2.new(0, 320, 1, -200)
-    Background.BackgroundTransparency = 1
+	Background.Name = "Background"  
+	Background.Parent = Notification  
+	Background.BackgroundColor3 = Color3.fromRGB(255, 255, 255)  
+	Background.BackgroundTransparency = 1.000  
+	Background.BorderColor3 = Color3.fromRGB(0, 0, 0)  
+	Background.BorderSizePixel = 0  
+	Background.Size = UDim2.new(0, 100, 0, 0)  
 
-    local UIListLayout = Instance.new("UIListLayout")
-    UIListLayout.Parent = Background
-    UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Right
-    UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-    UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Top
-    UIListLayout.Padding = UDim.new(0, 8)
+	-- เปลี่ยนตำแหน่งเป็นขวาบน
+	Background.Position = UDim2.new(1, -20, 0, 100)  -- ขวาบน, เลื่อนลง 100 px
+	UIListLayoutBackgorund.Name = "UIListLayoutBackgorund"
+	UIListLayoutBackgorund.Parent = Background  
+	UIListLayoutBackgorund.HorizontalAlignment = Enum.HorizontalAlignment.Right  
+	UIListLayoutBackgorund.SortOrder = Enum.SortOrder.LayoutOrder  
+	UIListLayoutBackgorund.VerticalAlignment = Enum.VerticalAlignment.Top  -- เรียงจากบนลงล่าง
+	UIListLayoutBackgorund.Padding = UDim.new(0, 8)  
 
-    -- Notification Frame
-    local NotifyFrame = Instance.new("Frame")
-    NotifyFrame.Name = "NotifyFrame"
-    NotifyFrame.Parent = Background
-    NotifyFrame.BackgroundColor3 = Color3.fromRGB(28,28,30)
-    NotifyFrame.BackgroundTransparency = 0.8 -- โปร่งใส 0.8
-    NotifyFrame.BorderSizePixel = 0
-    NotifyFrame.Size = UDim2.new(0, 150, 0, 0)
-    NotifyFrame.ClipsDescendants = true
+	Notifytemple_1.Name = "Notifytemple"  
+	Notifytemple_1.Parent = Background  
+	Notifytemple_1.BackgroundColor3 = Color3.fromRGB(28,28,30)  
+	Notifytemple_1.BorderColor3 = Color3.fromRGB(0,0,0)  
+	Notifytemple_1.BorderSizePixel = 0  
+	Notifytemple_1.Size = UDim2.new(0, 0,0, 0)  
+	Notifytemple_1.ClipsDescendants = true  
 
-    local UICorner = Instance.new("UICorner", NotifyFrame)
-    local UIStroke = Instance.new("UIStroke", NotifyFrame)
-    UIStroke.Color = Color3.fromRGB(41,42,45)
-    UIStroke.Thickness = 2
+	UICorner_1.Parent = Notifytemple_1  
 
-    -- Image
-    local ImageLabel = Instance.new("ImageLabel")
-    ImageLabel.Parent = NotifyFrame
-    ImageLabel.AnchorPoint = Vector2.new(1, 0.5)
-    ImageLabel.Position = UDim2.new(1.2, 0, 0.5, 0)
-    ImageLabel.Size = UDim2.new(0, 50, 0, 50)
-    ImageLabel.BackgroundTransparency = 1
-    ImageLabel.Image = Image
+	UIStroke_1.Parent = Notifytemple_1  
+	UIStroke_1.Color = Color3.fromRGB(41,42,45)  
+	UIStroke_1.Thickness = 2  
 
-    -- Title
-    local TitleLabel = Instance.new("TextLabel")
-    TitleLabel.Parent = NotifyFrame
-    TitleLabel.BackgroundTransparency = 1
-    TitleLabel.Size = UDim2.new(1,0,0,20)
-    TitleLabel.Font = Enum.Font.GothamBold
-    TitleLabel.TextSize = 14
-    TitleLabel.Text = Title
-    TitleLabel.TextColor3 = Color3.fromRGB(255,255,255)
-    TitleLabel.TextXAlignment = Enum.TextXAlignment.Left
+	Frame_1.Parent = Notifytemple_1  
+	Frame_1.BackgroundColor3 = Color3.fromRGB(255,255,255)  
+	Frame_1.BackgroundTransparency = 1  
+	Frame_1.BorderColor3 = Color3.fromRGB(0,0,0)  
+	Frame_1.BorderSizePixel = 0  
+	Frame_1.Size = UDim2.new(1, 0,1, 0)  
 
-    -- Desc
-    local DescLabel = Instance.new("TextLabel")
-    DescLabel.Parent = NotifyFrame
-    DescLabel.BackgroundTransparency = 1
-    DescLabel.Size = UDim2.new(1,0,0,65)
-    DescLabel.Font = Enum.Font.GothamBold -- ตัวเข้มเท่ากับ Title
-    DescLabel.TextSize = 12
-    DescLabel.Text = Desc
-    DescLabel.TextColor3 = Color3.fromRGB(255,255,255)
-    DescLabel.TextTransparency = 0.5
-    DescLabel.TextXAlignment = Enum.TextXAlignment.Left
-    DescLabel.TextYAlignment = Enum.TextYAlignment.Top
-    DescLabel.TextWrapped = true
+	UIPadding_1.Parent = Frame_1  
+	UIPadding_1.PaddingBottom = UDim.new(0,5)  
+	UIPadding_1.PaddingLeft = UDim.new(0,10)  
+	UIPadding_1.PaddingRight = UDim.new(0,10)  
+	UIPadding_1.PaddingTop = UDim.new(0,5)  
 
-    local FrameLayout = Instance.new("UIListLayout", NotifyFrame)
-    FrameLayout.SortOrder = Enum.SortOrder.LayoutOrder
+	Desc_1.Name = "Desc"  
+	Desc_1.Parent = Frame_1  
+	Desc_1.BackgroundColor3 = Color3.fromRGB(255,255,255)  
+	Desc_1.BackgroundTransparency = 1  
+	Desc_1.BorderColor3 = Color3.fromRGB(0,0,0)  
+	Desc_1.BorderSizePixel = 0  
+	Desc_1.LayoutOrder = 1  
+	Desc_1.Size = UDim2.new(1, 0,0, 65)  
+	Desc_1.Font = Enum.Font.GothamBold  -- ตัวหนังสือเข้มเท่ากับ Title
+	Desc_1.Text = Desc  
+	Desc_1.TextColor3 = Color3.fromRGB(255,255,255)  
+	Desc_1.TextSize = 12  
+	Desc_1.TextTransparency = 0.5  
+	Desc_1.TextXAlignment = Enum.TextXAlignment.Left  
+	Desc_1.TextYAlignment = Enum.TextYAlignment.Top  
+	Desc_1.TextWrapped = true  
 
-    -- Tween ขยาย Notification
-    NotifyFrame:TweenSize(UDim2.new(0, 150,0,80), Enum.EasingDirection.Out, Enum.EasingStyle.Exponential, 0.3, true)
+	UIListLayout_2.Parent = Frame_1  
+	UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder  
 
-    -- Cooldown bar
-    if type(Time) == "number" then
-        local CooldownBack = Instance.new("Frame", NotifyFrame)
-        CooldownBack.AnchorPoint = Vector2.new(0,1)
-        CooldownBack.BackgroundColor3 = Color3.fromRGB(41,42,45)
-        CooldownBack.BackgroundTransparency = 0.8
-        CooldownBack.BorderSizePixel = 0
-        CooldownBack.Position = UDim2.new(0,0,1,0)
-        CooldownBack.Size = UDim2.new(1,0,0,4)
-        local CooldownBar = Instance.new("Frame", CooldownBack)
-        CooldownBar.AnchorPoint = Vector2.new(0,0)
-        CooldownBar.BackgroundColor3 = Color3.fromRGB(161,161,161)
-        CooldownBar.BackgroundTransparency = 0.8
-        CooldownBar.BorderSizePixel = 0
-        CooldownBar.Position = UDim2.new(0,0,0,0)
-        CooldownBar.Size = UDim2.new(1,0,1,0)
+	Title_1.Name = "Title"  
+	Title_1.Parent = Frame_1  
+	Title_1.BackgroundColor3 = Color3.fromRGB(255,255,255)  
+	Title_1.BackgroundTransparency = 1  
+	Title_1.BorderColor3 = Color3.fromRGB(0,0,0)  
+	Title_1.BorderSizePixel = 0  
+	Title_1.Size = UDim2.new(1, 0,0, 20)  
+	Title_1.Font = Enum.Font.GothamBold  
+	Title_1.Text = Title  
+	Title_1.TextColor3 = Color3.fromRGB(255,255,255)  
+	Title_1.TextSize = 14  
+	Title_1.TextXAlignment = Enum.TextXAlignment.Left  
 
-        local UICorner1 = Instance.new("UICorner", CooldownBack)
-        local UICorner2 = Instance.new("UICorner", CooldownBar)
+	ImageLabel_1.Parent = Notifytemple_1  
+	ImageLabel_1.AnchorPoint = Vector2.new(1, 0.5)  
+	ImageLabel_1.BackgroundColor3 = Color3.fromRGB(255,255,255)  
+	ImageLabel_1.BackgroundTransparency = 1  
+	ImageLabel_1.BorderColor3 = Color3.fromRGB(0,0,0)  
+	ImageLabel_1.BorderSizePixel = 0  
+	ImageLabel_1.Position = UDim2.new(1.5, 0,0.5, 0)  
+	ImageLabel_1.Size = UDim2.new(0, 200,0, 200)  
+	ImageLabel_1.Image = "rbxassetid://107475662985726"  
+	ImageLabel_1.ImageTransparency = 0.8999999761581421  
 
-        -- ลดขนาด Cooldown Bar ตามเวลา
-        task.spawn(function()
-            for i = Time, 1, -1 do
-                local sizeRatio = i / Time
-                CooldownBar:TweenSize(UDim2.new(sizeRatio,0,1,0), Enum.EasingDirection.Out, Enum.EasingStyle.Exponential, 1, true)
-                task.wait(1)
-            end
-            -- Tween ปิด Notification
-            NotifyFrame:TweenSize(UDim2.new(0, 150,0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Exponential, 1, true, function()
-                NotifyFrame:Destroy()
-            end)
-        end)
-    end
+	tw({v = Background, t = 1.3, s = Enum.EasingStyle.Exponential, d = "Out", g = {Size = UDim2.new(0, 100,0, 80)}}):Play()  
+	local f = tw({v = Notifytemple_1, t = 0.3, s = Enum.EasingStyle.Exponential, d = "Out", g = {Size = UDim2.new(0, 150,0, 0)}})  
+	f:Play()  
+	f.Completed:Connect(function()  
+		tw({v = Notifytemple_1, t = 1, s = Enum.EasingStyle.Exponential, d = "Out", g = {Size = UDim2.new(0, 150,0, 80)}}):Play()  
+	end)  
+
+	if type(Time) == "number" then  
+		local Cool_1 = Instance.new("Frame")  
+		local Cooldown_1 = Instance.new("Frame")  
+		local UIStroke_2 = Instance.new("UIStroke")  
+		local Cooldown_2 = Instance.new("Frame")  
+		local UICorner_2 = Instance.new("UICorner")  
+		local UICorner_3 = Instance.new("UICorner")  
+		local UIPadding_2 = Instance.new("UIPadding")  
+
+		Cool_1.Name = "Cool"  
+		Cool_1.Parent = Notifytemple_1  
+		Cool_1.BackgroundColor3 = Color3.fromRGB(255,255,255)  
+		Cool_1.BackgroundTransparency = 1  
+		Cool_1.BorderColor3 = Color3.fromRGB(0,0,0)  
+		Cool_1.BorderSizePixel = 0  
+		Cool_1.Size = UDim2.new(1, 0,1, 0)  
+
+		Cooldown_1.Name = "Cooldown"  
+		Cooldown_1.Parent = Cool_1  
+		Cooldown_1.AnchorPoint = Vector2.new(0, 1)  
+		Cooldown_1.BackgroundColor3 = Color3.fromRGB(41,42,45)  
+		Cooldown_1.BorderColor3 = Color3.fromRGB(0,0,0)  
+		Cooldown_1.BorderSizePixel = 0  
+		Cooldown_1.Position = UDim2.new(0, 0,1, 0)  
+		Cooldown_1.Size = UDim2.new(1, 0,0, 4)  
+
+		UIStroke_2.Parent = Cooldown_1  
+		UIStroke_2.Color = Color3.fromRGB(41,42,45)  
+		UIStroke_2.Thickness = 3  
+
+		Cooldown_2.Name = "Cooldown"  
+		Cooldown_2.Parent = Cool_1  
+		Cooldown_2.AnchorPoint = Vector2.new(0, 1)  
+		Cooldown_2.BackgroundColor3 = Color3.fromRGB(161,161,161)  
+		Cooldown_2.BorderColor3 = Color3.fromRGB(0,0,0)  
+		Cooldown_2.BorderSizePixel = 0  
+		Cooldown_2.Position = UDim2.new(0, 0,1, 0)
+		Cooldown_2.Size = UDim2.new(1, 0,0, 4)
+
+		UICorner_2.Parent = Cooldown_1
+		UICorner_3.Parent = Cooldown_2
+
+		UIPadding_2.Parent = Cool_1
+		UIPadding_2.PaddingBottom = UDim.new(0,5)
+		UIPadding_2.PaddingLeft = UDim.new(0,5)
+		UIPadding_2.PaddingRight = UDim.new(0,5)
+
+		task.spawn(function()
+			for i = Time, 1, -1 do
+				local sizeRatio = i / Time
+				tw({v = Cooldown_2, t = 0.15, s = Enum.EasingStyle.Exponential, d = "Out", g = {Size = UDim2.new(sizeRatio, 0, 0, 4)}}):Play()
+				task.wait(1)
+			end
+			local f = tw({v = Notifytemple_1, t = 1, s = Enum.EasingStyle.Exponential, d = "Out", g = {Size = UDim2.new(0, 150,0, 0)}})
+			f:Play()
+			f.Completed:Connect(function()
+				tw({v = Background, t = 0.3, s = Enum.EasingStyle.Exponential, d = "Out", g = {Size = UDim2.new(0, 100,0, 0)}}):Play()
+				local t = tw({v = Notifytemple_1, t = 0.3, s = Enum.EasingStyle.Exponential, d = "Out", g = {Size = UDim2.new(0, 0,0, 0)}})
+				t:Play()
+				t.Completed:Connect(function()
+					Notifytemple_1:Destroy()
+				end)
+			end)
+		end)
+	end
 end
 
 	do
