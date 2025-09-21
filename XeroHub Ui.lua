@@ -2752,6 +2752,7 @@ function Library:CreateWindow(info)
 	local Desc = info.Desc or ''
 	local Time = info.Time or 5
 	local Button = info.Button or {}
+
 	local Notifytemple_1 = Instance.new("Frame")
 	local UICorner_1 = Instance.new("UICorner")
 	local UIStroke_1 = Instance.new("UIStroke")
@@ -2765,13 +2766,13 @@ function Library:CreateWindow(info)
 	local Background = Instance.new("Frame")
 	local UIListLayoutBackgorund = Instance.new("UIListLayout")
 
+	-- Container หลักของ Notification
 	Background.Name = "Background"
 	Background.Parent = Notification
-	Background.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	Background.BackgroundTransparency = 1.000
-	Background.BorderColor3 = Color3.fromRGB(0, 0, 0)
-	Background.BorderSizePixel = 0
-	Background.Size = UDim2.new(0, 100, 0, 0)
+	Background.AnchorPoint = Vector2.new(1, 0) -- ยึดขอบขวา
+	Background.Position = UDim2.new(1, 0, 0, 100) -- เลื่อนลงจากขอบบน 100px
+	Background.Size = UDim2.new(0, 320, 1, -40)
+	Background.BackgroundTransparency = 1
 
 	UIListLayoutBackgorund.Name = "UIListLayoutBackgorund"
 	UIListLayoutBackgorund.Parent = Background
@@ -2780,10 +2781,11 @@ function Library:CreateWindow(info)
 	UIListLayoutBackgorund.VerticalAlignment = Enum.VerticalAlignment.Top
 	UIListLayoutBackgorund.Padding = UDim.new(0, 8)
 
+	-- Notification Frame
 	Notifytemple_1.Name = "Notifytemple"
 	Notifytemple_1.Parent = Background
 	Notifytemple_1.BackgroundColor3 = Color3.fromRGB(28,28,30)
-	Notifytemple_1.BackgroundTransparency = 0.5 -- ✅ โปร่งใส 50%
+	Notifytemple_1.BackgroundTransparency = 0.5 -- โปร่งใส 50%
 	Notifytemple_1.BorderColor3 = Color3.fromRGB(0,0,0)
 	Notifytemple_1.BorderSizePixel = 0
 	Notifytemple_1.Size = UDim2.new(0, 0,0, 0)
@@ -2880,7 +2882,7 @@ function Library:CreateWindow(info)
 		Cooldown_1.Parent = Cool_1
 		Cooldown_1.AnchorPoint = Vector2.new(0, 1)
 		Cooldown_1.BackgroundColor3 = Color3.fromRGB(41,42,45)
-		Cooldown_1.BackgroundTransparency = 0.5 -- ✅ โปร่งใส 50%
+		Cooldown_1.BackgroundTransparency = 0.5
 		Cooldown_1.BorderColor3 = Color3.fromRGB(0,0,0)
 		Cooldown_1.BorderSizePixel = 0
 		Cooldown_1.Position = UDim2.new(0, 0,1, 0)
@@ -2894,7 +2896,7 @@ function Library:CreateWindow(info)
 		Cooldown_2.Parent = Cool_1
 		Cooldown_2.AnchorPoint = Vector2.new(0, 1)
 		Cooldown_2.BackgroundColor3 = Color3.fromRGB(161,161,161)
-		Cooldown_2.BackgroundTransparency = 0.5 -- ✅ โปร่งใส 50%
+		Cooldown_2.BackgroundTransparency = 0.5
 		Cooldown_2.BorderColor3 = Color3.fromRGB(0,0,0)
 		Cooldown_2.BorderSizePixel = 0
 		Cooldown_2.Position = UDim2.new(0, 0,1, 0)
