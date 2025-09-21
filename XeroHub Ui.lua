@@ -2752,35 +2752,53 @@ function Library:CreateWindow(info)
     local Title = info.Title
     local Desc = info.Desc or ''
     local Time = info.Time or 5
+    local Image = info.Image or "rbxassetid://107475662985726" -- ใส่ ID รูป default
+
     local PlayerGui = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
     local ScreenGui = PlayerGui:FindFirstChild("NotifyGui") or Instance.new("ScreenGui")
     ScreenGui.Name = "NotifyGui"
     ScreenGui.Parent = PlayerGui
+
     local Background = Instance.new("Frame")
     Background.Name = "Background"
     Background.Parent = ScreenGui
-    Background.AnchorPoint = Vector2.new(1, 0)
-    Background.Position = UDim2.new(1, 0, 0, 100)
+    Background.AnchorPoint = Vector2.new(1, 0) -- ขวาบน
+    Background.Position = UDim2.new(1, 0, 0, 100) -- ลงจากขอบบน 100px
     Background.Size = UDim2.new(0, 320, 1, -200)
     Background.BackgroundTransparency = 1
+
     local UIListLayout = Instance.new("UIListLayout")
     UIListLayout.Parent = Background
     UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Right
     UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
     UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Top
     UIListLayout.Padding = UDim.new(0, 8)
+
+    -- Notification Frame
     local NotifyFrame = Instance.new("Frame")
     NotifyFrame.Name = "NotifyFrame"
     NotifyFrame.Parent = Background
     NotifyFrame.BackgroundColor3 = Color3.fromRGB(28,28,30)
-    NotifyFrame.BackgroundTransparency = 0.7
+    NotifyFrame.BackgroundTransparency = 0.8 -- โปร่งใส 0.8
     NotifyFrame.BorderSizePixel = 0
     NotifyFrame.Size = UDim2.new(0, 150, 0, 0)
     NotifyFrame.ClipsDescendants = true
+
     local UICorner = Instance.new("UICorner", NotifyFrame)
     local UIStroke = Instance.new("UIStroke", NotifyFrame)
     UIStroke.Color = Color3.fromRGB(41,42,45)
     UIStroke.Thickness = 2
+
+    -- Image
+    local ImageLabel = Instance.new("ImageLabel")
+    ImageLabel.Parent = NotifyFrame
+    ImageLabel.AnchorPoint = Vector2.new(1, 0.5)
+    ImageLabel.Position = UDim2.new(1.2, 0, 0.5, 0)
+    ImageLabel.Size = UDim2.new(0, 50, 0, 50)
+    ImageLabel.BackgroundTransparency = 1
+    ImageLabel.Image = Image
+
+    -- Title
     local TitleLabel = Instance.new("TextLabel")
     TitleLabel.Parent = NotifyFrame
     TitleLabel.BackgroundTransparency = 1
@@ -2790,11 +2808,13 @@ function Library:CreateWindow(info)
     TitleLabel.Text = Title
     TitleLabel.TextColor3 = Color3.fromRGB(255,255,255)
     TitleLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+    -- Desc
     local DescLabel = Instance.new("TextLabel")
     DescLabel.Parent = NotifyFrame
     DescLabel.BackgroundTransparency = 1
     DescLabel.Size = UDim2.new(1,0,0,65)
-    DescLabel.Font = Enum.Font.GothamBold
+    DescLabel.Font = Enum.Font.GothamBold -- ตัวเข้มเท่ากับ Title
     DescLabel.TextSize = 12
     DescLabel.Text = Desc
     DescLabel.TextColor3 = Color3.fromRGB(255,255,255)
@@ -2805,31 +2825,38 @@ function Library:CreateWindow(info)
 
     local FrameLayout = Instance.new("UIListLayout", NotifyFrame)
     FrameLayout.SortOrder = Enum.SortOrder.LayoutOrder
+
+    -- Tween ขยาย Notification
     NotifyFrame:TweenSize(UDim2.new(0, 150,0,80), Enum.EasingDirection.Out, Enum.EasingStyle.Exponential, 0.3, true)
+
+    -- Cooldown bar
     if type(Time) == "number" then
         local CooldownBack = Instance.new("Frame", NotifyFrame)
         CooldownBack.AnchorPoint = Vector2.new(0,1)
         CooldownBack.BackgroundColor3 = Color3.fromRGB(41,42,45)
-        CooldownBack.BackgroundTransparency = 0.5
+        CooldownBack.BackgroundTransparency = 0.8
         CooldownBack.BorderSizePixel = 0
         CooldownBack.Position = UDim2.new(0,0,1,0)
         CooldownBack.Size = UDim2.new(1,0,0,4)
         local CooldownBar = Instance.new("Frame", CooldownBack)
         CooldownBar.AnchorPoint = Vector2.new(0,0)
         CooldownBar.BackgroundColor3 = Color3.fromRGB(161,161,161)
-        CooldownBar.BackgroundTransparency = 0.5
+        CooldownBar.BackgroundTransparency = 0.8
         CooldownBar.BorderSizePixel = 0
         CooldownBar.Position = UDim2.new(0,0,0,0)
         CooldownBar.Size = UDim2.new(1,0,1,0)
 
         local UICorner1 = Instance.new("UICorner", CooldownBack)
         local UICorner2 = Instance.new("UICorner", CooldownBar)
+
+        -- ลดขนาด Cooldown Bar ตามเวลา
         task.spawn(function()
             for i = Time, 1, -1 do
                 local sizeRatio = i / Time
                 CooldownBar:TweenSize(UDim2.new(sizeRatio,0,1,0), Enum.EasingDirection.Out, Enum.EasingStyle.Exponential, 1, true)
                 task.wait(1)
             end
+            -- Tween ปิด Notification
             NotifyFrame:TweenSize(UDim2.new(0, 150,0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Exponential, 1, true, function()
                 NotifyFrame:Destroy()
             end)
