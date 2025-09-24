@@ -2278,46 +2278,55 @@ end
 
     local Textbox = Instance.new("Frame")
     local UICorner_1 = Instance.new("UICorner")
-    local Box_1 = Instance.new("Frame")
     local ValueBox_1 = Instance.new("Frame")
     local UICorner_2 = Instance.new("UICorner")
     local UIStroke_1 = Instance.new("UIStroke")
     local TextBox_1 = Instance.new("TextBox")
-    local UIPadding_1 = Instance.new("UIPadding")
-    local Frame_1 = Instance.new("Frame")
     local Title_1 = Instance.new("TextLabel")
     local Desc_1 = Instance.new("TextLabel")
-    local UIPadding_2 = Instance.new("UIPadding")
 
     Textbox.Name = "Textbox"
     Textbox.Parent = Section_1
     Textbox.BackgroundColor3 = Color3.fromRGB(36, 39, 46)
     Textbox.BackgroundTransparency = Transparency
-    Textbox.BorderColor3 = Color3.fromRGB(0,0,0)
     Textbox.BorderSizePixel = 0
-    Textbox.Size = UDim2.new(1, 0,0, 65)
-    Textbox.ClipsDescendants = true
+    Textbox.Size = UDim2.new(1, 0, 0, 50)
 
     UICorner_1.Parent = Textbox
     UICorner_1.CornerRadius = UDim.new(0,4)
 
-    Box_1.Name = "Box"
-    Box_1.Parent = Textbox
-    Box_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-    Box_1.BackgroundTransparency = 1
-    Box_1.BorderColor3 = Color3.fromRGB(0,0,0)
-    Box_1.BorderSizePixel = 0
-    Box_1.Size = UDim2.new(1, 0,1, 0)
+    -- Title
+    Title_1.Name = "Title"
+    Title_1.Parent = Textbox
+    Title_1.BackgroundTransparency = 1
+    Title_1.Position = UDim2.new(0, 10, 0, 5) -- ชิดซ้าย 10px
+    Title_1.Size = UDim2.new(1, -140, 0, 16)  -- เหลือที่ให้กล่องขวา
+    Title_1.Font = Enum.Font.GothamBold
+    Title_1.Text = Title
+    Title_1.TextColor3 = Color3.fromRGB(255,255,255)
+    Title_1.TextSize = 13
+    Title_1.TextXAlignment = Enum.TextXAlignment.Left
 
+    -- Desc
+    Desc_1.Name = "Desc"
+    Desc_1.Parent = Textbox
+    Desc_1.BackgroundTransparency = 1
+    Desc_1.Position = UDim2.new(0, 10, 0, 25) -- ชิดซ้าย 10px เหมือน Title
+    Desc_1.Size = UDim2.new(1, -140, 0, 14)   -- เหลือที่ให้กล่องขวาเท่ากัน
+    Desc_1.Font = Enum.Font.Gotham
+    Desc_1.Text = Desc
+    Desc_1.TextColor3 = Color3.fromRGB(200,200,200)
+    Desc_1.TextSize = 10
+    Desc_1.TextXAlignment = Enum.TextXAlignment.Left
+
+    -- ValueBox (กล่องป้อนข้อมูล ขอบขวา)
     ValueBox_1.Name = "ValueBox"
-    ValueBox_1.Parent = Box_1
-    ValueBox_1.AnchorPoint = Vector2.new(1, 0.5) -- ยึดขวา
-    ValueBox_1.Position = UDim2.new(1, -10, 0.5, 0) -- ชิดขวา ห่าง 10px
-    ValueBox_1.Size = UDim2.new(0.55, 0, 0.6, 0) -- กว้าง 55% สูง 60%
+    ValueBox_1.Parent = Textbox
+    ValueBox_1.AnchorPoint = Vector2.new(1, 0.5)
+    ValueBox_1.Position = UDim2.new(1, -10, 0.5, 0) -- ชิดขวา
+    ValueBox_1.Size = UDim2.new(0, 120, 0, 28) -- กว้าง 120px สูง 28px
     ValueBox_1.BackgroundColor3 = Color3.fromRGB(31, 34, 40)
-    ValueBox_1.BorderColor3 = Color3.fromRGB(0,0,0)
     ValueBox_1.BorderSizePixel = 0
-    ValueBox_1.LayoutOrder = -1
 
     UICorner_2.Parent = ValueBox_1
     UICorner_2.CornerRadius = UDim.new(1,0)
@@ -2327,80 +2336,34 @@ end
     UIStroke_1.Thickness = 2.5
 
     TextBox_1.Parent = ValueBox_1
-    TextBox_1.Active = true
-    TextBox_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
     TextBox_1.BackgroundTransparency = 1
-    TextBox_1.BorderColor3 = Color3.fromRGB(0,0,0)
-    TextBox_1.BorderSizePixel = 0
-    TextBox_1.Size = UDim2.new(1, 0,1, 0)
+    TextBox_1.Size = UDim2.new(1, -10, 1, 0)
+    TextBox_1.Position = UDim2.new(0, 5, 0, 0)
     TextBox_1.Font = Enum.Font.Gotham
     TextBox_1.PlaceholderColor3 = Color3.fromRGB(178,178,178)
     TextBox_1.PlaceholderText = Placeholder
     TextBox_1.Text = Value
     TextBox_1.TextColor3 = Color3.fromRGB(255,255,255)
     TextBox_1.TextSize = 12
+    TextBox_1.ClearTextOnFocus = ClearText
 
-    UIPadding_1.Parent = Box_1
-    UIPadding_1.PaddingBottom = UDim.new(0,10)
-    UIPadding_1.PaddingLeft = UDim.new(0,10)
-    UIPadding_1.PaddingRight = UDim.new(0,10)
-    UIPadding_1.PaddingTop = UDim.new(0,30)
-
-    Frame_1.Parent = Textbox
-    Frame_1.AnchorPoint = Vector2.new(0, 0.5)
-    Frame_1.BackgroundTransparency = 1
-    Frame_1.Position = UDim2.new(0, 0,0.5, 0)
-    Frame_1.Size = UDim2.new(1, 0,1, 0)
-
-    Title_1.Name = "Title"
-    Title_1.Parent = Frame_1
-    Title_1.BackgroundTransparency = 1
-    Title_1.Size = UDim2.new(0.4, 0, 0, 16) -- กำหนดพื้นที่ 40%
-    Title_1.Font = Enum.Font.GothamBold
-    Title_1.RichText = true
-    Title_1.Text = Title
-    Title_1.TextColor3 = Color3.fromRGB(255,255,255)
-    Title_1.TextSize = 13
-    Title_1.TextWrapped = true
-    Title_1.TextXAlignment = Enum.TextXAlignment.Left
-
-    Desc_1.Name = "Desc"
-    Desc_1.Parent = Frame_1
-    Desc_1.BackgroundTransparency = 1
-    Desc_1.Position = UDim2.new(0, 13, 0, 22) -- อยู่ใต้ Title
-    Desc_1.Size = UDim2.new(0.4, 0, 0, 14)
-    Desc_1.Font = Enum.Font.Gotham
-    Desc_1.Text = Desc
-    Desc_1.TextColor3 = Color3.fromRGB(200,200,200)
-    Desc_1.TextSize = 10
-    Desc_1.TextWrapped = true
-    Desc_1.TextXAlignment = Enum.TextXAlignment.Left
-
-    UIPadding_2.Parent = Frame_1
-    UIPadding_2.PaddingLeft = UDim.new(0,13)
-    UIPadding_2.PaddingRight = UDim.new(0,13)
-    UIPadding_2.PaddingTop = UDim.new(0,7)
-
+    -- Event
     local function o()
         if #TextBox_1.Text > 0 then
             pcall(Callback, TextBox_1.Text)
         end
     end
-
     TextBox_1.FocusLost:Connect(o)
     delay(0, o)
 
     local New = {}
-
     function New:SetTitle(a)
         Title_1.Text = a
     end
-
     function New:SetValue(a)
         TextBox_1.Text = a
         pcall(Callback, TextBox_1.Text)
     end
-
     return New
 end
 			function Main:CreateSelect(info)
