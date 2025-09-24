@@ -363,96 +363,98 @@ function Library:CreateWindow(info)
 		return Click
 	end
 	local function background(p, t, d)
-		local ToggleDesc = Instance.new("Frame")
-		local UICorner_1 = Instance.new("UICorner")
-		local Frame_4 = Instance.new("Frame")
-		local UIListLayout_2 = Instance.new("UIListLayout")
-		local UIPadding_2 = Instance.new("UIPadding")
-		local TextLabel_1 = Instance.new("TextLabel")
-		local Title_1 = Instance.new("TextLabel")
+	local ToggleDesc = Instance.new("Frame")
+	local UICorner_1 = Instance.new("UICorner")
+	local Frame_4 = Instance.new("Frame")
+	local UIListLayout_2 = Instance.new("UIListLayout")
+	local UIPadding_2 = Instance.new("UIPadding")
+	local TextLabel_1 = Instance.new("TextLabel")
+	local Title_1 = Instance.new("TextLabel")
 
-		ToggleDesc.Name = "ToggleDesc"
-		ToggleDesc.Parent = p
-		ToggleDesc.BackgroundTransparency = Transparency
-		ToggleDesc.BackgroundColor3 = Color3.fromRGB(36, 39, 46)
-		ToggleDesc.BorderColor3 = Color3.fromRGB(0,0,0)
-		ToggleDesc.BorderSizePixel = 0
-		ToggleDesc.Size = UDim2.new(1, 0,0, 35)
-		ToggleDesc.ClipsDescendants = true
+	ToggleDesc.Name = "ToggleDesc"
+	ToggleDesc.Parent = p
+	ToggleDesc.BackgroundTransparency = Transparency
+	ToggleDesc.BackgroundColor3 = Color3.fromRGB(36, 39, 46)
+	ToggleDesc.BorderColor3 = Color3.fromRGB(0,0,0)
+	ToggleDesc.BorderSizePixel = 0
+	ToggleDesc.Size = UDim2.new(1, 0, 0, 40) -- ขยายขึ้นมานิดหน่อย
+	ToggleDesc.ClipsDescendants = true
 
-		UICorner_1.Parent = ToggleDesc
-		UICorner_1.CornerRadius = UDim.new(0,4)
+	UICorner_1.Parent = ToggleDesc
+	UICorner_1.CornerRadius = UDim.new(0,4)
 
-		Frame_4.Parent = ToggleDesc
-		Frame_4.AnchorPoint = Vector2.new(0, 0.5)
-		Frame_4.BackgroundColor3 = Color3.fromRGB(255,255,255)
-		Frame_4.BackgroundTransparency = 1
-		Frame_4.BorderColor3 = Color3.fromRGB(0,0,0)
-		Frame_4.BorderSizePixel = 0
-		Frame_4.Position = UDim2.new(0, 0,0.5, 0)
-		Frame_4.Size = UDim2.new(1, 0,1, 0)
+	Frame_4.Parent = ToggleDesc
+	Frame_4.AnchorPoint = Vector2.new(0, 0.5)
+	Frame_4.BackgroundColor3 = Color3.fromRGB(255,255,255)
+	Frame_4.BackgroundTransparency = 1
+	Frame_4.BorderColor3 = Color3.fromRGB(0,0,0)
+	Frame_4.BorderSizePixel = 0
+	Frame_4.Position = UDim2.new(0, 0, 0.5, 0)
+	Frame_4.Size = UDim2.new(1, 0, 1, 0)
 
-		UIListLayout_2.Parent = Frame_4
-		UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
-		UIListLayout_2.VerticalAlignment = Enum.VerticalAlignment.Center
+	UIListLayout_2.Parent = Frame_4
+	UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
+	UIListLayout_2.VerticalAlignment = Enum.VerticalAlignment.Center
 
-		UIPadding_2.Parent = Frame_4
-		UIPadding_2.PaddingLeft = UDim.new(0,13)
-		UIPadding_2.PaddingRight = UDim.new(0,70)
+	UIPadding_2.Parent = Frame_4
+	UIPadding_2.PaddingLeft = UDim.new(0,13)
+	UIPadding_2.PaddingRight = UDim.new(0,70)
 
-		TextLabel_1.Parent = Frame_4
-		TextLabel_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-		TextLabel_1.BackgroundTransparency = 1
-		TextLabel_1.BorderColor3 = Color3.fromRGB(0,0,0)
-		TextLabel_1.BorderSizePixel = 0
-		TextLabel_1.LayoutOrder = 1
-		TextLabel_1.Size = UDim2.new(1, 0,0, 16)
-		TextLabel_1.Font = Enum.Font.Gotham
-		TextLabel_1.RichText = true
-		TextLabel_1.TextColor3 = Color3.fromRGB(255,255,255)
-		TextLabel_1.TextSize = 11
-		TextLabel_1.TextTransparency = 0.5
-		TextLabel_1.TextWrapped = true
-		TextLabel_1.TextXAlignment = Enum.TextXAlignment.Left
-		TextLabel_1.Visible = false
-		TextLabel_1.AutomaticSize = Enum.AutomaticSize.Y
-		TextLabel_1.Name = 'Desc'
+	-- Desc
+	TextLabel_1.Parent = Frame_4
+	TextLabel_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
+	TextLabel_1.BackgroundTransparency = 1
+	TextLabel_1.BorderColor3 = Color3.fromRGB(0,0,0)
+	TextLabel_1.BorderSizePixel = 0
+	TextLabel_1.LayoutOrder = 2 -- ให้มาอยู่ล่าง Title
+	TextLabel_1.Size = UDim2.new(1, 0, 0, 16)
+	TextLabel_1.Font = Enum.Font.Gotham
+	TextLabel_1.RichText = true
+	TextLabel_1.TextColor3 = Color3.fromRGB(255,255,255)
+	TextLabel_1.TextSize = 10
+	TextLabel_1.TextTransparency = 0.5
+	TextLabel_1.TextWrapped = true
+	TextLabel_1.TextXAlignment = Enum.TextXAlignment.Left
+	TextLabel_1.Visible = false
+	TextLabel_1.AutomaticSize = Enum.AutomaticSize.Y
+	TextLabel_1.Name = "Desc"
 
-		Title_1.Name = "Title"
-		Title_1.Parent = Frame_4
-		Title_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-		Title_1.BackgroundTransparency = 1
-		Title_1.BorderColor3 = Color3.fromRGB(0,0,0)
-		Title_1.BorderSizePixel = 0
-		Title_1.Size = UDim2.new(1, 0,0, 16)
-		Title_1.Font = Enum.Font.GothamBold
-		Title_1.RichText = true
-		Title_1.Text = t
-		Title_1.TextColor3 = Color3.fromRGB(255,255,255)
-		Title_1.TextSize = 14
-		Title_1.TextWrapped = true
-		Title_1.TextXAlignment = Enum.TextXAlignment.Left
-		Title_1.AutomaticSize = Enum.AutomaticSize.Y
+	-- Title
+	Title_1.Name = "Title"
+	Title_1.Parent = Frame_4
+	Title_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
+	Title_1.BackgroundTransparency = 1
+	Title_1.BorderColor3 = Color3.fromRGB(0,0,0)
+	Title_1.BorderSizePixel = 0
+	Title_1.LayoutOrder = 1 -- ให้มาอยู่บน
+	Title_1.Size = UDim2.new(1, 0, 0, 16)
+	Title_1.Font = Enum.Font.GothamBold
+	Title_1.RichText = true
+	Title_1.Text = t
+	Title_1.TextColor3 = Color3.fromRGB(255,255,255)
+	Title_1.TextSize = 13
+	Title_1.TextWrapped = true
+	Title_1.TextXAlignment = Enum.TextXAlignment.Left
+	Title_1.AutomaticSize = Enum.AutomaticSize.Y
+	if d and d ~= "" then
+		TextLabel_1.Visible = true
+		TextLabel_1.Text = d
 
-		if d and d ~= "" then
-			TextLabel_1.Visible = true
-			TextLabel_1.Text = d
-			local function updateSize()
-				task.defer(function()
-					local newSize = UIListLayout_2.AbsoluteContentSize.Y + 20
-					if ToggleDesc.Size.Y.Offset ~= newSize then
-						ToggleDesc.Size = UDim2.new(1, 0, 0, newSize)
-					end
-				end)
-			end
-
-			UIListLayout_2:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(updateSize)
-
-			updateSize()
+		local function updateSize()
+			task.defer(function()
+				local newSize = UIListLayout_2.AbsoluteContentSize.Y + 20
+				if ToggleDesc.Size.Y.Offset ~= newSize then
+					ToggleDesc.Size = UDim2.new(1, 0, 0, newSize)
+				end
+			end)
 		end
 
-		return ToggleDesc
+		UIListLayout_2:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(updateSize)
+		updateSize()
 	end
+
+	return ToggleDesc
+end
 
 	local Logo = info.Logo
 	local Keycode = info.Keycode
