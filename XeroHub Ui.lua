@@ -1178,8 +1178,11 @@ function Library:CreateWindow(info)
 			local Main = {}
 
 			function Main:CreateSection(info)
-    local Title = info.Title
+    local Title = info.Title or "No Title"
     local ImageID = info.Image
+    local ImageSize = info.ImageSize or 25   -- ขนาดรูป
+    local TextSize = info.TextSize or 14
+    local SpaceCount = info.Space or 2       -- ช่องวรรคระหว่างรูปกับข้อความ
 
     local Section_2 = Instance.new("Frame")
     local TextLabel_2 = Instance.new("TextLabel")
@@ -1192,32 +1195,34 @@ function Library:CreateWindow(info)
     Section_2.BorderSizePixel = 0
     Section_2.Size = UDim2.new(1, 0, 0, 30)
 
-    -- TextLabel
-    TextLabel_2.Parent = Section_2
-    TextLabel_2.BackgroundTransparency = 1
-    TextLabel_2.BorderSizePixel = 0
-    TextLabel_2.RichText = true
-    TextLabel_2.Size = UDim2.new(0, 200, 0, 30)
-    TextLabel_2.Font = Enum.Font.GothamBold
-    TextLabel_2.Text = (Title or "No Title").."  " -- เว้นวรรคเล็กน้อย
-    TextLabel_2.TextColor3 = Color3.fromRGB(255,255,255)
-    TextLabel_2.TextSize = 14
-    TextLabel_2.TextXAlignment = Enum.TextXAlignment.Left
-    TextLabel_2.ZIndex = 1
-    TextLabel_2.Position = UDim2.new(0, 5, 0, 0)
-
-    -- รูปต่อท้ายข้อความ
+    -- รูปข้างหน้า
     if ImageID then
         ImageBG = Instance.new("ImageLabel")
         ImageBG.Name = "TitleImage"
         ImageBG.Parent = Section_2
         ImageBG.BackgroundTransparency = 1
         ImageBG.BorderSizePixel = 0
-        ImageBG.Size = UDim2.new(0, 25, 0, 25) -- ขนาด 25x25
-        ImageBG.Position = UDim2.new(0, TextLabel_2.TextBounds.X + 10, 0.5, -12) -- จัดให้อยู่หลังข้อความ มีระยะห่างและกึ่งกลาง
+        ImageBG.Size = UDim2.new(0, ImageSize, 0, ImageSize)
+        ImageBG.Position = UDim2.new(0, 5, 0.5, -ImageSize/2)
         ImageBG.Image = "rbxassetid://"..tostring(ImageID)
         ImageBG.ZIndex = 1
     end
+
+    -- TextLabel
+    TextLabel_2.Parent = Section_2
+    TextLabel_2.BackgroundTransparency = 1
+    TextLabel_2.BorderSizePixel = 0
+    TextLabel_2.RichText = true
+    TextLabel_2.Size = UDim2.new(0, 300, 0, 30)
+    TextLabel_2.Font = Enum.Font.GothamBold
+    TextLabel_2.TextSize = TextSize
+    TextLabel_2.TextColor3 = Color3.fromRGB(255,255,255)
+    TextLabel_2.TextXAlignment = Enum.TextXAlignment.Left
+    TextLabel_2.ZIndex = 1
+    TextLabel_2.Position = UDim2.new(0, ImageSize + 5 + (SpaceCount*TextSize/2), 0, 0) 
+    -- เลื่อนข้อความขวาจากรูป + ช่องวรรค
+
+    TextLabel_2.Text = Title
 
     UIPadding_3Sec.Parent = Section_2
     UIPadding_3Sec.PaddingLeft = UDim.new(0, 3)
@@ -1225,10 +1230,21 @@ function Library:CreateWindow(info)
     local New = {}
 
     function New:SetTitle(a)
-        TextLabel_2.Text = a.."  "
+        TextLabel_2.Text = a
+    end
+
+    function New:SetImageSize(size)
+        ImageSize = size
         if ImageBG then
-            ImageBG.Position = UDim2.new(0, TextLabel_2.TextBounds.X + 10, 0.5, -12)
+            ImageBG.Size = UDim2.new(0, ImageSize, 0, ImageSize)
+            ImageBG.Position = UDim2.new(0, 5, 0.5, -ImageSize/2)
+            TextLabel_2.Position = UDim2.new(0, ImageSize + 5 + (SpaceCount*TextSize/2), 0, 0)
         end
+    end
+
+    function New:SetSpace(count)
+        SpaceCount = count
+        TextLabel_2.Position = UDim2.new(0, ImageSize + 5 + (SpaceCount*TextSize/2), 0, 0)
     end
 
     return New
