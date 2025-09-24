@@ -1179,8 +1179,6 @@ function Library:CreateWindow(info)
 
 			function Main:CreateSection(info)
     local Title = info.Title
-    local ImageID = info.Image or nil -- เพิ่มตรงนี้
-
     local Section_2 = Instance.new("Frame")
     local ImageBG = Instance.new("ImageLabel")
     local TextLabel_2 = Instance.new("TextLabel")
@@ -1188,39 +1186,33 @@ function Library:CreateWindow(info)
 
     Section_2.Name = "Section"
     Section_2.Parent = Section_1
+    Section_2.BackgroundColor3 = Color3.fromRGB(255,255,255)
     Section_2.BackgroundTransparency = 1
     Section_2.BorderSizePixel = 0
     Section_2.Size = UDim2.new(1, 0, 0, 30)
 
-    -- รูปด้านหลัง / ด้านซ้าย Title
-    if ImageID then
-        ImageBG.Name = "TitleBackground"
-        ImageBG.Parent = Section_2
-        ImageBG.BackgroundTransparency = 1
-        ImageBG.BorderSizePixel = 0
-        ImageBG.Size = UDim2.new(0, 30, 0, 30) -- ขนาดรูป
-        ImageBG.Position = UDim2.new(0, 3, 0, 0) -- ระยะห่างซ้าย
-        ImageBG.Image = "rbxassetid://"..ImageID
-        ImageBG.ZIndex = 0
-    end
+    -- รูปด้านหลัง Title
+    ImageBG.Name = "TitleBackground"
+    ImageBG.Parent = Section_2
+    ImageBG.BackgroundTransparency = 1
+    ImageBG.BorderSizePixel = 0
+    ImageBG.Size = UDim2.new(0, 30, 0, 30) -- ขนาดรูป
+    ImageBG.Position = UDim2.new(0, 3, 0, 0) -- ระยะห่างซ้าย
+    ImageBG.Image = "rbxassetid://10723443193" -- เปลี่ยนเป็น ID รูปของคุณ
+    ImageBG.ZIndex = 0 -- อยู่ด้านหลัง
 
     TextLabel_2.Parent = Section_2
     TextLabel_2.BackgroundTransparency = 1
     TextLabel_2.BorderSizePixel = 0
     TextLabel_2.RichText = true
     TextLabel_2.Size = UDim2.new(0, 200, 0, 30)
+    TextLabel_2.Position = UDim2.new(0, 40, 0, 0) -- ขยับให้ไม่ทับรูป
     TextLabel_2.Font = Enum.Font.GothamBold
     TextLabel_2.Text = Title
     TextLabel_2.TextColor3 = Color3.fromRGB(255,255,255)
     TextLabel_2.TextSize = 18
     TextLabel_2.TextXAlignment = Enum.TextXAlignment.Left
-    TextLabel_2.ZIndex = 1
-
-    if ImageID then
-        TextLabel_2.Position = UDim2.new(0, 40, 0, 0) -- ขยับตัวหนังสือถ้ามีรูป
-    else
-        TextLabel_2.Position = UDim2.new(0, 5, 0, 0) -- ไม่มีรูป ก็ชิดซ้าย
-    end
+    TextLabel_2.ZIndex = 1 -- ให้อยู่บนรูป
 
     UIPadding_3Sec.Parent = Section_2
     UIPadding_3Sec.PaddingLeft = UDim.new(0, 3)
@@ -1232,27 +1224,7 @@ function Library:CreateWindow(info)
     end
 
     function New:SetImage(id)
-        if not ImageBG.Parent then
-            ImageBG.Parent = Section_2
-        end
         ImageBG.Image = "rbxassetid://"..id
-    end
-
-    return New
-end
-
-    function New:SetImageSize(size)
-        ImageSize = size
-        if ImageBG then
-            ImageBG.Size = UDim2.new(0, ImageSize, 0, ImageSize)
-            ImageBG.Position = UDim2.new(0, 5, 0.5, -ImageSize/2)
-            TextLabel_2.Position = UDim2.new(0, ImageSize + 5 + (SpaceCount*TextSize/2), 0, 0)
-        end
-    end
-
-    function New:SetSpace(count)
-        SpaceCount = count
-        TextLabel_2.Position = UDim2.new(0, ImageSize + 5 + (SpaceCount*TextSize/2), 0, 0)
     end
 
     return New
