@@ -369,66 +369,95 @@ function Library:CreateWindow(info)
 	local Frame_4 = Instance.new("Frame")
 	local UIListLayout_2 = Instance.new("UIListLayout")
 	local UIPadding_2 = Instance.new("UIPadding")
-	local TitleDescFrame = Instance.new("Frame")
+	local TextLabel_1 = Instance.new("TextLabel")
 	local Title_1 = Instance.new("TextLabel")
-	local Desc_1 = Instance.new("TextLabel")
 
 	ToggleDesc.Name = "ToggleDesc"
 	ToggleDesc.Parent = p
 	ToggleDesc.BackgroundTransparency = Transparency
 	ToggleDesc.BackgroundColor3 = Color3.fromRGB(36, 39, 46)
-	ToggleDesc.Size = UDim2.new(1, 0, 0, 44)
+	ToggleDesc.BorderColor3 = Color3.fromRGB(0,0,0)
+	ToggleDesc.BorderSizePixel = 0
+	ToggleDesc.Size = UDim2.new(1, 0, 0, 40) -- ขยายขึ้นมานิดหน่อย
 	ToggleDesc.ClipsDescendants = true
 
 	UICorner_1.Parent = ToggleDesc
 	UICorner_1.CornerRadius = UDim.new(0,4)
 
 	Frame_4.Parent = ToggleDesc
+	Frame_4.AnchorPoint = Vector2.new(0, 0.5)
+	Frame_4.BackgroundColor3 = Color3.fromRGB(255,255,255)
 	Frame_4.BackgroundTransparency = 1
+	Frame_4.BorderColor3 = Color3.fromRGB(0,0,0)
+	Frame_4.BorderSizePixel = 0
+	Frame_4.Position = UDim2.new(0, 0, 0.5, 0)
 	Frame_4.Size = UDim2.new(1, 0, 1, 0)
 
 	UIListLayout_2.Parent = Frame_4
 	UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
-	UIListLayout_2.FillDirection = Enum.FillDirection.Horizontal
 	UIListLayout_2.VerticalAlignment = Enum.VerticalAlignment.Center
-	UIListLayout_2.Padding = UDim.new(0, 8)
 
 	UIPadding_2.Parent = Frame_4
-	UIPadding_2.PaddingLeft = UDim.new(0,10)
-	UIPadding_2.PaddingRight = UDim.new(0,10)
+	UIPadding_2.PaddingLeft = UDim.new(0,13)
+	UIPadding_2.PaddingRight = UDim.new(0,70)
 
-	-- Title + Desc (ฝั่งซ้าย)
-	TitleDescFrame.Parent = Frame_4
-	TitleDescFrame.BackgroundTransparency = 1
-	TitleDescFrame.Size = UDim2.new(1, -130, 1, 0)
+	-- Desc
+	TextLabel_1.Parent = Frame_4
+	TextLabel_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
+	TextLabel_1.BackgroundTransparency = 1
+	TextLabel_1.BorderColor3 = Color3.fromRGB(0,0,0)
+	TextLabel_1.BorderSizePixel = 0
+	TextLabel_1.LayoutOrder = 2 -- ให้มาอยู่ล่าง Title
+	TextLabel_1.Size = UDim2.new(1, 0, 0, 16)
+	TextLabel_1.Font = Enum.Font.Gotham
+	TextLabel_1.RichText = true
+	TextLabel_1.TextColor3 = Color3.fromRGB(255,255,255)
+	TextLabel_1.TextSize = 10
+	TextLabel_1.TextTransparency = 0.5
+	TextLabel_1.TextWrapped = true
+	TextLabel_1.TextXAlignment = Enum.TextXAlignment.Left
+	TextLabel_1.Visible = false
+	TextLabel_1.AutomaticSize = Enum.AutomaticSize.Y
+	TextLabel_1.Name = "Desc"
 
+	-- Title
 	Title_1.Name = "Title"
-	Title_1.Parent = TitleDescFrame
+	Title_1.Parent = Frame_4
+	Title_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
 	Title_1.BackgroundTransparency = 1
-	Title_1.Size = UDim2.new(1, 0, 0, 18)
+	Title_1.BorderColor3 = Color3.fromRGB(0,0,0)
+	Title_1.BorderSizePixel = 0
+	Title_1.LayoutOrder = 1 -- ให้มาอยู่บน
+	Title_1.Size = UDim2.new(1, 0, 0, 16)
 	Title_1.Font = Enum.Font.GothamBold
+	Title_1.RichText = true
 	Title_1.Text = t
 	Title_1.TextColor3 = Color3.fromRGB(255,255,255)
 	Title_1.TextSize = 13
+	Title_1.TextWrapped = true
 	Title_1.TextXAlignment = Enum.TextXAlignment.Left
+	Title_1.AutomaticSize = Enum.AutomaticSize.Y
 
-	Desc_1.Name = "Desc"
-	Desc_1.Parent = TitleDescFrame
-	Desc_1.BackgroundTransparency = 1
-	Desc_1.Position = UDim2.new(0,0,0,20)
-	Desc_1.Size = UDim2.new(1,0,0,14)
-	Desc_1.Font = Enum.Font.Gotham
-	Desc_1.Text = d or ""
-	Desc_1.TextColor3 = Color3.fromRGB(178,178,178)
-	Desc_1.TextSize = 11
-	Desc_1.TextXAlignment = Enum.TextXAlignment.Left
-	Desc_1.Visible = (d and d ~= "")
+	-- ถ้ามี Desc ให้โชว์เพิ่มด้วย
+	if d and d ~= "" then
+		TextLabel_1.Visible = true
+		TextLabel_1.Text = d
 
-	return ToggleDesc, Title_1, Desc_1, Frame_4
+		local function updateSize()
+			task.defer(function()
+				local newSize = UIListLayout_2.AbsoluteContentSize.Y + 20
+				if ToggleDesc.Size.Y.Offset ~= newSize then
+					ToggleDesc.Size = UDim2.new(1, 0, 0, newSize)
+				end
+			end)
+		end
+
+		UIListLayout_2:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(updateSize)
+		updateSize()
+	end
+
+	return ToggleDesc
 end
-
-
-
 
 	local Logo = info.Logo
 	local Keycode = info.Keycode
@@ -2246,9 +2275,67 @@ end
     local Placeholder = info.Placeholder or 'Paste Your Text'
     local Callback = info.Callback or function() end
 
-    local ToggleDesc, Title_1, Desc_1, Frame_4 = background(Section_1, Title, Desc)
+    local ToggleDesc = Instance.new("Frame")
+    local UICorner_1 = Instance.new("UICorner")
+    local Frame_4 = Instance.new("Frame")
+    local UIListLayout_2 = Instance.new("UIListLayout")
+    local UIPadding_2 = Instance.new("UIPadding")
+    local Desc_1 = Instance.new("TextLabel")
+    local Title_1 = Instance.new("TextLabel")
 
-    -- ช่องกรอกค่าฝั่งขวา
+    ToggleDesc.Name = "ToggleDesc"
+    ToggleDesc.Parent = Section_1
+    ToggleDesc.BackgroundTransparency = Transparency
+    ToggleDesc.BackgroundColor3 = Color3.fromRGB(36, 39, 46)
+    ToggleDesc.BorderSizePixel = 0
+    ToggleDesc.Size = UDim2.new(1, 0, 0, 35)
+    ToggleDesc.ClipsDescendants = true
+
+    UICorner_1.Parent = ToggleDesc
+    UICorner_1.CornerRadius = UDim.new(0, 4)
+
+    Frame_4.Parent = ToggleDesc
+    Frame_4.AnchorPoint = Vector2.new(0, 0.5)
+    Frame_4.BackgroundTransparency = 1
+    Frame_4.Position = UDim2.new(0, 0, 0.5, 0)
+    Frame_4.Size = UDim2.new(1, 0, 1, 0)
+
+    UIListLayout_2.Parent = Frame_4
+    UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
+    UIListLayout_2.VerticalAlignment = Enum.VerticalAlignment.Center
+    UIListLayout_2.FillDirection = Enum.FillDirection.Horizontal
+    UIListLayout_2.Padding = UDim.new(0, 8)
+
+    UIPadding_2.Parent = Frame_4
+    UIPadding_2.PaddingLeft = UDim.new(0, 13)
+    UIPadding_2.PaddingRight = UDim.new(0, 10)
+
+    -- Desc
+    Desc_1.Parent = Frame_4
+    Desc_1.BackgroundTransparency = 1
+    Desc_1.Size = UDim2.new(1, 0, 0, 16)
+    Desc_1.Font = Enum.Font.Gotham
+    Desc_1.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Desc_1.TextTransparency = 0.5
+    Desc_1.TextSize = 10
+    Desc_1.TextXAlignment = Enum.TextXAlignment.Left
+    Desc_1.Visible = false
+    Desc_1.AutomaticSize = Enum.AutomaticSize.Y
+    Desc_1.Name = "Desc"
+
+    -- Title
+    Title_1.Name = "Title"
+    Title_1.Parent = Frame_4
+    Title_1.BackgroundTransparency = 1
+    Title_1.Size = UDim2.new(1, 0, 0, 16)
+    Title_1.Font = Enum.Font.GothamBold
+    Title_1.Text = Title
+    Title_1.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Title_1.TextSize = 13
+    Title_1.TextXAlignment = Enum.TextXAlignment.Left
+    Title_1.AutomaticSize = Enum.AutomaticSize.Y
+
+    -- ValueBox (TextBox)
     local ValueBox_1 = Instance.new("Frame")
     local UICorner_2 = Instance.new("UICorner")
     local UIStroke_1 = Instance.new("UIStroke")
@@ -2257,9 +2344,9 @@ end
     ValueBox_1.Name = "ValueBox"
     ValueBox_1.Parent = Frame_4
     ValueBox_1.BackgroundColor3 = Color3.fromRGB(31, 34, 40)
-    ValueBox_1.Size = UDim2.new(0, 120, 0, 28) 
+    ValueBox_1.Size = UDim2.new(0, 120, 0, 26)
     UICorner_2.Parent = ValueBox_1
-    UICorner_2.CornerRadius = UDim.new(0,6)
+    UICorner_2.CornerRadius = UDim.new(0, 6)
     UIStroke_1.Parent = ValueBox_1
     UIStroke_1.Color = Color3.fromRGB(54, 58, 69)
     UIStroke_1.Thickness = 2
@@ -2267,21 +2354,39 @@ end
     TextBox_1.Parent = ValueBox_1
     TextBox_1.BackgroundTransparency = 1
     TextBox_1.Size = UDim2.new(1, -10, 1, 0)
-    TextBox_1.Position = UDim2.new(0,5,0,0)
+    TextBox_1.Position = UDim2.new(0, 5, 0, 0)
     TextBox_1.Font = Enum.Font.Gotham
-    TextBox_1.PlaceholderColor3 = Color3.fromRGB(178,178,178)
+    TextBox_1.PlaceholderColor3 = Color3.fromRGB(178, 178, 178)
     TextBox_1.PlaceholderText = Placeholder
     TextBox_1.Text = Value
-    TextBox_1.TextColor3 = Color3.fromRGB(255,255,255)
+    TextBox_1.TextColor3 = Color3.fromRGB(255, 255, 255)
     TextBox_1.TextSize = 12
     TextBox_1.TextXAlignment = Enum.TextXAlignment.Left
 
+    -- show Desc if exists
+    if Desc and Desc ~= "" then
+        Desc_1.Visible = true
+        Desc_1.Text = Desc
+        local function updateSize()
+            task.defer(function()
+                local newSize = UIListLayout_2.AbsoluteContentSize.Y + 20
+                if ToggleDesc.Size.Y.Offset ~= newSize then
+                    ToggleDesc.Size = UDim2.new(1, 0, 0, newSize)
+                end
+            end)
+        end
+        UIListLayout_2:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(updateSize)
+        updateSize()
+    end
+
+    -- callback
     local function o()
         pcall(Callback, TextBox_1.Text)
     end
     TextBox_1.FocusLost:Connect(o)
     delay(0, o)
 
+    -- methods
     local New = {}
     function New:SetTitle(a) Title_1.Text = a end
     function New:SetDesc(a) Desc_1.Text = a; Desc_1.Visible = (a and a ~= "") end
