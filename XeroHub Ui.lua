@@ -362,20 +362,22 @@ function Library:CreateWindow(info)
 
 		return Click
 	end
+	
 	local function background(p, t, d)
 	local ToggleDesc = Instance.new("Frame")
 	local UICorner_1 = Instance.new("UICorner")
 	local Frame_4 = Instance.new("Frame")
 	local UIListLayout_2 = Instance.new("UIListLayout")
 	local UIPadding_2 = Instance.new("UIPadding")
-	local TextLabel_1 = Instance.new("TextLabel")
+	local TitleDescFrame = Instance.new("Frame")
 	local Title_1 = Instance.new("TextLabel")
+	local Desc_1 = Instance.new("TextLabel")
 
 	ToggleDesc.Name = "ToggleDesc"
 	ToggleDesc.Parent = p
 	ToggleDesc.BackgroundTransparency = Transparency
 	ToggleDesc.BackgroundColor3 = Color3.fromRGB(36, 39, 46)
-	ToggleDesc.Size = UDim2.new(1, 0, 0, 40)
+	ToggleDesc.Size = UDim2.new(1, 0, 0, 44)
 	ToggleDesc.ClipsDescendants = true
 
 	UICorner_1.Parent = ToggleDesc
@@ -387,39 +389,45 @@ function Library:CreateWindow(info)
 
 	UIListLayout_2.Parent = Frame_4
 	UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
-	UIListLayout_2.Padding = UDim.new(0, 2) -- เว้นระหว่าง Title/Desc/Box
+	UIListLayout_2.FillDirection = Enum.FillDirection.Horizontal
+	UIListLayout_2.VerticalAlignment = Enum.VerticalAlignment.Center
+	UIListLayout_2.Padding = UDim.new(0, 8)
 
 	UIPadding_2.Parent = Frame_4
 	UIPadding_2.PaddingLeft = UDim.new(0,10)
 	UIPadding_2.PaddingRight = UDim.new(0,10)
-	UIPadding_2.PaddingTop = UDim.new(0,6)
-	UIPadding_2.PaddingBottom = UDim.new(0,6)
 
-	-- Title
+	-- Title + Desc (ฝั่งซ้าย)
+	TitleDescFrame.Parent = Frame_4
+	TitleDescFrame.BackgroundTransparency = 1
+	TitleDescFrame.Size = UDim2.new(1, -130, 1, 0)
+
 	Title_1.Name = "Title"
-	Title_1.Parent = Frame_4
+	Title_1.Parent = TitleDescFrame
 	Title_1.BackgroundTransparency = 1
+	Title_1.Size = UDim2.new(1, 0, 0, 18)
 	Title_1.Font = Enum.Font.GothamBold
 	Title_1.Text = t
 	Title_1.TextColor3 = Color3.fromRGB(255,255,255)
-	Title_1.TextSize = 12
+	Title_1.TextSize = 13
 	Title_1.TextXAlignment = Enum.TextXAlignment.Left
-	Title_1.AutomaticSize = Enum.AutomaticSize.Y
 
-	-- Desc
-	TextLabel_1.Name = "Desc"
-	TextLabel_1.Parent = Frame_4
-	TextLabel_1.BackgroundTransparency = 1
-	TextLabel_1.Font = Enum.Font.Gotham
-	TextLabel_1.Text = d or ""
-	TextLabel_1.TextColor3 = Color3.fromRGB(178,178,178)
-	TextLabel_1.TextSize = 10
-	TextLabel_1.TextXAlignment = Enum.TextXAlignment.Left
-	TextLabel_1.AutomaticSize = Enum.AutomaticSize.Y
-	TextLabel_1.Visible = (d and d ~= "")
+	Desc_1.Name = "Desc"
+	Desc_1.Parent = TitleDescFrame
+	Desc_1.BackgroundTransparency = 1
+	Desc_1.Position = UDim2.new(0,0,0,20)
+	Desc_1.Size = UDim2.new(1,0,0,14)
+	Desc_1.Font = Enum.Font.Gotham
+	Desc_1.Text = d or ""
+	Desc_1.TextColor3 = Color3.fromRGB(178,178,178)
+	Desc_1.TextSize = 11
+	Desc_1.TextXAlignment = Enum.TextXAlignment.Left
+	Desc_1.Visible = (d and d ~= "")
 
-	return ToggleDesc, Title_1, TextLabel_1, Frame_4
+	return ToggleDesc, Title_1, Desc_1, Frame_4
 end
+
+
 
 
 	local Logo = info.Logo
@@ -2238,26 +2246,24 @@ end
     local Placeholder = info.Placeholder or 'Paste Your Text'
     local Callback = info.Callback or function() end
 
-    -- ใช้ background() สร้าง Title + Desc
     local ToggleDesc, Title_1, Desc_1, Frame_4 = background(Section_1, Title, Desc)
 
-    -- ValueBox (กล่องสำหรับ TextBox)
+    -- ช่องกรอกค่าฝั่งขวา
     local ValueBox_1 = Instance.new("Frame")
     local UICorner_2 = Instance.new("UICorner")
     local UIStroke_1 = Instance.new("UIStroke")
     local TextBox_1 = Instance.new("TextBox")
 
     ValueBox_1.Name = "ValueBox"
-    ValueBox_1.Parent = Frame_4 -- วางใต้ Title/Desc
+    ValueBox_1.Parent = Frame_4
     ValueBox_1.BackgroundColor3 = Color3.fromRGB(31, 34, 40)
-    ValueBox_1.Size = UDim2.new(1, 0, 0, 28) -- เต็มบรรทัด
+    ValueBox_1.Size = UDim2.new(0, 120, 0, 28) 
     UICorner_2.Parent = ValueBox_1
     UICorner_2.CornerRadius = UDim.new(0,6)
     UIStroke_1.Parent = ValueBox_1
     UIStroke_1.Color = Color3.fromRGB(54, 58, 69)
     UIStroke_1.Thickness = 2
 
-    -- TextBox
     TextBox_1.Parent = ValueBox_1
     TextBox_1.BackgroundTransparency = 1
     TextBox_1.Size = UDim2.new(1, -10, 1, 0)
@@ -2267,18 +2273,15 @@ end
     TextBox_1.PlaceholderText = Placeholder
     TextBox_1.Text = Value
     TextBox_1.TextColor3 = Color3.fromRGB(255,255,255)
-    TextBox_1.TextSize = 11
-    TextBox_1.ClearTextOnFocus = false
+    TextBox_1.TextSize = 12
     TextBox_1.TextXAlignment = Enum.TextXAlignment.Left
 
-    -- Callback
     local function o()
         pcall(Callback, TextBox_1.Text)
     end
     TextBox_1.FocusLost:Connect(o)
     delay(0, o)
 
-    -- methods
     local New = {}
     function New:SetTitle(a) Title_1.Text = a end
     function New:SetDesc(a) Desc_1.Text = a; Desc_1.Visible = (a and a ~= "") end
