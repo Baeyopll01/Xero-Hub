@@ -1178,42 +1178,58 @@ function Library:CreateWindow(info)
 			local Main = {}
 
 			function Main:CreateSection(info)
-				local Title = info.Title
-				local Section_2 = Instance.new("Frame")
-				local TextLabel_2 = Instance.new("TextLabel")
-				local UIPadding_3Sec = Instance.new("UIPadding")
+    local Title = info.Title
+    local ImageID = info.Image
 
-				Section_2.Name = "Section"
-				Section_2.Parent = Section_1
-				Section_2.BackgroundColor3 = Color3.fromRGB(255,255,255)
-				Section_2.BackgroundTransparency = 1
-				Section_2.BorderColor3 = Color3.fromRGB(0,0,0)
-				Section_2.BorderSizePixel = 0
-				Section_2.Size = UDim2.new(1, 0,0, 30)
+    local Section_2 = Instance.new("Frame")
+    local TextLabel_2 = Instance.new("TextLabel")
+    local UIPadding_3Sec = Instance.new("UIPadding")
 
-				TextLabel_2.Parent = Section_2
-				TextLabel_2.BackgroundColor3 = Color3.fromRGB(255,255,255)
-				TextLabel_2.BackgroundTransparency = 1
-				TextLabel_2.BorderColor3 = Color3.fromRGB(0,0,0)
-				TextLabel_2.BorderSizePixel = 0
-				TextLabel_2.RichText = true
-				TextLabel_2.Size = UDim2.new(0, 200,0, 30)
-				TextLabel_2.Font = Enum.Font.GothamBold
-				TextLabel_2.Text = Title
-				TextLabel_2.TextColor3 = Color3.fromRGB(255,255,255)
-				TextLabel_2.TextSize = 18
-				TextLabel_2.TextXAlignment = Enum.TextXAlignment.Left
+    Section_2.Name = "Section"
+    Section_2.Parent = Section_1
+    Section_2.BackgroundTransparency = 1
+    Section_2.BorderSizePixel = 0
+    Section_2.Size = UDim2.new(1, 0, 0, 30)
+    if ImageID then
+        local ImageBG = Instance.new("ImageLabel")
+        ImageBG.Name = "TitleImage"
+        ImageBG.Parent = Section_2
+        ImageBG.BackgroundTransparency = 1
+        ImageBG.BorderSizePixel = 0
+        ImageBG.Size = UDim2.new(0, 30, 0, 30) 
+        ImageBG.Position = UDim2.new(0, 3, 0, 0)
+        ImageBG.Image = "rbxassetid://"..tostring(ImageID)
+        ImageBG.ZIndex = 0
+    end
 
-				UIPadding_3Sec.Parent = Section_2
-				UIPadding_3Sec.PaddingLeft = UDim.new(0,3)
-				local New = {}
+    TextLabel_2.Parent = Section_2
+    TextLabel_2.BackgroundTransparency = 1
+    TextLabel_2.BorderSizePixel = 0
+    TextLabel_2.RichText = true
+    TextLabel_2.Size = UDim2.new(0, 200, 0, 30)
+    TextLabel_2.Font = Enum.Font.GothamBold
+    TextLabel_2.Text = Title or "No Title"
+    TextLabel_2.TextColor3 = Color3.fromRGB(255,255,255)
+    TextLabel_2.TextSize = 18
+    TextLabel_2.TextXAlignment = Enum.TextXAlignment.Left
+    TextLabel_2.ZIndex = 1
+    if ImageID then
+        TextLabel_2.Position = UDim2.new(0, 40, 0, 0)
+    else
+        TextLabel_2.Position = UDim2.new(0, 5, 0, 0)
+    end
 
-				function New:SetTitle(a)
-					TextLabel_2.Text = a
-				end
-				return New
-			end
+    UIPadding_3Sec.Parent = Section_2
+    UIPadding_3Sec.PaddingLeft = UDim.new(0, 3)
 
+    local New = {}
+
+    function New:SetTitle(a)
+        TextLabel_2.Text = a
+    end
+
+    return New
+end
 			function Main:CreateToggle(info)
 				local Title = info.Title
 				local Desc = info.Desc or ''
