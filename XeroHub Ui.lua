@@ -1184,23 +1184,13 @@ function Library:CreateWindow(info)
     local Section_2 = Instance.new("Frame")
     local TextLabel_2 = Instance.new("TextLabel")
     local UIPadding_3Sec = Instance.new("UIPadding")
+    local ImageBG
 
     Section_2.Name = "Section"
     Section_2.Parent = Section_1
     Section_2.BackgroundTransparency = 1
     Section_2.BorderSizePixel = 0
     Section_2.Size = UDim2.new(1, 0, 0, 30)
-    if ImageID then
-        local ImageBG = Instance.new("ImageLabel")
-        ImageBG.Name = "TitleImage"
-        ImageBG.Parent = Section_2
-        ImageBG.BackgroundTransparency = 1
-        ImageBG.BorderSizePixel = 0
-        ImageBG.Size = UDim2.new(0, 30, 0, 30) 
-        ImageBG.Position = UDim2.new(0, 3, 0, 0)
-        ImageBG.Image = "rbxassetid://"..tostring(ImageID)
-        ImageBG.ZIndex = 0
-    end
 
     TextLabel_2.Parent = Section_2
     TextLabel_2.BackgroundTransparency = 1
@@ -1213,10 +1203,20 @@ function Library:CreateWindow(info)
     TextLabel_2.TextSize = 18
     TextLabel_2.TextXAlignment = Enum.TextXAlignment.Left
     TextLabel_2.ZIndex = 1
+    TextLabel_2.Position = UDim2.new(0, 5, 0, 0)
+
+    -- รูปต่อท้ายข้อความ
     if ImageID then
-        TextLabel_2.Position = UDim2.new(0, 40, 0, 0)
-    else
-        TextLabel_2.Position = UDim2.new(0, 5, 0, 0)
+        ImageBG = Instance.new("ImageLabel")
+        ImageBG.Name = "TitleImage"
+        ImageBG.Parent = Section_2
+        ImageBG.BackgroundTransparency = 1
+        ImageBG.BorderSizePixel = 0
+        ImageBG.Size = UDim2.new(0, 14, 0, 14) -- ย่อเล็กลง
+        ImageBG.Position = UDim2.new(0, TextLabel_2.TextBounds.X + 10, 0.5, -7) 
+        -- -7 = ครึ่งของ 14 เพื่อให้อยู่ตรงกลางพอดี
+        ImageBG.Image = "rbxassetid://"..tostring(ImageID)
+        ImageBG.ZIndex = 1
     end
 
     UIPadding_3Sec.Parent = Section_2
@@ -1226,6 +1226,9 @@ function Library:CreateWindow(info)
 
     function New:SetTitle(a)
         TextLabel_2.Text = a
+        if ImageBG then
+            ImageBG.Position = UDim2.new(0, TextLabel_2.TextBounds.X + 10, 0.5, -7)
+        end
     end
 
     return New
