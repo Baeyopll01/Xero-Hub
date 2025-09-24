@@ -1178,57 +1178,41 @@ function Library:CreateWindow(info)
 			local Main = {}
 
 			function Main:CreateSection(info)
-    local Title = info.Title
-    local Section_2 = Instance.new("Frame")
-    local ImageBG = Instance.new("ImageLabel")
-    local TextLabel_2 = Instance.new("TextLabel")
-    local UIPadding_3Sec = Instance.new("UIPadding")
+				local Title = info.Title
+				local Section_2 = Instance.new("Frame")
+				local TextLabel_2 = Instance.new("TextLabel")
+				local UIPadding_3Sec = Instance.new("UIPadding")
 
-    Section_2.Name = "Section"
-    Section_2.Parent = Section_1
-    Section_2.BackgroundColor3 = Color3.fromRGB(255,255,255)
-    Section_2.BackgroundTransparency = 1
-    Section_2.BorderSizePixel = 0
-    Section_2.Size = UDim2.new(1, 0, 0, 30)
+				Section_2.Name = "Section"
+				Section_2.Parent = Section_1
+				Section_2.BackgroundColor3 = Color3.fromRGB(255,255,255)
+				Section_2.BackgroundTransparency = 1
+				Section_2.BorderColor3 = Color3.fromRGB(0,0,0)
+				Section_2.BorderSizePixel = 0
+				Section_2.Size = UDim2.new(1, 0,0, 30)
 
-    -- รูปด้านหลัง Title
-    ImageBG.Name = "TitleBackground"
-    ImageBG.Parent = Section_2
-    ImageBG.BackgroundTransparency = 1
-    ImageBG.BorderSizePixel = 0
-    ImageBG.Size = UDim2.new(0, 30, 0, 30) -- ขนาดรูป
-    ImageBG.Position = UDim2.new(0, 3, 0, 0) -- ระยะห่างซ้าย
-    ImageBG.Image = "rbxassetid://10723443193" -- เปลี่ยนเป็น ID รูปของคุณ
-    ImageBG.ZIndex = 0 -- อยู่ด้านหลัง
+				TextLabel_2.Parent = Section_2
+				TextLabel_2.BackgroundColor3 = Color3.fromRGB(255,255,255)
+				TextLabel_2.BackgroundTransparency = 1
+				TextLabel_2.BorderColor3 = Color3.fromRGB(0,0,0)
+				TextLabel_2.BorderSizePixel = 0
+				TextLabel_2.RichText = true
+				TextLabel_2.Size = UDim2.new(0, 200,0, 30)
+				TextLabel_2.Font = Enum.Font.GothamBold
+				TextLabel_2.Text = Title
+				TextLabel_2.TextColor3 = Color3.fromRGB(255,255,255)
+				TextLabel_2.TextSize = 18
+				TextLabel_2.TextXAlignment = Enum.TextXAlignment.Left
 
-    TextLabel_2.Parent = Section_2
-    TextLabel_2.BackgroundTransparency = 1
-    TextLabel_2.BorderSizePixel = 0
-    TextLabel_2.RichText = true
-    TextLabel_2.Size = UDim2.new(0, 200, 0, 30)
-    TextLabel_2.Position = UDim2.new(0, 40, 0, 0) -- ขยับให้ไม่ทับรูป
-    TextLabel_2.Font = Enum.Font.GothamBold
-    TextLabel_2.Text = Title
-    TextLabel_2.TextColor3 = Color3.fromRGB(255,255,255)
-    TextLabel_2.TextSize = 18
-    TextLabel_2.TextXAlignment = Enum.TextXAlignment.Left
-    TextLabel_2.ZIndex = 1 -- ให้อยู่บนรูป
+				UIPadding_3Sec.Parent = Section_2
+				UIPadding_3Sec.PaddingLeft = UDim.new(0,3)
+				local New = {}
 
-    UIPadding_3Sec.Parent = Section_2
-    UIPadding_3Sec.PaddingLeft = UDim.new(0, 3)
-
-    local New = {}
-
-    function New:SetTitle(a)
-        TextLabel_2.Text = a
-    end
-
-    function New:SetImage(id)
-        ImageBG.Image = "rbxassetid://"..id
-    end
-
-    return New
-end
+				function New:SetTitle(a)
+					TextLabel_2.Text = a
+				end
+				return New
+			end
 			function Main:CreateToggle(info)
 				local Title = info.Title
 				local Desc = info.Desc or ''
