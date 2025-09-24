@@ -375,86 +375,52 @@ function Library:CreateWindow(info)
 	ToggleDesc.Parent = p
 	ToggleDesc.BackgroundTransparency = Transparency
 	ToggleDesc.BackgroundColor3 = Color3.fromRGB(36, 39, 46)
-	ToggleDesc.BorderColor3 = Color3.fromRGB(0,0,0)
-	ToggleDesc.BorderSizePixel = 0
-	ToggleDesc.Size = UDim2.new(1, 0, 0, 40) -- ขยายขึ้นมานิดหน่อย
+	ToggleDesc.Size = UDim2.new(1, 0, 0, 40)
 	ToggleDesc.ClipsDescendants = true
 
 	UICorner_1.Parent = ToggleDesc
 	UICorner_1.CornerRadius = UDim.new(0,4)
 
 	Frame_4.Parent = ToggleDesc
-	Frame_4.AnchorPoint = Vector2.new(0, 0.5)
-	Frame_4.BackgroundColor3 = Color3.fromRGB(255,255,255)
 	Frame_4.BackgroundTransparency = 1
-	Frame_4.BorderColor3 = Color3.fromRGB(0,0,0)
-	Frame_4.BorderSizePixel = 0
-	Frame_4.Position = UDim2.new(0, 0, 0.5, 0)
 	Frame_4.Size = UDim2.new(1, 0, 1, 0)
 
 	UIListLayout_2.Parent = Frame_4
 	UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
-	UIListLayout_2.VerticalAlignment = Enum.VerticalAlignment.Center
+	UIListLayout_2.Padding = UDim.new(0, 2) -- เว้นระหว่าง Title/Desc/Box
 
 	UIPadding_2.Parent = Frame_4
-	UIPadding_2.PaddingLeft = UDim.new(0,13)
-	UIPadding_2.PaddingRight = UDim.new(0,70)
-
-	-- Desc
-	TextLabel_1.Parent = Frame_4
-	TextLabel_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	TextLabel_1.BackgroundTransparency = 1
-	TextLabel_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	TextLabel_1.BorderSizePixel = 0
-	TextLabel_1.LayoutOrder = 2 -- ให้มาอยู่ล่าง Title
-	TextLabel_1.Size = UDim2.new(1, 0, 0, 16)
-	TextLabel_1.Font = Enum.Font.Gotham
-	TextLabel_1.RichText = true
-	TextLabel_1.TextColor3 = Color3.fromRGB(255,255,255)
-	TextLabel_1.TextSize = 10
-	TextLabel_1.TextTransparency = 0.5
-	TextLabel_1.TextWrapped = true
-	TextLabel_1.TextXAlignment = Enum.TextXAlignment.Left
-	TextLabel_1.Visible = false
-	TextLabel_1.AutomaticSize = Enum.AutomaticSize.Y
-	TextLabel_1.Name = "Desc"
+	UIPadding_2.PaddingLeft = UDim.new(0,10)
+	UIPadding_2.PaddingRight = UDim.new(0,10)
+	UIPadding_2.PaddingTop = UDim.new(0,6)
+	UIPadding_2.PaddingBottom = UDim.new(0,6)
 
 	-- Title
 	Title_1.Name = "Title"
 	Title_1.Parent = Frame_4
-	Title_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
 	Title_1.BackgroundTransparency = 1
-	Title_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	Title_1.BorderSizePixel = 0
-	Title_1.LayoutOrder = 1 -- ให้มาอยู่บน
-	Title_1.Size = UDim2.new(1, 0, 0, 16)
 	Title_1.Font = Enum.Font.GothamBold
-	Title_1.RichText = true
 	Title_1.Text = t
 	Title_1.TextColor3 = Color3.fromRGB(255,255,255)
-	Title_1.TextSize = 13
-	Title_1.TextWrapped = true
+	Title_1.TextSize = 12
 	Title_1.TextXAlignment = Enum.TextXAlignment.Left
 	Title_1.AutomaticSize = Enum.AutomaticSize.Y
-	if d and d ~= "" then
-		TextLabel_1.Visible = true
-		TextLabel_1.Text = d
 
-		local function updateSize()
-			task.defer(function()
-				local newSize = UIListLayout_2.AbsoluteContentSize.Y + 20
-				if ToggleDesc.Size.Y.Offset ~= newSize then
-					ToggleDesc.Size = UDim2.new(1, 0, 0, newSize)
-				end
-			end)
-		end
+	-- Desc
+	TextLabel_1.Name = "Desc"
+	TextLabel_1.Parent = Frame_4
+	TextLabel_1.BackgroundTransparency = 1
+	TextLabel_1.Font = Enum.Font.Gotham
+	TextLabel_1.Text = d or ""
+	TextLabel_1.TextColor3 = Color3.fromRGB(178,178,178)
+	TextLabel_1.TextSize = 10
+	TextLabel_1.TextXAlignment = Enum.TextXAlignment.Left
+	TextLabel_1.AutomaticSize = Enum.AutomaticSize.Y
+	TextLabel_1.Visible = (d and d ~= "")
 
-		UIListLayout_2:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(updateSize)
-		updateSize()
-	end
-
-	return ToggleDesc
+	return ToggleDesc, Title_1, TextLabel_1, Frame_4
 end
+
 
 	local Logo = info.Logo
 	local Keycode = info.Keycode
@@ -2272,7 +2238,7 @@ end
     local Placeholder = info.Placeholder or 'Paste Your Text'
     local Callback = info.Callback or function() end
 
-    -- ใช้ background() สร้าง Title/Desc
+    -- ใช้ background() สร้าง Title + Desc
     local ToggleDesc, Title_1, Desc_1, Frame_4 = background(Section_1, Title, Desc)
 
     -- ValueBox (กล่องสำหรับ TextBox)
@@ -2282,9 +2248,9 @@ end
     local TextBox_1 = Instance.new("TextBox")
 
     ValueBox_1.Name = "ValueBox"
-    ValueBox_1.Parent = Frame_4
+    ValueBox_1.Parent = Frame_4 -- วางใต้ Title/Desc
     ValueBox_1.BackgroundColor3 = Color3.fromRGB(31, 34, 40)
-    ValueBox_1.Size = UDim2.new(0.5, -10, 0.8, 0)
+    ValueBox_1.Size = UDim2.new(1, 0, 0, 28) -- เต็มบรรทัด
     UICorner_2.Parent = ValueBox_1
     UICorner_2.CornerRadius = UDim.new(0,6)
     UIStroke_1.Parent = ValueBox_1
@@ -2302,14 +2268,12 @@ end
     TextBox_1.Text = Value
     TextBox_1.TextColor3 = Color3.fromRGB(255,255,255)
     TextBox_1.TextSize = 11
-    TextBox_1.TextWrapped = true
     TextBox_1.ClearTextOnFocus = false
+    TextBox_1.TextXAlignment = Enum.TextXAlignment.Left
 
     -- Callback
     local function o()
-        if #TextBox_1.Text > 0 then
-            pcall(Callback, TextBox_1.Text)
-        end
+        pcall(Callback, TextBox_1.Text)
     end
     TextBox_1.FocusLost:Connect(o)
     delay(0, o)
@@ -2317,7 +2281,7 @@ end
     -- methods
     local New = {}
     function New:SetTitle(a) Title_1.Text = a end
-    function New:SetDesc(a) Desc_1.Text = a end
+    function New:SetDesc(a) Desc_1.Text = a; Desc_1.Visible = (a and a ~= "") end
     function New:SetValue(a)
         TextBox_1.Text = a
         pcall(Callback, TextBox_1.Text)
