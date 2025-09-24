@@ -2269,22 +2269,19 @@ end
     local Title = info.Title
     local Desc = info.Desc or ''
     local Value = info.Value or ''
-    local Placeholder = info.Placeholder or ''
-    local ClearText = info.ClearText or false
+    local Placeholder = info.Placeholder or 'Paste Your Text'
     local Callback = info.Callback or function() end
 
     local Textbox = Instance.new("Frame")
     local UICorner_1 = Instance.new("UICorner")
     local Box_1 = Instance.new("Frame")
+    local TitleBox = Instance.new("Frame")
+    local Title_1 = Instance.new("TextLabel")
+    local Desc_1 = Instance.new("TextLabel")
     local ValueBox_1 = Instance.new("Frame")
     local UICorner_2 = Instance.new("UICorner")
     local UIStroke_1 = Instance.new("UIStroke")
     local TextBox_1 = Instance.new("TextBox")
-    local UIPadding_1 = Instance.new("UIPadding")
-    local Frame_1 = Instance.new("Frame")
-    local Title_1 = Instance.new("TextLabel")
-    local Desc_1 = Instance.new("TextLabel")
-    local UIPadding_2 = Instance.new("UIPadding")
 
     -- Textbox
     Textbox.Name = "Textbox"
@@ -2292,83 +2289,75 @@ end
     Textbox.BackgroundColor3 = Color3.fromRGB(36, 39, 46)
     Textbox.BackgroundTransparency = Transparency
     Textbox.BorderSizePixel = 0
-    Textbox.Size = UDim2.new(1, 0,0, 80) -- เพิ่มความสูงให้รองรับ Desc
-    Textbox.ClipsDescendants = true
+    Textbox.Size = UDim2.new(1, 0, 0, 40) -- เตี้ยลง
     UICorner_1.Parent = Textbox
     UICorner_1.CornerRadius = UDim.new(0,4)
 
-    -- Box
+    -- Box (แนวนอน)
     Box_1.Name = "Box"
     Box_1.Parent = Textbox
     Box_1.BackgroundTransparency = 1
-    Box_1.Size = UDim2.new(1, 0,1, 0)
+    Box_1.Size = UDim2.new(1, 0, 1, 0)
 
+    local UIList = Instance.new("UIListLayout", Box_1)
+    UIList.FillDirection = Enum.FillDirection.Horizontal
+    UIList.HorizontalAlignment = Enum.HorizontalAlignment.Left
+    UIList.VerticalAlignment = Enum.VerticalAlignment.Center
+    UIList.Padding = UDim.new(0, 6)
+
+    -- TitleBox (ชื่อ + Desc ด้านหน้า)
+    TitleBox.Parent = Box_1
+    TitleBox.BackgroundTransparency = 1
+    TitleBox.Size = UDim2.new(0.5, 0, 1, 0)
+
+    Title_1.Name = "Title"
+    Title_1.Parent = TitleBox
+    Title_1.BackgroundTransparency = 1
+    Title_1.Position = UDim2.new(0,0,0,0)
+    Title_1.Size = UDim2.new(1, 0, 0.5, 0)
+    Title_1.Font = Enum.Font.GothamBold
+    Title_1.Text = Title
+    Title_1.TextColor3 = Color3.fromRGB(255,255,255)
+    Title_1.TextSize = 12
+    Title_1.TextXAlignment = Enum.TextXAlignment.Left
+
+    Desc_1.Name = "Desc"
+    Desc_1.Parent = TitleBox
+    Desc_1.BackgroundTransparency = 1
+    Desc_1.Position = UDim2.new(0,0,0.5,0)
+    Desc_1.Size = UDim2.new(1,0,0.5,0)
+    Desc_1.Font = Enum.Font.Gotham
+    Desc_1.Text = Desc
+    Desc_1.TextColor3 = Color3.fromRGB(178,178,178)
+    Desc_1.TextSize = 10
+    Desc_1.TextXAlignment = Enum.TextXAlignment.Left
+
+    -- ValueBox (กล่องใส่ค่า)
     ValueBox_1.Name = "ValueBox"
     ValueBox_1.Parent = Box_1
-    ValueBox_1.AnchorPoint = Vector2.new(0.5, 0.5)
+    ValueBox_1.AnchorPoint = Vector2.new(0, 0.5)
     ValueBox_1.BackgroundColor3 = Color3.fromRGB(31, 34, 40)
-    ValueBox_1.Position = UDim2.new(0.5, 0,0.5, 0)
-    ValueBox_1.Size = UDim2.new(1, 0,1, 0)
+    ValueBox_1.Size = UDim2.new(0.5, -10, 0.8, 0) -- ครึ่งนึงของพื้นที่
+    ValueBox_1.Position = UDim2.new(0.5, 0, 0.5, 0)
     UICorner_2.Parent = ValueBox_1
-    UICorner_2.CornerRadius = UDim.new(1,0)
+    UICorner_2.CornerRadius = UDim.new(0,6)
     UIStroke_1.Parent = ValueBox_1
     UIStroke_1.Color = Color3.fromRGB(54, 58, 69)
-    UIStroke_1.Thickness = 2.5
+    UIStroke_1.Thickness = 2
 
     -- TextBox
     TextBox_1.Parent = ValueBox_1
     TextBox_1.BackgroundTransparency = 1
-    TextBox_1.Size = UDim2.new(1, 0,1, 0)
+    TextBox_1.Size = UDim2.new(1, -10, 1, 0)
+    TextBox_1.Position = UDim2.new(0,5,0,0)
     TextBox_1.Font = Enum.Font.Gotham
     TextBox_1.PlaceholderColor3 = Color3.fromRGB(178,178,178)
     TextBox_1.PlaceholderText = Placeholder
     TextBox_1.Text = Value
     TextBox_1.TextColor3 = Color3.fromRGB(255,255,255)
-    TextBox_1.TextSize = 12
+    TextBox_1.TextSize = 11
     TextBox_1.TextWrapped = true
-
-    UIPadding_1.Parent = Box_1
-    UIPadding_1.PaddingBottom = UDim.new(0,10)
-    UIPadding_1.PaddingLeft = UDim.new(0,10)
-    UIPadding_1.PaddingRight = UDim.new(0,10)
-    UIPadding_1.PaddingTop = UDim.new(0,30)
-
-    -- Frame สำหรับ Title และ Desc
-    Frame_1.Parent = Textbox
-    Frame_1.AnchorPoint = Vector2.new(0, 0)
-    Frame_1.BackgroundTransparency = 1
-    Frame_1.Size = UDim2.new(1, 0,1, 0)
-
-    -- Title
-    Title_1.Name = "Title"
-    Title_1.Parent = Frame_1
-    Title_1.BackgroundTransparency = 1
-    Title_1.Size = UDim2.new(1, 0,0, 16)
-    Title_1.Font = Enum.Font.GothamBold
-    Title_1.RichText = true
-    Title_1.Text = Title
-    Title_1.TextColor3 = Color3.fromRGB(255,255,255)
-    Title_1.TextSize = 13
-    Title_1.TextWrapped = true
-    Title_1.TextXAlignment = Enum.TextXAlignment.Left
-
-    -- Desc
-    Desc_1.Name = "Desc"
-    Desc_1.Parent = Frame_1
-    Desc_1.BackgroundTransparency = 1
-    Desc_1.Position = UDim2.new(0,0,0,18)
-    Desc_1.Size = UDim2.new(1,0,0,12)
-    Desc_1.Font = Enum.Font.Gotham
-    Desc_1.Text = Desc
-    Desc_1.TextColor3 = Color3.fromRGB(178,178,178)
-    Desc_1.TextSize = 11
-    Desc_1.TextWrapped = true
-    Desc_1.TextXAlignment = Enum.TextXAlignment.Left
-
-    UIPadding_2.Parent = Frame_1
-    UIPadding_2.PaddingLeft = UDim.new(0,13)
-    UIPadding_2.PaddingRight = UDim.new(0,13)
-    UIPadding_2.PaddingTop = UDim.new(0,7)
+    TextBox_1.ClearTextOnFocus = false
 
     -- Callback
     local function o()
@@ -2380,15 +2369,8 @@ end
     delay(0, o)
 
     local New = {}
-
-    function New:SetTitle(a)
-        Title_1.Text = a
-    end
-
-    function New:SetDesc(a)
-        Desc_1.Text = a
-    end
-
+    function New:SetTitle(a) Title_1.Text = a end
+    function New:SetDesc(a) Desc_1.Text = a end
     function New:SetValue(a)
         TextBox_1.Text = a
         pcall(Callback, TextBox_1.Text)
@@ -2396,7 +2378,6 @@ end
 
     return New
 end
-
 			function Main:CreateSelect(info)
 				local Title = info.Title
 				local Desc = info.Desc or ''
