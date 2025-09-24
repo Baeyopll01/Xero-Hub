@@ -2272,73 +2272,19 @@ end
     local Placeholder = info.Placeholder or 'Paste Your Text'
     local Callback = info.Callback or function() end
 
-    local Textbox = Instance.new("Frame")
-    local UICorner_1 = Instance.new("UICorner")
-    local Box_1 = Instance.new("Frame")
-    local TitleBox = Instance.new("Frame")
-    local Title_1 = Instance.new("TextLabel")
-    local Desc_1 = Instance.new("TextLabel")
+    -- ใช้ background() สร้าง Title/Desc
+    local ToggleDesc, Title_1, Desc_1, Frame_4 = background(Section_1, Title, Desc)
+
+    -- ValueBox (กล่องสำหรับ TextBox)
     local ValueBox_1 = Instance.new("Frame")
     local UICorner_2 = Instance.new("UICorner")
     local UIStroke_1 = Instance.new("UIStroke")
     local TextBox_1 = Instance.new("TextBox")
 
-    -- Textbox
-    Textbox.Name = "Textbox"
-    Textbox.Parent = Section_1
-    Textbox.BackgroundColor3 = Color3.fromRGB(36, 39, 46)
-    Textbox.BackgroundTransparency = Transparency
-    Textbox.BorderSizePixel = 0
-    Textbox.Size = UDim2.new(1, 0, 0, 40) -- เตี้ยลง
-    UICorner_1.Parent = Textbox
-    UICorner_1.CornerRadius = UDim.new(0,4)
-
-    -- Box (แนวนอน)
-    Box_1.Name = "Box"
-    Box_1.Parent = Textbox
-    Box_1.BackgroundTransparency = 1
-    Box_1.Size = UDim2.new(1, 0, 1, 0)
-
-    local UIList = Instance.new("UIListLayout", Box_1)
-    UIList.FillDirection = Enum.FillDirection.Horizontal
-    UIList.HorizontalAlignment = Enum.HorizontalAlignment.Left
-    UIList.VerticalAlignment = Enum.VerticalAlignment.Center
-    UIList.Padding = UDim.new(0, 6)
-
-    -- TitleBox (ชื่อ + Desc ด้านหน้า)
-    TitleBox.Parent = Box_1
-    TitleBox.BackgroundTransparency = 1
-    TitleBox.Size = UDim2.new(0.5, 0, 1, 0)
-
-    Title_1.Name = "Title"
-    Title_1.Parent = TitleBox
-    Title_1.BackgroundTransparency = 1
-    Title_1.Position = UDim2.new(0,0,0,0)
-    Title_1.Size = UDim2.new(1, 0, 0.5, 0)
-    Title_1.Font = Enum.Font.GothamBold
-    Title_1.Text = Title
-    Title_1.TextColor3 = Color3.fromRGB(255,255,255)
-    Title_1.TextSize = 12
-    Title_1.TextXAlignment = Enum.TextXAlignment.Left
-
-    Desc_1.Name = "Desc"
-    Desc_1.Parent = TitleBox
-    Desc_1.BackgroundTransparency = 1
-    Desc_1.Position = UDim2.new(0,0,0.5,0)
-    Desc_1.Size = UDim2.new(1,0,0.5,0)
-    Desc_1.Font = Enum.Font.Gotham
-    Desc_1.Text = Desc
-    Desc_1.TextColor3 = Color3.fromRGB(178,178,178)
-    Desc_1.TextSize = 10
-    Desc_1.TextXAlignment = Enum.TextXAlignment.Left
-
-    -- ValueBox (กล่องใส่ค่า)
     ValueBox_1.Name = "ValueBox"
-    ValueBox_1.Parent = Box_1
-    ValueBox_1.AnchorPoint = Vector2.new(0, 0.5)
+    ValueBox_1.Parent = Frame_4
     ValueBox_1.BackgroundColor3 = Color3.fromRGB(31, 34, 40)
-    ValueBox_1.Size = UDim2.new(0.5, -10, 0.8, 0) -- ครึ่งนึงของพื้นที่
-    ValueBox_1.Position = UDim2.new(0.5, 0, 0.5, 0)
+    ValueBox_1.Size = UDim2.new(0.5, -10, 0.8, 0)
     UICorner_2.Parent = ValueBox_1
     UICorner_2.CornerRadius = UDim.new(0,6)
     UIStroke_1.Parent = ValueBox_1
@@ -2368,6 +2314,7 @@ end
     TextBox_1.FocusLost:Connect(o)
     delay(0, o)
 
+    -- methods
     local New = {}
     function New:SetTitle(a) Title_1.Text = a end
     function New:SetDesc(a) Desc_1.Text = a end
