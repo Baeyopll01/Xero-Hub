@@ -410,8 +410,8 @@ function Library:CreateWindow(info)
 		TextLabel_1.Font = Enum.Font.Gotham
 		TextLabel_1.RichText = true
 		TextLabel_1.TextColor3 = Color3.fromRGB(255,255,255)
-		TextLabel_1.TextSize = 9
-		TextLabel_1.TextTransparency = 0.5
+		TextLabel_1.TextSize = 14
+		TextLabel_1.TextTransparency = 1
 		TextLabel_1.TextWrapped = true
 		TextLabel_1.TextXAlignment = Enum.TextXAlignment.Left
 		TextLabel_1.Visible = false
@@ -429,7 +429,7 @@ function Library:CreateWindow(info)
 		Title_1.RichText = true
 		Title_1.Text = t
 		Title_1.TextColor3 = Color3.fromRGB(255,255,255)
-		Title_1.TextSize = 13
+		Title_1.TextSize = 16
 		Title_1.TextWrapped = true
 		Title_1.TextXAlignment = Enum.TextXAlignment.Left
 		Title_1.AutomaticSize = Enum.AutomaticSize.Y
