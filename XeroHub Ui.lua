@@ -1212,9 +1212,9 @@ function Library:CreateWindow(info)
         ImageBG.Parent = Section_2
         ImageBG.BackgroundTransparency = 1
         ImageBG.BorderSizePixel = 0
-        ImageBG.Size = UDim2.new(0, 14, 0, 14) -- ย่อเล็กลง
-        ImageBG.Position = UDim2.new(0, TextLabel_2.TextBounds.X + 10, 0.5, -7) 
-        -- -7 = ครึ่งของ 14 เพื่อให้อยู่ตรงกลางพอดี
+        ImageBG.Size = UDim2.new(0, 18, 0, 18) -- ปรับเป็น 18x18
+        ImageBG.Position = UDim2.new(0, TextLabel_2.TextBounds.X + 10, 0.5, -9) 
+        -- -9 = ครึ่งของ 18 เพื่อให้อยู่ตรงกลางแนวตั้ง
         ImageBG.Image = "rbxassetid://"..tostring(ImageID)
         ImageBG.ZIndex = 1
     end
@@ -1227,7 +1227,7 @@ function Library:CreateWindow(info)
     function New:SetTitle(a)
         TextLabel_2.Text = a
         if ImageBG then
-            ImageBG.Position = UDim2.new(0, TextLabel_2.TextBounds.X + 10, 0.5, -7)
+            ImageBG.Position = UDim2.new(0, TextLabel_2.TextBounds.X + 10, 0.5, -9)
         end
     end
 
