@@ -1412,6 +1412,7 @@ function Library:CreateWindow(info)
                 LabelFrame.BorderColor3 = Color3.fromRGB(60, 60, 60)
                 LabelFrame.BorderSizePixel = 1
                 LabelFrame.Size = UDim2.new(0.5, -5, 0, 30)
+
                 if Mode == 2 then
                     LabelFrame.Position = UDim2.new(0.5, 5, 0, 0)
                 else
@@ -1427,20 +1428,27 @@ function Library:CreateWindow(info)
                 IconImage.Parent = LabelFrame
                 IconImage.BackgroundTransparency = 1
                 IconImage.Size = UDim2.new(0, 20, 0, 20)
-                IconImage.Position = UDim2.new(0, 5, 0.5, -10)
                 IconImage.Image = Icon
                 IconImage.ImageColor3 = Color3.fromRGB(255, 255, 255)
 
                 local TextLabel = Instance.new("TextLabel")
                 TextLabel.Parent = LabelFrame
                 TextLabel.BackgroundTransparency = 1
-                TextLabel.Size = UDim2.new(1, -30, 1, 0)
-                TextLabel.Position = UDim2.new(0, 30, 0, 0)
                 TextLabel.Font = Enum.Font.Gotham
                 TextLabel.Text = Title
                 TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
                 TextLabel.TextSize = 16
-                TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+                if Mode == 2 then
+                    IconImage.Position = UDim2.new(1, -25, 0.5, -10)
+                    TextLabel.Position = UDim2.new(0, 5, 0, 0)
+                    TextLabel.Size = UDim2.new(1, -30, 1, 0)
+                    TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+                else
+                    IconImage.Position = UDim2.new(0, 5, 0.5, -10)
+                    TextLabel.Position = UDim2.new(0, 30, 0, 0)
+                    TextLabel.Size = UDim2.new(1, -35, 1, 0)
+                    TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+                end
 
                 local New = {}
 
