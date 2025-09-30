@@ -1400,67 +1400,62 @@ function Library:CreateWindow(info)
                 end
                 return New
             end
-            function Main:CreateLabel(info)
-                local Title = info.Title or "Label"
+
+            function Library:CreateLabel(info)
+                local TitleText = info.Title or "Label"
                 local Mode = info.Mode or 1
                 local Icon = info.Icon or ""
 
                 local LabelFrame = Instance.new("Frame")
-                LabelFrame.Name = "Label"
-                LabelFrame.Parent = Section_1
-                LabelFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-                LabelFrame.BorderColor3 = Color3.fromRGB(60, 60, 60)
-                LabelFrame.BorderSizePixel = 1
-                LabelFrame.Size = UDim2.new(0.5, -5, 0, 30)
+                LabelFrame.Size = UDim2.new(1, 0, 0, 30)
+                LabelFrame.BackgroundTransparency = 1
+                LabelFrame.Parent = info.Parent
 
-                if Mode == 2 then
-                    LabelFrame.Position = UDim2.new(0.5, 5, 0, 0)
-                else
-                    LabelFrame.Position = UDim2.new(0, 0, 0, 0)
-                end
-
-                local UICorner = Instance.new("UICorner")
-                UICorner.CornerRadius = UDim.new(0, 6)
-                UICorner.Parent = LabelFrame
+                local Layout = Instance.new("UIListLayout")
+                Layout.Parent = LabelFrame
+                Layout.FillDirection = Enum.FillDirection.Horizontal
+                Layout.VerticalAlignment = Enum.VerticalAlignment.Center
+                Layout.SortOrder = Enum.SortOrder.LayoutOrder
+                Layout.Padding = UDim.new(0, 5)
 
                 local IconImage = Instance.new("ImageLabel")
                 IconImage.Name = "Icon"
-                IconImage.Parent = LabelFrame
-                IconImage.BackgroundTransparency = 1
                 IconImage.Size = UDim2.new(0, 20, 0, 20)
+                IconImage.BackgroundTransparency = 1
                 IconImage.Image = Icon
-                IconImage.ImageColor3 = Color3.fromRGB(255, 255, 255)
+                IconImage.Parent = LabelFrame
 
                 local TextLabel = Instance.new("TextLabel")
-                TextLabel.Parent = LabelFrame
+                TextLabel.Name = "Text"
+                TextLabel.Size = UDim2.new(1, 0, 1, 0)
                 TextLabel.BackgroundTransparency = 1
-                TextLabel.Font = Enum.Font.Gotham
-                TextLabel.Text = Title
+                TextLabel.Text = TitleText
                 TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+                TextLabel.Font = Enum.Font.Gotham
                 TextLabel.TextSize = 16
+                TextLabel.TextWrapped = true
+                TextLabel.Parent = LabelFrame
+
                 if Mode == 2 then
-                    IconImage.Position = UDim2.new(1, -25, 0.5, -10)
-                    TextLabel.Position = UDim2.new(0, 5, 0, 0)
-                    TextLabel.Size = UDim2.new(1, -30, 1, 0)
-                    TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+                    TextLabel.LayoutOrder = 1
+                    IconImage.LayoutOrder = 2
+                    TextLabel.TextXAlignment = Enum.TextXAlignment.Right
                 else
-                    IconImage.Position = UDim2.new(0, 5, 0.5, -10)
-                    TextLabel.Position = UDim2.new(0, 30, 0, 0)
-                    TextLabel.Size = UDim2.new(1, -35, 1, 0)
+                    IconImage.LayoutOrder = 1
+                    TextLabel.LayoutOrder = 2
                     TextLabel.TextXAlignment = Enum.TextXAlignment.Left
                 end
 
-                local New = {}
-
-                function New:SetTitle(a)
-                    TextLabel.Text = a
+                local Label = {}
+                function Label:SetTitle(newText)
+                    TextLabel.Text = newText
                 end
 
-                function New:SetIcon(assetId)
-                    IconImage.Image = assetId
+                function Label:SetIcon(newIcon)
+                    IconImage.Image = newIcon
                 end
 
-                return New
+                return Label
             end
             function Main:CreateToggle(info)
                 local Title = info.Title
